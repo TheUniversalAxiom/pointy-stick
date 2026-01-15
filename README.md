@@ -29,6 +29,8 @@ The Universal Axiom is a mathematical and philosophical framework that models in
 Intelligence_n = E_n · (1 + F_n) · X · Y · Z · (A · B · C)
 ```
 
+<img width="1170" height="1749" alt="image" src="https://github.com/user-attachments/assets/9f403849-9c81-4510-8fd4-5321ba820000" />
+
 Where:
 
 **Foundation Layer:**
