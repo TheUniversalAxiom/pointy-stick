@@ -1,0 +1,22 @@
+[package]
+name = "universal-axiom"
+version = "0.1.0"
+edition = "2021"
+authors = ["Matt Belanger"]
+description = "The Universal Axiom - Core implementation in Rust"
+license = "MIT"
+keywords = ["axiom", "intelligence", "reasoning", "ai"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[dev-dependencies]
+
+[lib]
+name = "universal_axiom"
+path = "lib.rs"
+
+[[example]]
+name = "basic_usage"
+path = "../../examples/rust/basic_usage.rs"

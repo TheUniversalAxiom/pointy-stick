@@ -1,0 +1,39 @@
+{
+  "name": "pointy-stick",
+  "version": "0.1.0",
+  "description": "The Universal Axiom & The Epiphany Engine - Multi-language implementation",
+  "main": "src/javascript/universal-axiom.js",
+  "types": "src/javascript/universal-axiom.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "example:js": "node examples/javascript/basic-usage.js",
+    "example:ts": "ts-node examples/javascript/basic-usage.ts",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "universal-axiom",
+    "epiphany-engine",
+    "intelligence",
+    "ai",
+    "reasoning",
+    "consciousness"
+  ],
+  "author": "Matt Belanger",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

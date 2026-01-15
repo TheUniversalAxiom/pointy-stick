@@ -250,7 +250,68 @@ This is intelligence evolution — understanding the medium through which intell
 
 ---
 
+## 💻 Multi-Language Implementation
+
+The Universal Axiom is implemented in **four languages**, each optimized for different use cases:
+
+### Python
+**Best for**: Research, ML integration, data analysis
+```bash
+cd examples/python
+python basic_usage.py
+```
+
+### JavaScript/TypeScript
+**Best for**: Web applications, interactive demos, browser tools
+```bash
+npm install
+npm run build
+npm run example:js
+```
+
+### Rust
+**Best for**: High-performance systems, production applications, embedded systems
+```bash
+cd src/rust
+cargo run --example basic_usage
+```
+
+### Julia
+**Best for**: Scientific computing, numerical analysis, research
+```bash
+julia examples/julia/basic_usage.jl
+```
+
+**Documentation**:
+- [Implementation Guide](docs/IMPLEMENTATION.md) - Detailed setup and usage
+- [API Reference](docs/api/API_REFERENCE.md) - Complete API documentation
+- [Examples](examples/) - Working examples in all languages
+
+---
+
 ## 🚀 Getting Started
+
+### Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/TheUniversalAxiom/pointy-stick.git
+   cd pointy-stick
+   ```
+
+2. **Choose your language** and run examples:
+   - Python: `python examples/python/basic_usage.py`
+   - JavaScript: `npm install && npm run example:js`
+   - Rust: `cd src/rust && cargo run --example basic_usage`
+   - Julia: `julia examples/julia/basic_usage.jl`
+
+3. **Explore the framework**:
+   - Adjust parameters (impulses, pressure, subjectivity)
+   - Run evolution simulations
+   - Test contradiction resolution
+   - Measure coherence
+
+### Learn More
 
 Visit [www.epiphanyengine.ai](https://www.epiphanyengine.ai) to explore:
 - The full framework documentation
