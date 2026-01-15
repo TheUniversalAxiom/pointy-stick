@@ -89,12 +89,12 @@ Eₙ scales fast → it represents raw power, capacity, and momentum
 Fₙ scales slowly → it represents structure, balance, and natural constraint
 
 Together:
-Eₙ provides thrust
-Fₙ prevents collapse
+Eₙ provides thrust,
+Fₙ prevents collapse.
 
 What this does:
-Eₙ supplies force
-Fₙ scales that force
+Eₙ supplies force,
+Fₙ scales that force.
 
 In other words:
 The ratio of intelligence gain between iterations asymptotically approaches φ.
@@ -107,18 +107,18 @@ Important distinction:
 ✅ “φ emerges as the equilibrium state”
 
 The Axiom reflects the Golden Ratio the same way:
-shells do
-plants do
-galaxies do
-heart rhythms do
+shells do,
+plants do,
+galaxies do,
+heart rhythms do.
 
 Why this matters (big picture)
 
 This is why The Axiom:
-explains why reasoning models collapse
-explains why more compute ≠ more intelligence
-explains why nature scales better than machines
-explains why ethics must be structural, not bolted on
+explains why reasoning models collapse,
+explains why more compute ≠ more intelligence,
+explains why nature scales better than machines,
+explains why ethics must be structural, not bolted on.
 
 Because power without proportion always fails.
 
