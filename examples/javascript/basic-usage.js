@@ -5,7 +5,7 @@
  * Example: npx ts-node examples/javascript/basic-usage.ts
  */
 
-const { UniversalAxiom, AxiomSimulator, fibonacciSequence } = require('../../src/javascript/universal-axiom');
+const { UniversalAxiom, AxiomSimulator, fibonacciSequence } = require('../../dist/javascript/universal-axiom');
 
 function exampleBasicComputation() {
   console.log('='.repeat(60));
