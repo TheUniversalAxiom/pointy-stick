@@ -404,22 +404,22 @@ Generates Fibonacci sequence up to n terms.
 # Python
 from universal_axiom import fibonacci_sequence
 seq = fibonacci_sequence(10)
-# [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+# [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
 
 // JavaScript
 import { fibonacciSequence } from './universal-axiom';
 const seq = fibonacciSequence(10);
-// [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+// [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
 
 // Rust
 use universal_axiom::fibonacci_sequence;
 let seq = fibonacci_sequence(10);
-// vec![0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+// vec![1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
 
 # Julia
 using .UniversalAxiom
 seq = fibonacci_sequence(10)
-# [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+# [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
 ```
 
 ---
@@ -446,11 +446,11 @@ Represents the dynamic layer: E_n · (1 + F_n)
 
 **Properties**:
 - `n`: Current iteration
-- `base_exponential`: Base for exponential growth (default: e)
+- `base_exponential`: Base for exponential growth (default: 3)
 
 **Methods**:
-- `exponential_growth()`: Returns base^n
-- `fibonacci()`: Returns nth Fibonacci number
+- `exponential_growth()`: Returns 2 × base^n - 1
+- `fibonacci()`: Returns nth Fibonacci number (1, 1, 2, 3, ...)
 - `compute()`: Returns E_n × (1 + F_n)
 
 ---
