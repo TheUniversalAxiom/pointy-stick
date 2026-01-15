@@ -4,6 +4,10 @@
 
 The Universal Axiom is an origin engine, not a knowledge container. It doesn't recycle answers — it **generates insight from first principles**, the same way physics generates motion, mathematics generates structure, and nature generates life.
 
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/ceb83ed2-5218-4ec4-9957-6707cac2dfb3" />
+
+
 ---
 
 ## 🌟 Overview
