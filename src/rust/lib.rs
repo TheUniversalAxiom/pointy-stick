@@ -9,7 +9,6 @@
  */
 
 use serde::{Deserialize, Serialize};
-use std::f64::consts::E;
 
 /// Foundation Layer: A · B · C
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -49,20 +48,20 @@ impl DynamicLayer {
     pub fn new(n: usize) -> Self {
         Self {
             n,
-            base_exponential: E,
+            base_exponential: 3.0,
         }
     }
 
     pub fn exponential_growth(&self) -> f64 {
-        self.base_exponential.powi(self.n as i32)
+        (2.0 * self.base_exponential.powi(self.n as i32)) - 1.0
     }
 
     pub fn fibonacci(&self) -> u64 {
         if self.n <= 1 {
-            return self.n as u64;
+            return 1;
         }
 
-        let mut a = 0u64;
+        let mut a = 1u64;
         let mut b = 1u64;
 
         for _ in 2..=self.n {
@@ -339,10 +338,10 @@ pub fn fibonacci_sequence(n: usize) -> Vec<u64> {
         return vec![];
     }
     if n == 1 {
-        return vec![0];
+        return vec![1];
     }
 
-    let mut sequence = vec![0, 1];
+    let mut sequence = vec![1, 1];
     for i in 2..n {
         sequence.push(sequence[i - 1] + sequence[i - 2]);
     }
@@ -357,7 +356,7 @@ mod tests {
     #[test]
     fn test_fibonacci() {
         let dynamic = DynamicLayer::new(10);
-        assert_eq!(dynamic.fibonacci(), 55);
+        assert_eq!(dynamic.fibonacci(), 89);
     }
 
     #[test]

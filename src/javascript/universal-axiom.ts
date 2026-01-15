@@ -69,17 +69,17 @@ export class FoundationLayer {
 export class DynamicLayer {
   constructor(
     public n: number,
-    public baseExponential: number = Math.E
+    public baseExponential: number = 3
   ) {}
 
   exponentialGrowth(): number {
-    return Math.pow(this.baseExponential, this.n);
+    return (2 * Math.pow(this.baseExponential, this.n)) - 1;
   }
 
   fibonacci(): number {
-    if (this.n <= 1) return this.n;
+    if (this.n <= 1) return 1;
 
-    let a = 0;
+    let a = 1;
     let b = 1;
 
     for (let i = 2; i <= this.n; i++) {
@@ -316,9 +316,9 @@ export class AxiomSimulator {
  */
 export function fibonacciSequence(n: number): number[] {
   if (n <= 0) return [];
-  if (n === 1) return [0];
+  if (n === 1) return [1];
 
-  const sequence = [0, 1];
+  const sequence = [1, 1];
   for (let i = 2; i < n; i++) {
     sequence.push(sequence[i - 1] + sequence[i - 2]);
   }
