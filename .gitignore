@@ -22,6 +22,10 @@ wheels/
 venv/
 ENV/
 env/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
 
 # JavaScript/Node
 node_modules/
