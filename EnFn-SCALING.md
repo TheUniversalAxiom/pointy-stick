@@ -178,4 +178,4 @@ E_n(1 + F_n) = (2·3^n − 1)(1 + F_n)
 | 19 | 2,324,522,933 | 6,765 | 6,766  | 15,730,028,329,478  |
 | 20 | 6,973,568,801 | 10,946| 10,947 | 76,349,545,566,347  |
 
-
+En is a deterministic, division-free projection of the Collatz odd-step dynamics.
