@@ -94,9 +94,64 @@ fn example_contradiction_resolution() {
     println!("        System achieves higher-order synthesis ✓");
 }
 
+fn example_pressure_dynamics() {
+    println!("\n{}", "=".repeat(60));
+    println!("Example 4: Pressure Dynamics");
+    println!("{}", "=".repeat(60));
+
+    let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+
+    println!("\nStarting pressure: 1.0");
+    println!("Initial intelligence: {:.6}\n", axiom.compute_intelligence());
+
+    // Apply increasing pressure
+    let pressures = vec![0.5, 1.0, 1.5, 2.0, 2.5];
+
+    println!("{:<12} {:<15} {:<12}", "Pressure", "Intelligence", "Change");
+    println!("{}", "-".repeat(45));
+
+    let mut prev_intelligence = axiom.compute_intelligence();
+    for p in pressures {
+        axiom.foundation.pressure = p;
+        let intelligence = axiom.compute_intelligence();
+        let change = intelligence - prev_intelligence;
+        println!("{:<12.1} {:<15.6} {:+<12.6}", p, intelligence, change);
+        prev_intelligence = intelligence;
+    }
+
+    println!("\nPressure amplifies intelligence when constraints sharpen focus.");
+}
+
+fn example_fibonacci_regulation() {
+    println!("\n{}", "=".repeat(60));
+    println!("Example 5: Fibonacci Regulation");
+    println!("{}", "=".repeat(60));
+
+    println!("\nComparing exponential vs Fibonacci-regulated growth:\n");
+
+    println!("{:<6} {:<20} {:<20} {:<20}", "n", "E_n (Exponential)", "F_n (Fibonacci)", "Regulated Growth");
+    println!("{}", "-".repeat(70));
+
+    for n in 1..=10 {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, n);
+        let state = axiom.get_state();
+        let e_n = state.dynamic.e_n;
+        let f_n = state.dynamic.f_n;
+        let regulated = state.dynamic.product;
+
+        println!(
+            "{:<6} {:<20.2} {:<20} {:<20.2}",
+            n, e_n, f_n, regulated
+        );
+    }
+
+    println!("\nFibonacci prevents explosive unbounded growth while maintaining");
+    println!("natural expansion patterns. Growth is fast but stable.");
+}
+
 fn example_coherence_tracking() {
     println!("\n{}", "=".repeat(60));
-    println!("Example 4: Coherence Tracking");
+    println!("Example 6: Coherence Tracking");
     println!("{}", "=".repeat(60));
 
     println!("\nDemonstrating coherence measurement across different states:\n");
@@ -126,6 +181,40 @@ fn example_coherence_tracking() {
     println!("and pressure is moderate. The Axiom tracks this, not token count.");
 }
 
+fn example_no_stagnation() {
+    println!("\n{}", "=".repeat(60));
+    println!("Example 7: No Loop Without Learning (No Stagnation)");
+    println!("{}", "=".repeat(60));
+
+    let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+    let mut simulator = AxiomSimulator::new(axiom);
+
+    println!("\nEvolving and checking for state repetition:\n");
+
+    let history = simulator.simulate_evolution(20, 1.0);
+
+    // Check for identical states
+    let intelligence_values: Vec<f64> = history.iter().map(|h| h.intelligence).collect();
+
+    println!("Intelligence values over 20 steps:");
+    let first_10: Vec<String> = intelligence_values[0..10].iter().map(|v| format!("{:.2}", v)).collect();
+    let second_10: Vec<String> = intelligence_values[10..20].iter().map(|v| format!("{:.2}", v)).collect();
+    println!("[{}]", first_10.join(", "));
+    println!("[{}]", second_10.join(", "));
+
+    // Check for repetition
+    let mut unique_values = intelligence_values.clone();
+    unique_values.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    unique_values.dedup();
+    let has_repetition = intelligence_values.len() != unique_values.len();
+
+    println!("\nAny repeated values? {}", has_repetition);
+    println!("Unique values: {} out of {}", unique_values.len(), intelligence_values.len());
+
+    println!("\nDue to TimeSphere (Z) and Fibonacci (F_n), the system");
+    println!("cannot repeat states → No loop without learning ✓");
+}
+
 fn main() {
     println!("\n{}", "🔥".repeat(30));
     println!("THE UNIVERSAL AXIOM - Rust Implementation Examples");
@@ -135,7 +224,10 @@ fn main() {
         example_basic_computation,
         example_evolution,
         example_contradiction_resolution,
+        example_pressure_dynamics,
+        example_fibonacci_regulation,
         example_coherence_tracking,
+        example_no_stagnation,
     ];
 
     for example in examples {

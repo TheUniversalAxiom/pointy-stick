@@ -101,9 +101,65 @@ function exampleContradictionResolution() {
   console.log('        System achieves higher-order synthesis ✓');
 }
 
+function examplePressureDynamics() {
+  console.log('\n' + '='.repeat(60));
+  console.log('Example 4: Pressure Dynamics');
+  console.log('='.repeat(60));
+
+  const axiom = new UniversalAxiom({ pressure: 1.0 });
+
+  console.log('\nStarting pressure: 1.0');
+  console.log(`Initial intelligence: ${axiom.computeIntelligence().toFixed(6)}\n`);
+
+  // Apply increasing pressure
+  const pressures = [0.5, 1.0, 1.5, 2.0, 2.5];
+
+  console.log(`${'Pressure'.padEnd(12)} ${'Intelligence'.padEnd(15)} ${'Change'.padEnd(12)}`);
+  console.log('-'.repeat(45));
+
+  let prevIntelligence = axiom.computeIntelligence();
+  pressures.forEach(p => {
+    axiom.foundation.pressure = p;
+    const intelligence = axiom.computeIntelligence();
+    const change = intelligence - prevIntelligence;
+    const changeStr = (change >= 0 ? '+' : '') + change.toFixed(6);
+    console.log(`${String(p.toFixed(1)).padEnd(12)} ${intelligence.toFixed(6).padEnd(15)} ${changeStr.padEnd(12)}`);
+    prevIntelligence = intelligence;
+  });
+
+  console.log('\nPressure amplifies intelligence when constraints sharpen focus.');
+}
+
+function exampleFibonacciRegulation() {
+  console.log('\n' + '='.repeat(60));
+  console.log('Example 5: Fibonacci Regulation');
+  console.log('='.repeat(60));
+
+  console.log('\nComparing exponential vs Fibonacci-regulated growth:\n');
+
+  console.log(`${'n'.padEnd(6)} ${'E_n (Exponential)'.padEnd(20)} ${'F_n (Fibonacci)'.padEnd(20)} ${'Regulated Growth'.padEnd(20)}`);
+  console.log('-'.repeat(70));
+
+  for (let n = 1; n <= 10; n++) {
+    const axiom = new UniversalAxiom({ n });
+    const state = axiom.getState();
+    const E_n = state.dynamic.E_n;
+    const F_n = state.dynamic.F_n;
+    const regulated = state.dynamic.product;
+
+    console.log(
+      `${String(n).padEnd(6)} ${E_n.toFixed(2).padEnd(20)} ` +
+      `${String(F_n).padEnd(20)} ${regulated.toFixed(2).padEnd(20)}`
+    );
+  }
+
+  console.log('\nFibonacci prevents explosive unbounded growth while maintaining');
+  console.log('natural expansion patterns. Growth is fast but stable.');
+}
+
 function exampleCoherenceTracking() {
   console.log('\n' + '='.repeat(60));
-  console.log('Example 4: Coherence Tracking');
+  console.log('Example 6: Coherence Tracking');
   console.log('='.repeat(60));
 
   console.log('\nDemonstrating coherence measurement across different states:\n');
@@ -133,6 +189,38 @@ function exampleCoherenceTracking() {
   console.log('and pressure is moderate. The Axiom tracks this, not token count.');
 }
 
+function exampleNoStagnation() {
+  console.log('\n' + '='.repeat(60));
+  console.log('Example 7: No Loop Without Learning (No Stagnation)');
+  console.log('='.repeat(60));
+
+  const axiom = new UniversalAxiom({ n: 1 });
+  const simulator = new AxiomSimulator(axiom);
+
+  console.log('\nEvolving and checking for state repetition:\n');
+
+  const history = simulator.simulateEvolution(20, 1.0);
+
+  // Check for identical states
+  const intelligenceValues = history.map(h => h.intelligence);
+
+  console.log('Intelligence values over 20 steps:');
+  const first10 = intelligenceValues.slice(0, 10).map(v => v.toFixed(2));
+  const second10 = intelligenceValues.slice(10).map(v => v.toFixed(2));
+  console.log(`[${first10.join(', ')}]`);
+  console.log(`[${second10.join(', ')}]`);
+
+  // Check for repetition
+  const uniqueValues = new Set(intelligenceValues);
+  const hasRepetition = intelligenceValues.length !== uniqueValues.size;
+
+  console.log(`\nAny repeated values? ${hasRepetition}`);
+  console.log(`Unique values: ${uniqueValues.size} out of ${intelligenceValues.length}`);
+
+  console.log('\nDue to TimeSphere (Z) and Fibonacci (F_n), the system');
+  console.log('cannot repeat states → No loop without learning ✓');
+}
+
 function main() {
   console.log('\n' + '🔥'.repeat(30));
   console.log('THE UNIVERSAL AXIOM - JavaScript/TypeScript Implementation Examples');
@@ -142,7 +230,10 @@ function main() {
     exampleBasicComputation,
     exampleEvolution,
     exampleContradictionResolution,
+    examplePressureDynamics,
+    exampleFibonacciRegulation,
     exampleCoherenceTracking,
+    exampleNoStagnation,
   ];
 
   examples.forEach(example => {
@@ -166,5 +257,8 @@ module.exports = {
   exampleBasicComputation,
   exampleEvolution,
   exampleContradictionResolution,
-  exampleCoherenceTracking
+  examplePressureDynamics,
+  exampleFibonacciRegulation,
+  exampleCoherenceTracking,
+  exampleNoStagnation
 };

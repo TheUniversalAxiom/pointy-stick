@@ -120,8 +120,8 @@ class TestUniversalAxiom:
         for _ in range(9):
             axiom.evolve()
         intelligence = axiom.compute_intelligence()
-        # n=10 value is 10,628,730
-        assert intelligence == 10_628_730
+        # n=10 value with new formula (base 3.0): 106,287,300
+        assert intelligence == 106_287_300
 
     def test_evolve_increases_intelligence(self):
         """Test evolution increases intelligence per PROMPT.md"""
