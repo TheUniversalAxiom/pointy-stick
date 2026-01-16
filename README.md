@@ -368,6 +368,29 @@ julia examples/julia/basic_usage.jl
 - [API Reference](docs/api/API_REFERENCE.md) - Complete API documentation
 - [Examples](examples/) - Working examples in all languages
 
+### Cross-Language Verification
+
+To ensure all implementations remain mathematically equivalent and prevent formula drift:
+
+```bash
+# Verify all languages produce identical outputs
+python verify_outputs.py
+
+# Verify specific language
+python verify_outputs.py --language python
+
+# Verbose output showing each test
+python verify_outputs.py --verbose
+```
+
+The verification system:
+- ✅ Runs canonical test cases against all implementations
+- ✅ Detects formula drift immediately
+- ✅ Ensures deterministic behavior across languages
+- ✅ Runs automatically in CI/CD on every push
+
+See [tests/VERIFICATION.md](tests/VERIFICATION.md) for details.
+
 ---
 
 ## 🚀 Getting Started
