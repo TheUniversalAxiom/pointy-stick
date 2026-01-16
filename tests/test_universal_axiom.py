@@ -4,8 +4,11 @@ Tests the core formula: Intelligence_n = E_n⋅(1+F_n)⋅X⋅Y⋅Z⋅(A⋅B⋅C)
 Based on PROMPT.md principles and The Epiphany Engine specifications
 """
 
-import pytest
+import csv
 import math
+from pathlib import Path
+
+import pytest
 from src.python.universal_axiom import (
     FoundationLayer,
     DynamicLayer,
@@ -265,6 +268,31 @@ class TestAxiomSimulator:
         # Verify monotonic increase
         for i in range(1, len(intelligences)):
             assert intelligences[i] > intelligences[i-1]
+
+
+class TestGoldenCases:
+    """Cross-language golden data cases for parity checks."""
+
+    def test_golden_cases_match_expected(self):
+        """Validate intelligence results against golden case expectations."""
+        golden_path = Path(__file__).with_name("golden_cases.csv")
+        with golden_path.open(newline="") as handle:
+            reader = csv.DictReader(handle)
+            for row in reader:
+                axiom = UniversalAxiom(
+                    impulses=float(row["impulses"]),
+                    elements=float(row["elements"]),
+                    pressure=float(row["pressure"]),
+                    subjectivity=float(row["subjectivity"]),
+                    purpose=float(row["purpose"]),
+                    time=float(row["time"]),
+                    n=int(row["n"]),
+                )
+                expected = float(row["expected_intelligence"])
+                actual = axiom.compute_intelligence()
+                assert math.isclose(actual, expected, rel_tol=1e-9, abs_tol=1e-6), row[
+                    "name"
+                ]
 
 
 class TestPROMPTCompliance:

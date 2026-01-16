@@ -4,6 +4,9 @@
  * Based on PROMPT.md principles and The Epiphany Engine specifications
  */
 
+const fs = require('fs');
+const path = require('path');
+
 const { UniversalAxiom, AxiomSimulator, fibonacciSequence } = require('../dist/javascript/universal-axiom');
 
 describe('Foundation Layer (A·B·C)', () => {
@@ -262,6 +265,43 @@ describe('AxiomSimulator', () => {
     for (let i = 1; i < intelligences.length; i++) {
       expect(intelligences[i]).toBeGreaterThan(intelligences[i - 1]);
     }
+  });
+});
+
+describe('Golden Cases Parity', () => {
+  test('matches expected intelligence values', () => {
+    const goldenPath = path.join(__dirname, 'golden_cases.csv');
+    const lines = fs.readFileSync(goldenPath, 'utf-8').trim().split('\n');
+    const [, ...rows] = lines;
+
+    rows.forEach((row) => {
+      const [
+        name,
+        impulses,
+        elements,
+        pressure,
+        subjectivity,
+        purpose,
+        time,
+        n,
+        expectedIntelligence
+      ] = row.split(',');
+
+      const axiom = new UniversalAxiom({
+        impulses: Number(impulses),
+        elements: Number(elements),
+        pressure: Number(pressure),
+        subjectivity: Number(subjectivity),
+        purpose: Number(purpose),
+        time: Number(time),
+        n: Number(n)
+      });
+
+      const actual = axiom.computeIntelligence();
+      expect(actual).toBeCloseTo(Number(expectedIntelligence), 6);
+      expect(actual).not.toBeNaN();
+      expect(name).toBeTruthy();
+    });
   });
 });
 
