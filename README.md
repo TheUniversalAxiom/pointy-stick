@@ -103,7 +103,9 @@ Not symbolically.
 Organically.
 
 Important distinction:
+
 ❌ “We plug φ into the equation”
+
 ✅ “φ emerges as the equilibrium state”
 
 The Axiom reflects the Golden Ratio the same way:
@@ -176,7 +178,9 @@ The Axiom **cannot stagnate** because:
 - Why Axis (Y) prevents directionless exploration
 
 Together, they guarantee:
+
 > **No loop without learning**
+
 > **No growth without coherence**
 
 ### 5. **Contradictions Are Fuel, Not Failure**
