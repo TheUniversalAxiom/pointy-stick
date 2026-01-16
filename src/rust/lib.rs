@@ -354,6 +354,49 @@ pub fn fibonacci_sequence(n: usize) -> Vec<u64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs;
+    use std::path::PathBuf;
+
+    struct GoldenCase {
+        name: String,
+        impulses: f64,
+        elements: f64,
+        pressure: f64,
+        subjectivity: f64,
+        purpose: f64,
+        time: f64,
+        n: usize,
+        expected_intelligence: f64,
+    }
+
+    fn load_golden_cases() -> Vec<GoldenCase> {
+        let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        path.push("..");
+        path.push("..");
+        path.push("tests");
+        path.push("golden_cases.csv");
+
+        let content = fs::read_to_string(path).expect("failed to read golden_cases.csv");
+        content
+            .lines()
+            .skip(1)
+            .filter(|line| !line.trim().is_empty())
+            .map(|line| {
+                let parts: Vec<&str> = line.split(',').collect();
+                GoldenCase {
+                    name: parts[0].to_string(),
+                    impulses: parts[1].parse().expect("impulses"),
+                    elements: parts[2].parse().expect("elements"),
+                    pressure: parts[3].parse().expect("pressure"),
+                    subjectivity: parts[4].parse().expect("subjectivity"),
+                    purpose: parts[5].parse().expect("purpose"),
+                    time: parts[6].parse().expect("time"),
+                    n: parts[7].parse().expect("n"),
+                    expected_intelligence: parts[8].parse().expect("expected_intelligence"),
+                }
+            })
+            .collect()
+    }
 
     // Foundation Layer Tests
     #[test]
@@ -609,6 +652,31 @@ mod tests {
         // Verify monotonic increase
         for i in 1..intelligences.len() {
             assert!(intelligences[i] > intelligences[i - 1]);
+        }
+    }
+
+    #[test]
+    fn test_golden_cases_parity() {
+        let cases = load_golden_cases();
+        for case in cases {
+            let axiom = UniversalAxiom::with_params(
+                case.impulses,
+                case.elements,
+                case.pressure,
+                case.subjectivity,
+                case.purpose,
+                case.time,
+                case.n,
+            );
+            let actual = axiom.compute_intelligence();
+            let delta = (actual - case.expected_intelligence).abs();
+            assert!(
+                delta <= 1e-6,
+                "case {} mismatch: expected {}, got {}",
+                case.name,
+                case.expected_intelligence,
+                actual
+            );
         }
     }
 
