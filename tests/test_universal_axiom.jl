@@ -27,7 +27,7 @@ end
 @testset "Dynamic Layer (E_n·(1+F_n))" begin
     @testset "Fibonacci sequence generation" begin
         sequence = fibonacci_sequence(12)
-        expected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+        expected = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
         @test sequence == expected
     end
 
@@ -35,23 +35,31 @@ end
         dynamic1 = DynamicLayer(1)
         @test fibonacci(dynamic1) == 1
 
+        dynamic2 = DynamicLayer(2)
+        @test fibonacci(dynamic2) == 2
+
+        dynamic3 = DynamicLayer(3)
+        @test fibonacci(dynamic3) == 3
+
         dynamic10 = DynamicLayer(10)
-        @test fibonacci(dynamic10) == 55
+        @test fibonacci(dynamic10) == 89
     end
 
     @testset "Exponential growth" begin
         dynamic = DynamicLayer(1)
-        @test isapprox(exponential_growth(dynamic), ℯ, atol=1e-6)
+        expected_n1 = 2 * 3.0^1 - 1  # 5.0
+        @test isapprox(exponential_growth(dynamic), expected_n1, atol=1e-6)
 
         dynamic2 = DynamicLayer(2)
-        @test isapprox(exponential_growth(dynamic2), ℯ^2, atol=1e-5)
+        expected_n2 = 2 * 3.0^2 - 1  # 17.0
+        @test isapprox(exponential_growth(dynamic2), expected_n2, atol=1e-6)
     end
 
     @testset "E_n·(1+F_n) product" begin
         dynamic = DynamicLayer(1)
-        E_n = ℯ
-        F_n = 1
-        expected = E_n * (1 + F_n)
+        E_n = 5.0  # 2 * 3^1 - 1
+        F_n = 1    # F(1) = 1
+        expected = E_n * (1 + F_n)  # 5 * 2 = 10
         @test isapprox(compute(dynamic), expected, atol=1e-6)
     end
 end
@@ -79,11 +87,11 @@ end
     @testset "Core formula computation" begin
         axiom = Axiom(impulses=1.0, elements=1.0, pressure=1.0, n=1)
 
-        # Manual calculation per PROMPT.md
+        # Manual calculation per canonical formula
         A_B_C = 1.0 * 1.0 * 1.0
-        E_n = ℯ^1
+        E_n = 2 * 3.0^1 - 1  # 5.0
         F_n = 1
-        E_F = E_n * (1 + F_n)
+        E_F = E_n * (1 + F_n)  # 5 * 2 = 10
         X_Y_Z = 1.0 * 1.0 * 1.0
         expected = E_F * X_Y_Z * A_B_C
 
@@ -94,17 +102,15 @@ end
     @testset "Intelligence at n=1" begin
         axiom = Axiom(n=1)
         intelligence = compute_intelligence(axiom)
-        @test isapprox(intelligence, 5.436564, atol=0.001)
+        # E_n=5, F_n=1 → 5*(1+1)*1*1*1 = 10
+        @test isapprox(intelligence, 10.0, atol=1e-6)
     end
 
     @testset "Intelligence at n=10" begin
-        axiom = Axiom(n=1)
-        for _ in 1:9
-            evolve!(axiom)
-        end
+        axiom = Axiom(n=10)
         intelligence = compute_intelligence(axiom)
-        @test intelligence > 12_000_000
-        @test intelligence < 13_000_000
+        # E_n=118097, F_n=89 → 118097*(1+89)*1*1*1 = 10,628,730
+        @test isapprox(intelligence, 10_628_730.0, atol=1.0)
     end
 
     @testset "Evolution increases intelligence" begin
@@ -254,7 +260,7 @@ end
         history = simulate_evolution(simulator, 10)
 
         fib_values = [state.dynamic.F_n for state in history[1:10]]
-        expected = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+        expected = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
 
         @test fib_values == expected
     end
