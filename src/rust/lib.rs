@@ -9,7 +9,6 @@
  */
 
 use serde::{Deserialize, Serialize};
-use std::f64::consts::E;
 
 /// Foundation Layer: A · B · C
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -41,28 +40,28 @@ impl FoundationLayer {
 pub struct DynamicLayer {
     /// Current iteration/step
     pub n: usize,
-    /// Base for exponential growth
-    pub base_exponential: f64,
 }
 
 impl DynamicLayer {
     pub fn new(n: usize) -> Self {
         Self {
             n,
-            base_exponential: E,
         }
     }
 
+    /// Exponential growth: E_n = 2 * 3^n - 1
     pub fn exponential_growth(&self) -> f64 {
-        self.base_exponential.powi(self.n as i32)
+        2.0 * 3.0_f64.powi(self.n as i32) - 1.0
     }
 
+    /// Fibonacci sequence: F(1)=1, F(2)=2, F(3)=3, F(4)=5, F(5)=8, ...
+    /// (Shifted Fibonacci starting from 1, 2 instead of 0, 1)
     pub fn fibonacci(&self) -> u64 {
         if self.n <= 1 {
-            return self.n as u64;
+            return 1;
         }
 
-        let mut a = 0u64;
+        let mut a = 1u64;
         let mut b = 1u64;
 
         for _ in 2..=self.n {
@@ -334,15 +333,17 @@ impl AxiomSimulator {
 }
 
 /// Generate Fibonacci sequence up to n terms
+/// Generate a Fibonacci sequence of length n
+/// Returns the first n terms: [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...]
 pub fn fibonacci_sequence(n: usize) -> Vec<u64> {
     if n == 0 {
         return vec![];
     }
     if n == 1 {
-        return vec![0];
+        return vec![1];
     }
 
-    let mut sequence = vec![0, 1];
+    let mut sequence = vec![1, 1];
     for i in 2..n {
         sequence.push(sequence[i - 1] + sequence[i - 2]);
     }
@@ -373,7 +374,7 @@ mod tests {
     #[test]
     fn test_fibonacci_sequence_generation() {
         let sequence = fibonacci_sequence(12);
-        let expected = vec![0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+        let expected = vec![1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
         assert_eq!(sequence, expected);
     }
 
@@ -382,27 +383,33 @@ mod tests {
         let dynamic1 = DynamicLayer::new(1);
         assert_eq!(dynamic1.fibonacci(), 1);
 
+        let dynamic2 = DynamicLayer::new(2);
+        assert_eq!(dynamic2.fibonacci(), 2);
+
+        let dynamic3 = DynamicLayer::new(3);
+        assert_eq!(dynamic3.fibonacci(), 3);
+
         let dynamic10 = DynamicLayer::new(10);
-        assert_eq!(dynamic10.fibonacci(), 55);
+        assert_eq!(dynamic10.fibonacci(), 89);
     }
 
     #[test]
     fn test_exponential_growth() {
-        use std::f64::consts::E;
         let dynamic = DynamicLayer::new(1);
-        assert!((dynamic.exponential_growth() - E).abs() < 1e-6);
+        let expected_n1 = 2.0 * 3.0_f64.powi(1) - 1.0; // 5.0
+        assert!((dynamic.exponential_growth() - expected_n1).abs() < 1e-6);
 
         let dynamic2 = DynamicLayer::new(2);
-        assert!((dynamic2.exponential_growth() - E.powi(2)).abs() < 1e-5);
+        let expected_n2 = 2.0 * 3.0_f64.powi(2) - 1.0; // 17.0
+        assert!((dynamic2.exponential_growth() - expected_n2).abs() < 1e-6);
     }
 
     #[test]
     fn test_dynamic_compute_product() {
-        use std::f64::consts::E;
         let dynamic = DynamicLayer::new(1);
-        let e_n = E;
-        let f_n = 1.0;
-        let expected = e_n * (1.0 + f_n);
+        let e_n = 5.0; // 2 * 3^1 - 1 = 5
+        let f_n = 1.0; // F(1) = 1
+        let expected = e_n * (1.0 + f_n); // 5 * 2 = 10
         assert!((dynamic.compute() - expected).abs() < 1e-6);
     }
 
@@ -430,15 +437,14 @@ mod tests {
 
     #[test]
     fn test_core_formula_computation() {
-        use std::f64::consts::E;
         let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
 
         let a_b_c = 1.0 * 1.0 * 1.0;
-        let e_n = E.powi(1);
-        let f_n = 1.0;
-        let e_f = e_n * (1.0 + f_n);
+        let e_n = 5.0; // 2 * 3^1 - 1
+        let f_n = 1.0; // F(1) = 1
+        let e_f = e_n * (1.0 + f_n); // 5 * 2 = 10
         let x_y_z = 1.0 * 1.0 * 1.0;
-        let expected = e_f * x_y_z * a_b_c;
+        let expected = e_f * x_y_z * a_b_c; // 10
 
         let intelligence = axiom.compute_intelligence();
         assert!((intelligence - expected).abs() < 1e-6);
@@ -448,18 +454,15 @@ mod tests {
     fn test_intelligence_at_n_1() {
         let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
         let intelligence = axiom.compute_intelligence();
-        assert!((intelligence - 5.436564).abs() < 0.001);
+        assert!((intelligence - 10.0).abs() < 1e-6); // E_n=5, F_n=1 → 5*(1+1) = 10
     }
 
     #[test]
     fn test_intelligence_at_n_10() {
-        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
-        for _ in 0..9 {
-            axiom.evolve(1.0);
-        }
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 10);
         let intelligence = axiom.compute_intelligence();
-        assert!(intelligence > 12_000_000.0);
-        assert!(intelligence < 13_000_000.0);
+        // E_n=118097, F_n=89 → 118097*(1+89)*1*1*1 = 10,628,730
+        assert!((intelligence - 10_628_730.0).abs() < 1.0);
     }
 
     #[test]
@@ -624,7 +627,7 @@ mod tests {
         let history = simulator.simulate_evolution(10, 1.0);
 
         let fib_values: Vec<u64> = history.iter().take(10).map(|s| s.dynamic.f_n).collect();
-        let expected = vec![1, 1, 2, 3, 5, 8, 13, 21, 34, 55];
+        let expected = vec![1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
 
         assert_eq!(fib_values, expected);
     }

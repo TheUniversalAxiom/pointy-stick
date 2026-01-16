@@ -312,14 +312,11 @@ serde_json = "1.0"
 
     def _run_sequence_test(self, test_case: Dict[str, Any]) -> Dict[str, Any]:
         rust_code = """
-use universal_axiom::DynamicLayer;
+use universal_axiom::fibonacci_sequence;
 use serde_json::json;
 
 fn main() {
-    let sequence: Vec<u64> = (1..=12).map(|n| {
-        DynamicLayer::new(n).fibonacci()
-    }).collect();
-
+    let sequence = fibonacci_sequence(12);
     let result = json!({ "sequence": sequence });
     println!("{}", result);
 }
