@@ -195,10 +195,17 @@ The verification runs automatically on GitHub Actions for every push and pull re
 See `.github/workflows/test.yml` for the CI configuration.
 
 The workflow:
-1. Runs individual language test suites
+1. Runs individual language test suites (Python, JavaScript, Rust, Julia)
 2. Builds all implementations
-3. Runs cross-language verification
-4. Fails the build if any drift is detected
+3. Sets up all 4 language environments
+4. Runs cross-language verification against all available languages
+5. Fails the build if any drift is detected
+
+All 4 languages are now tested in CI/CD:
+- Python 3.11
+- Node.js 20
+- Rust (latest stable)
+- Julia 1.9
 
 ## How It Works
 
