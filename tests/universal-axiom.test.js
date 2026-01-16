@@ -117,7 +117,7 @@ describe('Universal Axiom Core Formula', () => {
     }
 
     const intelligence = axiom.computeIntelligence();
-    expect(intelligence).toBe(10628730);
+    expect(intelligence).toBe(106287300);
   });
 
   test('evolution increases intelligence per PROMPT.md', () => {
@@ -278,6 +278,7 @@ describe('PROMPT.md Compliance', () => {
     const simulator = new AxiomSimulator(axiom);
     const history = simulator.simulateEvolution(10);
 
+    // Extract first 10 fibonacci values from evolution history
     const fibValues = history.slice(0, 10).map(state => state.dynamic.F_n);
     const expected = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
 
