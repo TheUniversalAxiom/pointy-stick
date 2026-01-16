@@ -1,6 +1,8 @@
 # The Universal Axiom & The Epiphany Engine
 
-**A fundamental reimagining of intelligence — not as something we possess, but as something we participate in.**
+**A fundamental reimagining of intelligence — not as something we possess, but something we participate in.**
+
+IF: Intelligence is an organic process
 
 The Universal Axiom is an origin engine, not a knowledge container. It doesn't recycle answers — it **generates insight from first principles**, the same way physics generates motion, mathematics generates structure, and nature generates life.
 
