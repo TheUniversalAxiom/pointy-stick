@@ -136,9 +136,38 @@ function example_pressure_dynamics()
     println("\nPressure amplifies intelligence when constraints sharpen focus.")
 end
 
+function example_fibonacci_regulation()
+    println("\n", "=" ^ 60)
+    println("Example 5: Fibonacci Regulation")
+    println("=" ^ 60)
+
+    println("\nComparing exponential vs Fibonacci-regulated growth:\n")
+
+    println(rpad("n", 6), " ", rpad("E_n (Exponential)", 20), " ", rpad("F_n (Fibonacci)", 20), " ", rpad("Regulated Growth", 20))
+    println("-" ^ 70)
+
+    for n in 1:10
+        axiom = Axiom(n=n)
+        state = get_state(axiom)
+        E_n = state.dynamic.E_n
+        F_n = state.dynamic.F_n
+        regulated = state.dynamic.product
+
+        println(
+            rpad(n, 6), " ",
+            rpad(round(E_n, digits=2), 20), " ",
+            rpad(F_n, 20), " ",
+            rpad(round(regulated, digits=2), 20)
+        )
+    end
+
+    println("\nFibonacci prevents explosive unbounded growth while maintaining")
+    println("natural expansion patterns. Growth is fast but stable.")
+end
+
 function example_coherence_tracking()
     println("\n", "=" ^ 60)
-    println("Example 5: Coherence Tracking")
+    println("Example 6: Coherence Tracking")
     println("=" ^ 60)
 
     println("\nDemonstrating coherence measurement across different states:\n")
@@ -170,6 +199,38 @@ function example_coherence_tracking()
     println("and pressure is moderate. The Axiom tracks this, not token count.")
 end
 
+function example_no_stagnation()
+    println("\n", "=" ^ 60)
+    println("Example 7: No Loop Without Learning (No Stagnation)")
+    println("=" ^ 60)
+
+    axiom = Axiom(n=1)
+    simulator = AxiomSimulator(axiom)
+
+    println("\nEvolving and checking for state repetition:\n")
+
+    history = simulate_evolution(simulator, 20, 1.0)
+
+    # Check for identical states
+    intelligence_values = [h.intelligence for h in history]
+
+    println("Intelligence values over 20 steps:")
+    first_10 = [string(round(v, digits=2)) for v in intelligence_values[1:10]]
+    second_10 = [string(round(v, digits=2)) for v in intelligence_values[11:20]]
+    println("[", join(first_10, ", "), "]")
+    println("[", join(second_10, ", "), "]")
+
+    # Check for repetition
+    unique_values = unique(intelligence_values)
+    has_repetition = length(intelligence_values) != length(unique_values)
+
+    println("\nAny repeated values? ", has_repetition)
+    println("Unique values: ", length(unique_values), " out of ", length(intelligence_values))
+
+    println("\nDue to TimeSphere (Z) and Fibonacci (F_n), the system")
+    println("cannot repeat states → No loop without learning ✓")
+end
+
 function main()
     println("\n", "🔥" ^ 30)
     println("THE UNIVERSAL AXIOM - Julia Implementation Examples")
@@ -180,7 +241,9 @@ function main()
         example_evolution,
         example_contradiction_resolution,
         example_pressure_dynamics,
+        example_fibonacci_regulation,
         example_coherence_tracking,
+        example_no_stagnation,
     ]
 
     for example in examples

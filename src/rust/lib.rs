@@ -353,26 +353,332 @@ pub fn fibonacci_sequence(n: usize) -> Vec<u64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::f64::consts::E;
 
+    // Foundation Layer Tests
     #[test]
-    fn test_fibonacci() {
-        let dynamic = DynamicLayer::new(10);
-        assert_eq!(dynamic.fibonacci(), 55);
+    fn test_foundation_initialization() {
+        let foundation = FoundationLayer::new(1.0, 1.0, 1.0);
+        assert_eq!(foundation.impulses, 1.0);
+        assert_eq!(foundation.elements, 1.0);
+        assert_eq!(foundation.pressure, 1.0);
     }
 
     #[test]
-    fn test_basic_computation() {
+    fn test_foundation_compute_product() {
+        let foundation = FoundationLayer::new(2.0, 3.0, 1.5);
+        assert_eq!(foundation.compute(), 2.0 * 3.0 * 1.5);
+    }
+
+    // Dynamic Layer Tests
+    #[test]
+    fn test_fibonacci_sequence_generation() {
+        let sequence = fibonacci_sequence(12);
+        let expected = vec![0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+        assert_eq!(sequence, expected);
+    }
+
+    #[test]
+    fn test_fibonacci_at_n() {
+        let dynamic1 = DynamicLayer::new(1);
+        assert_eq!(dynamic1.fibonacci(), 1);
+
+        let dynamic10 = DynamicLayer::new(10);
+        assert_eq!(dynamic10.fibonacci(), 55);
+    }
+
+    #[test]
+    fn test_exponential_growth() {
+        let dynamic = DynamicLayer::new(1);
+        assert!((dynamic.exponential_growth() - E).abs() < 1e-6);
+
+        let dynamic2 = DynamicLayer::new(2);
+        assert!((dynamic2.exponential_growth() - E.powi(2)).abs() < 1e-5);
+    }
+
+    #[test]
+    fn test_dynamic_compute_product() {
+        let dynamic = DynamicLayer::new(1);
+        let e_n = E;
+        let f_n = 1.0;
+        let expected = e_n * (1.0 + f_n);
+        assert!((dynamic.compute() - expected).abs() < 1e-6);
+    }
+
+    // Cognitive Layer Tests
+    #[test]
+    fn test_subjectivity_objectivity_relationship() {
+        let cognitive = CognitiveLayer::new(0.3, 1.0, 1.0);
+        let objectivity = cognitive.objectivity();
+        assert_eq!(objectivity, 0.7);
+    }
+
+    #[test]
+    fn test_cognitive_compute_product() {
+        let cognitive = CognitiveLayer::new(0.2, 1.5, 2.0);
+        let expected = 0.8 * 1.5 * 2.0;
+        assert_eq!(cognitive.compute(), expected);
+    }
+
+    // Universal Axiom Core Formula Tests
+    #[test]
+    fn test_axiom_initialization() {
         let axiom = UniversalAxiom::new();
+        assert_eq!(axiom.n, 1);
+    }
+
+    #[test]
+    fn test_core_formula_computation() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+
+        let a_b_c = 1.0 * 1.0 * 1.0;
+        let e_n = E.powi(1);
+        let f_n = 1.0;
+        let e_f = e_n * (1.0 + f_n);
+        let x_y_z = 1.0 * 1.0 * 1.0;
+        let expected = e_f * x_y_z * a_b_c;
+
+        let intelligence = axiom.compute_intelligence();
+        assert!((intelligence - expected).abs() < 1e-6);
+    }
+
+    #[test]
+    fn test_intelligence_at_n_1() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let intelligence = axiom.compute_intelligence();
+        assert!((intelligence - 5.436564).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_intelligence_at_n_10() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        for _ in 0..9 {
+            axiom.evolve(1.0);
+        }
+        let intelligence = axiom.compute_intelligence();
+        assert!(intelligence > 12_000_000.0);
+        assert!(intelligence < 13_000_000.0);
+    }
+
+    #[test]
+    fn test_evolve_increases_intelligence() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let intelligence_before = axiom.compute_intelligence();
+        axiom.evolve(1.0);
+        let intelligence_after = axiom.compute_intelligence();
+        assert!(intelligence_after > intelligence_before);
+    }
+
+    #[test]
+    fn test_apply_pressure_increases_foundation() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let intelligence_before = axiom.compute_intelligence();
+        axiom.apply_pressure(1.0);
+        let intelligence_after = axiom.compute_intelligence();
+        assert!(intelligence_after > intelligence_before);
+    }
+
+    #[test]
+    fn test_pressure_clamping_minimum() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        axiom.apply_pressure(-10.0);
+        assert_eq!(axiom.foundation.pressure, 0.01);
+    }
+
+    #[test]
+    fn test_adjust_subjectivity_changes_objectivity() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1);
+        let intelligence_before = axiom.compute_intelligence();
+        axiom.adjust_subjectivity(-0.2);
+        let intelligence_after = axiom.compute_intelligence();
+        assert!(intelligence_after > intelligence_before);
+        assert_eq!(axiom.cognitive.subjectivity, 0.3);
+    }
+
+    #[test]
+    fn test_subjectivity_clamping() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1);
+        axiom.adjust_subjectivity(1.0);
+        assert_eq!(axiom.cognitive.subjectivity, 1.0);
+
+        axiom.adjust_subjectivity(-2.0);
+        assert_eq!(axiom.cognitive.subjectivity, 0.0);
+    }
+
+    #[test]
+    fn test_strengthen_purpose_multiplier() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let intelligence_before = axiom.compute_intelligence();
+        axiom.strengthen_purpose(1.5);
+        assert_eq!(axiom.cognitive.purpose, 1.5);
+        let intelligence_after = axiom.compute_intelligence();
+        assert!(intelligence_after > intelligence_before);
+    }
+
+    #[test]
+    fn test_get_state_completeness() {
+        let axiom = UniversalAxiom::new();
+        let state = axiom.get_state();
+        assert_eq!(state.n, 1);
+        assert!(state.intelligence > 0.0);
+    }
+
+    #[test]
+    fn test_negative_impulses() {
+        let axiom = UniversalAxiom::with_params(-1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let intelligence = axiom.compute_intelligence();
+        assert!(intelligence < 0.0);
+    }
+
+    #[test]
+    fn test_extreme_subjectivity() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1);
+        let intelligence = axiom.compute_intelligence();
+        assert_eq!(intelligence, 0.0);
+    }
+
+    #[test]
+    fn test_extreme_objectivity() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
         let intelligence = axiom.compute_intelligence();
         assert!(intelligence > 0.0);
     }
 
+    // AxiomSimulator Tests
     #[test]
-    fn test_evolution() {
-        let mut axiom = UniversalAxiom::new();
-        let initial = axiom.compute_intelligence();
-        axiom.evolve(1.0);
-        let evolved = axiom.compute_intelligence();
-        assert!(evolved > initial);
+    fn test_simulator_initialization() {
+        let axiom = UniversalAxiom::new();
+        let _simulator = AxiomSimulator::new(axiom);
+    }
+
+    #[test]
+    fn test_simulate_evolution_tracks_history() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let mut simulator = AxiomSimulator::new(axiom);
+        let history = simulator.simulate_evolution(5, 1.0);
+
+        assert_eq!(history.len(), 6); // initial + 5 steps
+        assert_eq!(history[0].n, 1);
+        assert_eq!(history[5].n, 6);
+    }
+
+    #[test]
+    fn test_contradiction_resolution_reduces_subjectivity() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1);
+        let initial_subjectivity = axiom.cognitive.subjectivity;
+        let mut simulator = AxiomSimulator::new(axiom);
+
+        let history = simulator.simulate_contradiction_resolution(2.0, 5);
+        let final_subjectivity = history[history.len() - 1].cognitive.x_subjectivity;
+
+        assert!(final_subjectivity < initial_subjectivity);
+    }
+
+    #[test]
+    fn test_coherence_metric_high_objectivity() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.1, 2.0, 1.0, 1);
+        let simulator = AxiomSimulator::new(axiom);
+        let coherence = simulator.get_coherence_metric();
+        assert!(coherence > 0.8);
+    }
+
+    #[test]
+    fn test_coherence_decreases_with_subjectivity() {
+        let axiom_objective = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.1, 1.0, 1.0, 1);
+        let coherence_objective = AxiomSimulator::new(axiom_objective).get_coherence_metric();
+
+        let axiom_subjective = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.8, 1.0, 1.0, 1);
+        let coherence_subjective = AxiomSimulator::new(axiom_subjective).get_coherence_metric();
+
+        assert!(coherence_objective > coherence_subjective);
+    }
+
+    #[test]
+    fn test_no_stagnation_with_evolution() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let mut simulator = AxiomSimulator::new(axiom);
+        let history = simulator.simulate_evolution(10, 1.0);
+
+        let intelligences: Vec<f64> = history.iter().map(|s| s.intelligence).collect();
+
+        // Verify monotonic increase
+        for i in 1..intelligences.len() {
+            assert!(intelligences[i] > intelligences[i - 1]);
+        }
+    }
+
+    // PROMPT.md Compliance Tests
+    #[test]
+    fn test_axiom_is_deterministic() {
+        let axiom1 = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 5);
+        let axiom2 = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 5);
+        assert_eq!(axiom1.compute_intelligence(), axiom2.compute_intelligence());
+    }
+
+    #[test]
+    fn test_fibonacci_regulation_of_dynamics() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let mut simulator = AxiomSimulator::new(axiom);
+        let history = simulator.simulate_evolution(10, 1.0);
+
+        let fib_values: Vec<u64> = history.iter().take(10).map(|s| s.dynamic.f_n).collect();
+        let expected = vec![1, 1, 2, 3, 5, 8, 13, 21, 34, 55];
+
+        assert_eq!(fib_values, expected);
+    }
+
+    #[test]
+    fn test_pressure_reveals_contradictions() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1);
+        axiom.apply_pressure(2.0);
+        assert_eq!(axiom.foundation.pressure, 3.0);
+    }
+
+    #[test]
+    fn test_timesphere_advancement() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        let mut simulator = AxiomSimulator::new(axiom);
+        let history = simulator.simulate_evolution(5, 1.0);
+
+        let times: Vec<f64> = history.iter().map(|s| s.cognitive.z_time).collect();
+        let expected = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+
+        for (i, &time) in times.iter().enumerate() {
+            assert!((time - expected[i]).abs() < 1e-6);
+        }
+    }
+
+    #[test]
+    fn test_foundation_abc_variables() {
+        let axiom = UniversalAxiom::with_params(2.0, 3.0, 1.5, 0.0, 1.0, 1.0, 1);
+        let state = axiom.get_state();
+
+        assert_eq!(state.foundation.a_impulses, 2.0);
+        assert_eq!(state.foundation.b_elements, 3.0);
+        assert_eq!(state.foundation.c_pressure, 1.5);
+        assert_eq!(state.foundation.product, 2.0 * 3.0 * 1.5);
+    }
+
+    #[test]
+    fn test_cognitive_xyz_variables() {
+        let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.3, 1.5, 2.0, 1);
+        let state = axiom.get_state();
+
+        assert_eq!(state.cognitive.x_subjectivity, 0.3);
+        assert_eq!(state.cognitive.x_objectivity, 0.7);
+        assert_eq!(state.cognitive.y_purpose, 1.5);
+        assert_eq!(state.cognitive.z_time, 2.0);
+    }
+
+    #[test]
+    fn test_large_n_fibonacci_growth() {
+        let mut axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
+        for _ in 0..19 {
+            axiom.evolve(1.0);
+        }
+
+        let intelligence = axiom.compute_intelligence();
+        assert!(intelligence > 0.0);
+        assert!(intelligence.is_finite());
     }
 }
