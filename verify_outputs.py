@@ -378,14 +378,15 @@ axiom = Axiom(
 )
 
 state = get_state(axiom)
+state_dict = state_to_dict(state)
 intelligence = compute_intelligence(axiom)
 
 result = Dict(
-    "E_n" => state["dynamic"]["E_n"],
-    "F_n" => state["dynamic"]["F_n"],
-    "dynamic_product" => state["dynamic"]["product"],
-    "foundation_product" => state["foundation"]["product"],
-    "cognitive_product" => state["cognitive"]["product"],
+    "E_n" => state_dict["dynamic"]["E_n"],
+    "F_n" => state_dict["dynamic"]["F_n"],
+    "dynamic_product" => state_dict["dynamic"]["product"],
+    "foundation_product" => state_dict["foundation"]["product"],
+    "cognitive_product" => state_dict["cognitive"]["product"],
     "intelligence" => intelligence
 )
 

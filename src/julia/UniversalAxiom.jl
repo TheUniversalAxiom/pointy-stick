@@ -12,9 +12,9 @@ module UniversalAxiom
 
 export FoundationLayer, DynamicLayer, CognitiveLayer
 export Axiom, AxiomSimulator, AxiomState
-export compute_intelligence, evolve!, apply_pressure!, adjust_subjectivity!, strengthen_purpose!
-export get_state, simulate_evolution, simulate_contradiction_resolution, get_coherence_metric
-export fibonacci_sequence
+export compute, compute_intelligence, evolve!, apply_pressure!, adjust_subjectivity!, strengthen_purpose!
+export get_state, state_to_dict, simulate_evolution, simulate_contradiction_resolution, get_coherence_metric
+export fibonacci_sequence, fibonacci, exponential_growth, objectivity
 
 """
 Foundation Layer: A · B · C
@@ -208,6 +208,34 @@ function get_state(axiom::Axiom)::AxiomState
             product = cognitive_product
         ),
         compute_intelligence(axiom)
+    )
+end
+
+"""
+Convert AxiomState to a Dict for JSON serialization
+"""
+function state_to_dict(state::AxiomState)::Dict{String,Any}
+    Dict(
+        "n" => state.n,
+        "foundation" => Dict(
+            "A_impulses" => state.foundation.A_impulses,
+            "B_elements" => state.foundation.B_elements,
+            "C_pressure" => state.foundation.C_pressure,
+            "product" => state.foundation.product
+        ),
+        "dynamic" => Dict(
+            "E_n" => state.dynamic.E_n,
+            "F_n" => state.dynamic.F_n,
+            "product" => state.dynamic.product
+        ),
+        "cognitive" => Dict(
+            "X_subjectivity" => state.cognitive.X_subjectivity,
+            "X_objectivity" => state.cognitive.X_objectivity,
+            "Y_purpose" => state.cognitive.Y_purpose,
+            "Z_time" => state.cognitive.Z_time,
+            "product" => state.cognitive.product
+        ),
+        "intelligence" => state.intelligence
     )
 end
 
