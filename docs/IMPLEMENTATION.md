@@ -23,8 +23,8 @@ Intelligence_n = E_n · (1 + F_n) · X · Y · Z · (A · B · C)
 - **C (Pressure)**: Constraints, forces, and external pressures
 
 #### Dynamic Layer: E_n · (1 + F_n)
-- **E_n (Exponential Growth)**: Base^n expansion (default: e^n)
-- **F_n (Fibonacci Sequence)**: Natural regulation preventing explosive growth
+- **E_n (Exponential Growth)**: 2 · 3^n - 1 scaling (base 3 with offset)
+- **F_n (Fibonacci Sequence)**: Natural regulation preventing explosive growth (1, 1, 2, 3, ...)
 
 #### Cognitive Layer: X · Y · Z
 - **X (Subjectivity Scale)**: 0 = fully objective, 1 = fully subjective

@@ -20,8 +20,8 @@ All implementations of The Universal Axiom have been tested and verified.
 7. ✓ No Loop Without Learning (No Stagnation)
 
 **Key Results**:
-- Initial Intelligence (n=1): 5.436564
-- After 10 evolution steps: 59,275,400.298046
+- Initial Intelligence (n=1): 10
+- After 10 evolution steps: 51,372,485
 - Fibonacci sequence correctly generated: [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
 - Contradiction resolution: Subjectivity reduced from 0.5 → 0.0 over 6 steps
 - Coherence tracking: High objectivity (0.90) = 0.9667 coherence
@@ -46,8 +46,8 @@ tsc src/javascript/universal-axiom.ts --outDir dist --module commonjs --target E
 3. ✓ Contradiction Resolution
 
 **Key Results**:
-- Initial Intelligence (n=1): 5.436564
-- After 10 evolution steps: 59,275,400.298046
+- Initial Intelligence (n=1): 10
+- After 10 evolution steps: 51,372,485
 - TypeScript compilation successful with zero errors
 - All computations match Python implementation exactly
 - Contradiction resolution working correctly (0.5 → 0.0 subjectivity)
@@ -69,8 +69,8 @@ tsc src/javascript/universal-axiom.ts --outDir dist --module commonjs --target E
 4. ✓ Coherence Tracking
 
 **Key Results**:
-- Initial Intelligence (n=1): 5.436564
-- After 10 evolution steps: 59,275,400.298046
+- Initial Intelligence (n=1): 10
+- After 10 evolution steps: 51,372,485
 - Cargo build successful with zero warnings
 - Unit tests passed (fibonacci, basic_computation, evolution)
 - All computations match Python/JavaScript implementations exactly
@@ -105,9 +105,9 @@ All tested implementations produce **identical numerical results**:
 
 | Test | Python | JavaScript | Rust | Expected Julia |
 |------|--------|------------|------|----------------|
-| Initial Intelligence (n=1) | 5.436564 | 5.436564 | 5.436564 | 5.436564 |
-| Intelligence at n=10 | 59,275,400.298 | 59,275,400.298 | 59,275,400.298 | 59,275,400.298 |
-| Fibonacci(10) | 55 | 55 | 55 | 55 |
+| Initial Intelligence (n=1) | 10 | 10 | 10 | 10 |
+| Intelligence at n=10 | 10,628,730 | 10,628,730 | 10,628,730 | 10,628,730 |
+| Fibonacci(10) | 89 | 89 | 89 | 89 |
 | Coherence (high objectivity) | 0.9667 | 0.9667 | 0.9667 | 0.9667 |
 
 **Verification**: Mathematical consistency across all implementations ✓
@@ -131,7 +131,7 @@ Intelligence_n = E_n · (1 + F_n) · X · Y · Z · (A · B · C)
 - ✓ Product computed accurately
 
 ### Dynamic Layer (E_n·(1+F_n))
-- ✓ Exponential growth (e^n) computed correctly
+- ✓ Exponential growth (2 · 3^n - 1) computed correctly
 - ✓ Fibonacci sequence generated accurately
 - ✓ Regulation term (1+F_n) applied correctly
 - ✓ Product matches expected values

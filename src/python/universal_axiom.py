@@ -8,8 +8,7 @@ Dynamic Layer: Exponential Growth (E_n), Fibonacci Sequence (F_n)
 Cognitive Layer: Subjectivity Scale (X), Why Axis (Y), TimeSphere (Z)
 """
 
-import math
-from typing import Dict, List, Tuple
+from typing import Dict, List
 from dataclasses import dataclass
 
 
@@ -29,18 +28,18 @@ class FoundationLayer:
 class DynamicLayer:
     """Dynamic Layer: E_n · (1 + F_n)"""
     n: int  # Current iteration/step
-    base_exponential: float = math.e  # Base for exponential growth
+    base_exponential: float = 3.0  # Base for exponential growth
 
     def exponential_growth(self) -> float:
         """E_n - Exponential growth component"""
-        return self.base_exponential ** self.n
+        return (2 * (self.base_exponential ** self.n)) - 1
 
     def fibonacci(self) -> int:
         """F_n - Fibonacci sequence for natural regulation"""
         if self.n <= 1:
-            return self.n
+            return 1
 
-        a, b = 0, 1
+        a, b = 1, 1
         for _ in range(2, self.n + 1):
             a, b = b, a + b
         return b
@@ -308,9 +307,9 @@ def fibonacci_sequence(n: int) -> List[int]:
     if n <= 0:
         return []
     elif n == 1:
-        return [0]
+        return [1]
 
-    sequence = [0, 1]
+    sequence = [1, 1]
     for i in range(2, n):
         sequence.append(sequence[i-1] + sequence[i-2])
     return sequence

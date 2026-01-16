@@ -27,7 +27,7 @@ describe('Foundation Layer (A·B·C)', () => {
 describe('Dynamic Layer (E_n·(1+F_n))', () => {
   test('generates Fibonacci sequence per PROMPT.md', () => {
     const sequence = fibonacciSequence(12);
-    const expected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+    const expected = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
 
     expect(sequence).toEqual(expected);
   });
@@ -37,21 +37,21 @@ describe('Dynamic Layer (E_n·(1+F_n))', () => {
     const axiom10 = new UniversalAxiom({ n: 10 });
 
     expect(axiom1.getState().dynamic.F_n).toBe(1);
-    expect(axiom10.getState().dynamic.F_n).toBe(55);
+    expect(axiom10.getState().dynamic.F_n).toBe(89);
   });
 
   test('computes exponential growth E_n', () => {
     const axiom = new UniversalAxiom({ n: 1 });
     const state = axiom.getState();
 
-    expect(state.dynamic.E_n).toBeCloseTo(Math.E, 6);
+    expect(state.dynamic.E_n).toBe(5);
   });
 
   test('computes E_n·(1+F_n) product', () => {
     const axiom = new UniversalAxiom({ n: 1 });
     const state = axiom.getState();
 
-    const E_n = Math.E;
+    const E_n = 5;
     const F_n = 1;
     const expected = E_n * (1 + F_n);
 
@@ -93,7 +93,7 @@ describe('Universal Axiom Core Formula', () => {
 
     // Manual calculation per PROMPT.md
     const A_B_C = 1.0 * 1.0 * 1.0;
-    const E_n = Math.E ** 1;
+    const E_n = 5;
     const F_n = 1;
     const E_F = E_n * (1 + F_n);
     const X_Y_Z = 1.0 * 1.0 * 1.0;
@@ -107,7 +107,7 @@ describe('Universal Axiom Core Formula', () => {
     const axiom = new UniversalAxiom({ n: 1 });
     const intelligence = axiom.computeIntelligence();
 
-    expect(intelligence).toBeCloseTo(5.436564, 3);
+    expect(intelligence).toBeCloseTo(10.0, 3);
   });
 
   test('matches TEST_RESULTS.md value at n=10', () => {
@@ -117,8 +117,7 @@ describe('Universal Axiom Core Formula', () => {
     }
 
     const intelligence = axiom.computeIntelligence();
-    expect(intelligence).toBeGreaterThan(12000000);
-    expect(intelligence).toBeLessThan(13000000);
+    expect(intelligence).toBe(10628730);
   });
 
   test('evolution increases intelligence per PROMPT.md', () => {
@@ -280,7 +279,7 @@ describe('PROMPT.md Compliance', () => {
     const history = simulator.simulateEvolution(10);
 
     const fibValues = history.slice(0, 10).map(state => state.dynamic.F_n);
-    const expected = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55];
+    const expected = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
 
     expect(fibValues).toEqual(expected);
   });

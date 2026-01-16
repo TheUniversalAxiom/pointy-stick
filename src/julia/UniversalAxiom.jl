@@ -36,19 +36,19 @@ mutable struct DynamicLayer
     n::Int64                    # Current iteration/step
     base_exponential::Float64   # Base for exponential growth
 
-    DynamicLayer(n::Int64) = new(n, ℯ)
+    DynamicLayer(n::Int64) = new(n, 3.0)
 end
 
 function exponential_growth(dynamic::DynamicLayer)::Float64
-    dynamic.base_exponential ^ dynamic.n
+    (2 * (dynamic.base_exponential ^ dynamic.n)) - 1
 end
 
 function fibonacci(n::Int64)::Int64
     if n <= 1
-        return n
+        return 1
     end
 
-    a, b = 0, 1
+    a, b = 1, 1
     for _ in 2:n
         a, b = b, a + b
     end
@@ -292,10 +292,10 @@ function fibonacci_sequence(n::Int64)::Vector{Int64}
     if n <= 0
         return Int64[]
     elseif n == 1
-        return [0]
+        return [1]
     end
 
-    sequence = [0, 1]
+    sequence = [1, 1]
     for i in 3:n
         push!(sequence, sequence[i-1] + sequence[i-2])
     end

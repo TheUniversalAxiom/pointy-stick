@@ -353,7 +353,6 @@ pub fn fibonacci_sequence(n: usize) -> Vec<u64> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::f64::consts::E;
 
     // Foundation Layer Tests
     #[test]
@@ -389,6 +388,7 @@ mod tests {
 
     #[test]
     fn test_exponential_growth() {
+        use std::f64::consts::E;
         let dynamic = DynamicLayer::new(1);
         assert!((dynamic.exponential_growth() - E).abs() < 1e-6);
 
@@ -398,6 +398,7 @@ mod tests {
 
     #[test]
     fn test_dynamic_compute_product() {
+        use std::f64::consts::E;
         let dynamic = DynamicLayer::new(1);
         let e_n = E;
         let f_n = 1.0;
@@ -429,6 +430,7 @@ mod tests {
 
     #[test]
     fn test_core_formula_computation() {
+        use std::f64::consts::E;
         let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1);
 
         let a_b_c = 1.0 * 1.0 * 1.0;
