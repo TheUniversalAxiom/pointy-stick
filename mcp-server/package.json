@@ -1,6 +1,6 @@
 {
   "name": "universal-axiom-mcp-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP Server for The Universal Axiom - Expose intelligence framework as tools and resources",
   "type": "module",
   "main": "build/mcp-server/index.js",
@@ -21,8 +21,27 @@
     "reasoning",
     "ai-tools"
   ],
-  "author": "Matt Belanger",
+  "author": {
+    "name": "Matt Belanger",
+    "url": "https://www.epiphanyengine.ai"
+  },
   "license": "MIT",
+  "homepage": "https://github.com/TheUniversalAxiom/pointy-stick#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheUniversalAxiom/pointy-stick.git",
+    "directory": "mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/TheUniversalAxiom/pointy-stick/issues"
+  },
+  "files": [
+    "build/",
+    "README.md",
+    "LICENSE",
+    "universal-axiom.js",
+    "universal-axiom.d.ts"
+  ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4"
   },
