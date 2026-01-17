@@ -13,25 +13,29 @@ This MCP server allows AI assistants (like Claude) to:
 
 ## Features
 
-### Tools
+### Tools (12 Total)
 
 The server provides these tools for AI assistants:
 
+#### Core Intelligence Tools
 1. **`compute_intelligence`** - Calculate intelligence using the formula: `Intelligence_n = E_n · (1 + F_n) · X · Y · Z · (A · B · C)`
-
 2. **`evolve_system`** - Evolve a system forward in time
-
 3. **`apply_pressure`** - Apply pressure changes (contradictions, constraints)
-
 4. **`adjust_subjectivity`** - Move toward objectivity or subjectivity
 
+#### Simulation Tools
 5. **`simulate_evolution`** - Simulate evolution over multiple steps
-
 6. **`simulate_contradiction_resolution`** - See how contradictions resolve through the axiom
+7. **`predict_trajectory`** - 🆕 Forecast future system evolution with environmental changes
 
-7. **`get_coherence_metric`** - Measure system coherence
-
+#### Analysis Tools
 8. **`analyze_permutation`** - Get diagnostic analysis and recommendations
+9. **`get_coherence_metric`** - Measure system coherence
+10. **`compare_permutations`** - 🆕 Compare two systems across multiple criteria
+11. **`detect_collapse_risk`** - 🆕 Analyze collapse risk with severity assessment
+
+#### Optimization Tools
+12. **`optimize_system`** - 🆕 Get intelligent suggestions for improving system variables
 
 ### Resources
 

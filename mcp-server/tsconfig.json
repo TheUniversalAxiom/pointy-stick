@@ -15,11 +15,15 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "**/*.ts",
+    "index.ts",
+    "universal-axiom.d.ts",
     "../src/javascript/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "**/*.test.ts",
+    "test-*.ts",
+    "demo-*.ts"
   ]
 }

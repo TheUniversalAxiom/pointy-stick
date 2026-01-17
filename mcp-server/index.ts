@@ -28,7 +28,7 @@ import {
 const server = new Server(
   {
     name: "universal-axiom-server",
-    version: "0.1.0",
+    version: "0.2.0",
   },
   {
     capabilities: {
@@ -239,6 +239,103 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             n: { type: "number", default: 1 },
           },
           required: [],
+        },
+      },
+      {
+        name: "compare_permutations",
+        description:
+          "Compare two different system permutations to see which has higher intelligence and better alignment",
+        inputSchema: {
+          type: "object",
+          properties: {
+            permutation_a: {
+              type: "object",
+              description: "First permutation to compare (with impulses, elements, pressure, etc.)",
+            },
+            permutation_b: {
+              type: "object",
+              description: "Second permutation to compare",
+            },
+            comparison_criteria: {
+              type: "array",
+              description: "Criteria to compare: intelligence, coherence, foundation, cognitive, dynamic",
+              default: ["intelligence", "coherence"],
+            },
+          },
+          required: ["permutation_a", "permutation_b"],
+        },
+      },
+      {
+        name: "optimize_system",
+        description:
+          "Suggest optimal adjustments to system variables to improve intelligence and coherence",
+        inputSchema: {
+          type: "object",
+          properties: {
+            current_state: {
+              type: "object",
+              description: "Current state of the system",
+            },
+            optimization_goal: {
+              type: "string",
+              description: "Goal: maximize_intelligence, maximize_coherence, balance, reduce_subjectivity",
+              default: "maximize_intelligence",
+            },
+            constraints: {
+              type: "object",
+              description: "Constraints on adjustments (e.g., max_pressure: 5.0)",
+              default: {},
+            },
+          },
+          required: ["current_state"],
+        },
+      },
+      {
+        name: "predict_trajectory",
+        description:
+          "Predict the future trajectory of a system over multiple iterations",
+        inputSchema: {
+          type: "object",
+          properties: {
+            impulses: { type: "number", default: 1.0 },
+            elements: { type: "number", default: 1.0 },
+            pressure: { type: "number", default: 1.0 },
+            subjectivity: { type: "number", minimum: 0, maximum: 1, default: 0.0 },
+            purpose: { type: "number", default: 1.0 },
+            time: { type: "number", default: 1.0 },
+            n: { type: "number", default: 1 },
+            future_steps: {
+              type: "number",
+              description: "Number of future steps to predict",
+              default: 10,
+            },
+            environmental_changes: {
+              type: "object",
+              description: "Changes to apply per step (e.g., pressure_per_step: 0.1)",
+              default: {},
+            },
+          },
+          required: [],
+        },
+      },
+      {
+        name: "detect_collapse_risk",
+        description:
+          "Analyze a system for collapse risk indicators and warning signs",
+        inputSchema: {
+          type: "object",
+          properties: {
+            current_state: {
+              type: "object",
+              description: "Current state of the system to analyze",
+            },
+            trajectory_history: {
+              type: "array",
+              description: "Optional historical states to detect trends",
+              default: [],
+            },
+          },
+          required: ["current_state"],
         },
       },
     ],
@@ -493,6 +590,468 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             {
               type: "text",
               text: JSON.stringify(diagnostics, null, 2),
+            },
+          ],
+        };
+      }
+
+      case "compare_permutations": {
+        const { permutation_a, permutation_b, comparison_criteria = ["intelligence", "coherence"] } = args as any;
+
+        const axiomA = new UniversalAxiom(permutation_a);
+        const axiomB = new UniversalAxiom(permutation_b);
+        const stateA = axiomA.getState();
+        const stateB = axiomB.getState();
+        const simA = new AxiomSimulator(axiomA);
+        const simB = new AxiomSimulator(axiomB);
+        const coherenceA = simA.getCoherenceMetric();
+        const coherenceB = simB.getCoherenceMetric();
+
+        const comparison: any = {
+          permutation_a: stateA,
+          permutation_b: stateB,
+          comparison: {},
+          winner: {},
+        };
+
+        if (comparison_criteria.includes("intelligence")) {
+          comparison.comparison.intelligence = {
+            permutation_a: stateA.intelligence,
+            permutation_b: stateB.intelligence,
+            difference: stateA.intelligence - stateB.intelligence,
+            winner: stateA.intelligence > stateB.intelligence ? "A" : stateB.intelligence > stateA.intelligence ? "B" : "TIE",
+          };
+        }
+
+        if (comparison_criteria.includes("coherence")) {
+          comparison.comparison.coherence = {
+            permutation_a: coherenceA,
+            permutation_b: coherenceB,
+            difference: coherenceA - coherenceB,
+            winner: coherenceA > coherenceB ? "A" : coherenceB > coherenceA ? "B" : "TIE",
+          };
+        }
+
+        if (comparison_criteria.includes("foundation")) {
+          comparison.comparison.foundation = {
+            permutation_a: stateA.foundation.product,
+            permutation_b: stateB.foundation.product,
+            difference: stateA.foundation.product - stateB.foundation.product,
+            winner: stateA.foundation.product > stateB.foundation.product ? "A" : stateB.foundation.product > stateA.foundation.product ? "B" : "TIE",
+          };
+        }
+
+        if (comparison_criteria.includes("cognitive")) {
+          comparison.comparison.cognitive = {
+            permutation_a: stateA.cognitive.product,
+            permutation_b: stateB.cognitive.product,
+            difference: stateA.cognitive.product - stateB.cognitive.product,
+            winner: stateA.cognitive.product > stateB.cognitive.product ? "A" : stateB.cognitive.product > stateA.cognitive.product ? "B" : "TIE",
+          };
+        }
+
+        if (comparison_criteria.includes("dynamic")) {
+          comparison.comparison.dynamic = {
+            permutation_a: stateA.dynamic.product,
+            permutation_b: stateB.dynamic.product,
+            difference: stateA.dynamic.product - stateB.dynamic.product,
+            winner: stateA.dynamic.product > stateB.dynamic.product ? "A" : stateB.dynamic.product > stateA.dynamic.product ? "B" : "TIE",
+          };
+        }
+
+        // Overall winner
+        const winsA = Object.values(comparison.comparison).filter((c: any) => c.winner === "A").length;
+        const winsB = Object.values(comparison.comparison).filter((c: any) => c.winner === "B").length;
+        comparison.winner.overall = winsA > winsB ? "A" : winsB > winsA ? "B" : "TIE";
+        comparison.winner.wins_a = winsA;
+        comparison.winner.wins_b = winsB;
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(comparison, null, 2),
+            },
+          ],
+        };
+      }
+
+      case "optimize_system": {
+        const { current_state, optimization_goal = "maximize_intelligence", constraints = {} } = args as any;
+        const currentAxiom = createAxiomFromState(current_state);
+        const currentState = currentAxiom.getState();
+        const currentSim = new AxiomSimulator(currentAxiom);
+        const currentCoherence = currentSim.getCoherenceMetric();
+
+        const suggestions: any = {
+          current_state: currentState,
+          current_metrics: {
+            intelligence: currentState.intelligence,
+            coherence: currentCoherence,
+          },
+          optimization_goal,
+          suggestions: [],
+        };
+
+        // Analyze and suggest improvements
+        if (optimization_goal === "maximize_intelligence" || optimization_goal === "balance") {
+          // Reduce subjectivity to increase objectivity (X)
+          if (currentState.cognitive.X_subjectivity > 0.3) {
+            suggestions.suggestions.push({
+              variable: "subjectivity",
+              current: currentState.cognitive.X_subjectivity,
+              suggested: Math.max(0, currentState.cognitive.X_subjectivity - 0.3),
+              reason: "Lower subjectivity increases objectivity (X), which multiplicatively boosts intelligence",
+              expected_impact: "high",
+            });
+          }
+
+          // Increase purpose if low
+          if (currentState.cognitive.Y_purpose < 0.8) {
+            suggestions.suggestions.push({
+              variable: "purpose",
+              current: currentState.cognitive.Y_purpose,
+              suggested: 1.0,
+              reason: "Stronger purpose alignment (Y) directly increases intelligence",
+              expected_impact: "medium",
+            });
+          }
+
+          // Fix negative foundation
+          if (currentState.foundation.product <= 0) {
+            if (currentState.foundation.B_elements < 0) {
+              suggestions.suggestions.push({
+                variable: "elements",
+                current: currentState.foundation.B_elements,
+                suggested: Math.abs(currentState.foundation.B_elements),
+                reason: "Detrimental elements create negative foundation - replace with beneficial elements",
+                expected_impact: "critical",
+              });
+            }
+            if (currentState.foundation.A_impulses < 0) {
+              suggestions.suggestions.push({
+                variable: "impulses",
+                current: currentState.foundation.A_impulses,
+                suggested: Math.abs(currentState.foundation.A_impulses),
+                reason: "Negative impulses create negative foundation - realign with positive drives",
+                expected_impact: "critical",
+              });
+            }
+          }
+
+          // Optimize pressure
+          if (currentState.foundation.C_pressure > 4 && !constraints.max_pressure) {
+            suggestions.suggestions.push({
+              variable: "pressure",
+              current: currentState.foundation.C_pressure,
+              suggested: 2.0,
+              reason: "Very high pressure can cause stress - moderate pressure (around 1-2) is often optimal",
+              expected_impact: "medium",
+            });
+          } else if (currentState.foundation.C_pressure < 0.5) {
+            suggestions.suggestions.push({
+              variable: "pressure",
+              current: currentState.foundation.C_pressure,
+              suggested: 1.0,
+              reason: "Low pressure reduces foundation strength - moderate pressure provides constructive force",
+              expected_impact: "low",
+            });
+          }
+        }
+
+        if (optimization_goal === "maximize_coherence" || optimization_goal === "balance") {
+          // Coherence optimization
+          if (currentState.cognitive.X_subjectivity > 0.2) {
+            suggestions.suggestions.push({
+              variable: "subjectivity",
+              current: currentState.cognitive.X_subjectivity,
+              suggested: 0.1,
+              reason: "High objectivity is key to coherence",
+              expected_impact: "high",
+            });
+          }
+
+          if (Math.abs(currentState.foundation.C_pressure - 1.0) > 1.0) {
+            suggestions.suggestions.push({
+              variable: "pressure",
+              current: currentState.foundation.C_pressure,
+              suggested: 1.0,
+              reason: "Balanced pressure (around 1.0) maximizes coherence",
+              expected_impact: "medium",
+            });
+          }
+        }
+
+        if (optimization_goal === "reduce_subjectivity") {
+          suggestions.suggestions.push({
+            variable: "subjectivity",
+            current: currentState.cognitive.X_subjectivity,
+            suggested: 0.0,
+            reason: "Move to complete objectivity for maximum clarity",
+            expected_impact: "high",
+          });
+        }
+
+        // Simulate optimized state
+        if (suggestions.suggestions.length > 0) {
+          const optimizedParams: any = { ...(args as any).current_state };
+          suggestions.suggestions.forEach((s: any) => {
+            optimizedParams[s.variable] = s.suggested;
+          });
+
+          const optimizedAxiom = new UniversalAxiom(optimizedParams);
+          const optimizedState = optimizedAxiom.getState();
+          const optimizedSim = new AxiomSimulator(optimizedAxiom);
+          const optimizedCoherence = optimizedSim.getCoherenceMetric();
+
+          suggestions.optimized_projection = {
+            intelligence: optimizedState.intelligence,
+            coherence: optimizedCoherence,
+            improvement: {
+              intelligence: optimizedState.intelligence - currentState.intelligence,
+              intelligence_percent: ((optimizedState.intelligence - currentState.intelligence) / Math.abs(currentState.intelligence)) * 100,
+              coherence: optimizedCoherence - currentCoherence,
+            },
+          };
+        } else {
+          suggestions.message = "System is already well-optimized for the given goal";
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(suggestions, null, 2),
+            },
+          ],
+        };
+      }
+
+      case "predict_trajectory": {
+        const { future_steps = 10, environmental_changes = {}, ...params } = args as any;
+        const axiom = new UniversalAxiom(params);
+
+        const trajectory: AxiomState[] = [];
+        trajectory.push(axiom.getState());
+
+        for (let i = 0; i < future_steps; i++) {
+          // Apply environmental changes
+          if (environmental_changes.pressure_per_step) {
+            axiom.applyPressure(environmental_changes.pressure_per_step);
+          }
+          if (environmental_changes.subjectivity_per_step) {
+            axiom.adjustSubjectivity(environmental_changes.subjectivity_per_step);
+          }
+          if (environmental_changes.purpose_multiplier_per_step) {
+            axiom.strengthenPurpose(environmental_changes.purpose_multiplier_per_step);
+          }
+
+          // Evolve forward
+          axiom.evolve(1.0);
+          trajectory.push(axiom.getState());
+        }
+
+        // Analyze trajectory
+        const intelligenceValues = trajectory.map(s => s.intelligence);
+        const coherenceValues = trajectory.map(s => {
+          const sim = new AxiomSimulator(new UniversalAxiom({
+            impulses: s.foundation.A_impulses,
+            elements: s.foundation.B_elements,
+            pressure: s.foundation.C_pressure,
+            subjectivity: s.cognitive.X_subjectivity,
+            purpose: s.cognitive.Y_purpose,
+            time: s.cognitive.Z_time,
+            n: s.n,
+          }));
+          return sim.getCoherenceMetric();
+        });
+
+        const analysis = {
+          trajectory,
+          analysis: {
+            intelligence: {
+              start: intelligenceValues[0],
+              end: intelligenceValues[intelligenceValues.length - 1],
+              change: intelligenceValues[intelligenceValues.length - 1] - intelligenceValues[0],
+              trend: intelligenceValues[intelligenceValues.length - 1] > intelligenceValues[0] ? "increasing" : intelligenceValues[intelligenceValues.length - 1] < intelligenceValues[0] ? "decreasing" : "stable",
+              min: Math.min(...intelligenceValues),
+              max: Math.max(...intelligenceValues),
+            },
+            coherence: {
+              start: coherenceValues[0],
+              end: coherenceValues[coherenceValues.length - 1],
+              change: coherenceValues[coherenceValues.length - 1] - coherenceValues[0],
+              trend: coherenceValues[coherenceValues.length - 1] > coherenceValues[0] ? "improving" : coherenceValues[coherenceValues.length - 1] < coherenceValues[0] ? "degrading" : "stable",
+            },
+          },
+          environmental_changes,
+          steps: future_steps,
+        };
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(analysis, null, 2),
+            },
+          ],
+        };
+      }
+
+      case "detect_collapse_risk": {
+        const { current_state, trajectory_history = [] } = args as any;
+        const axiom = createAxiomFromState(current_state);
+        const state = axiom.getState();
+        const simulator = new AxiomSimulator(axiom);
+        const coherence = simulator.getCoherenceMetric();
+
+        const risks: any = {
+          current_state: state,
+          risk_level: "low",
+          risk_score: 0,
+          risk_factors: [],
+          warnings: [],
+          trajectory_analysis: null,
+        };
+
+        let riskScore = 0;
+
+        // Check foundation collapse risk
+        if (state.foundation.product <= 0) {
+          risks.risk_factors.push({
+            factor: "negative_foundation",
+            severity: "critical",
+            description: "Foundation is negative or zero - system has collapsed or will collapse immediately",
+          });
+          riskScore += 10;
+        } else if (state.foundation.product < 0.5) {
+          risks.risk_factors.push({
+            factor: "weak_foundation",
+            severity: "high",
+            description: "Foundation is weak and close to collapse",
+          });
+          riskScore += 7;
+        }
+
+        // Check extreme pressure
+        if (state.foundation.C_pressure > 5) {
+          risks.risk_factors.push({
+            factor: "extreme_pressure",
+            severity: "high",
+            description: "Very high pressure can cause system instability and collapse",
+          });
+          riskScore += 6;
+        } else if (state.foundation.C_pressure > 3) {
+          risks.risk_factors.push({
+            factor: "high_pressure",
+            severity: "medium",
+            description: "Elevated pressure - monitor for stress indicators",
+          });
+          riskScore += 3;
+        }
+
+        // Check high subjectivity
+        if (state.cognitive.X_subjectivity > 0.9) {
+          risks.risk_factors.push({
+            factor: "extreme_subjectivity",
+            severity: "high",
+            description: "Near-total subjectivity can lead to distortion and collapse of coherence",
+          });
+          riskScore += 5;
+        } else if (state.cognitive.X_subjectivity > 0.7) {
+          risks.risk_factors.push({
+            factor: "high_subjectivity",
+            severity: "medium",
+            description: "High subjectivity reduces objectivity and system stability",
+          });
+          riskScore += 3;
+        }
+
+        // Check low purpose
+        if (state.cognitive.Y_purpose < 0.1) {
+          risks.risk_factors.push({
+            factor: "no_purpose",
+            severity: "high",
+            description: "Lack of purpose leads to directionless drift and potential collapse",
+          });
+          riskScore += 5;
+        } else if (state.cognitive.Y_purpose < 0.3) {
+          risks.risk_factors.push({
+            factor: "weak_purpose",
+            severity: "medium",
+            description: "Low purpose alignment reduces system coherence",
+          });
+          riskScore += 2;
+        }
+
+        // Check low coherence
+        if (coherence < 0.2) {
+          risks.risk_factors.push({
+            factor: "critical_coherence",
+            severity: "critical",
+            description: "Critically low coherence indicates imminent system failure",
+          });
+          riskScore += 8;
+        } else if (coherence < 0.4) {
+          risks.risk_factors.push({
+            factor: "low_coherence",
+            severity: "high",
+            description: "Low coherence suggests system is under stress",
+          });
+          riskScore += 4;
+        }
+
+        // Analyze trajectory if provided
+        if (trajectory_history.length > 2) {
+          const recentIntelligence = trajectory_history.slice(-3).map((s: any) => s.intelligence);
+          const isDecreasing = recentIntelligence.every((val: number, i: number, arr: number[]) =>
+            i === 0 || val < arr[i - 1]
+          );
+
+          if (isDecreasing) {
+            risks.risk_factors.push({
+              factor: "declining_trajectory",
+              severity: "high",
+              description: "Intelligence has been declining consistently - indicates systemic degradation",
+            });
+            riskScore += 6;
+          }
+
+          risks.trajectory_analysis = {
+            recent_trend: isDecreasing ? "declining" : "stable_or_improving",
+            data_points: trajectory_history.length,
+          };
+        }
+
+        // Determine overall risk level
+        if (riskScore >= 10) {
+          risks.risk_level = "critical";
+        } else if (riskScore >= 6) {
+          risks.risk_level = "high";
+        } else if (riskScore >= 3) {
+          risks.risk_level = "medium";
+        } else {
+          risks.risk_level = "low";
+        }
+
+        risks.risk_score = riskScore;
+
+        // Generate warnings
+        if (risks.risk_level === "critical") {
+          risks.warnings.push("⚠️ CRITICAL: System collapse is imminent or has occurred. Immediate intervention required.");
+        } else if (risks.risk_level === "high") {
+          risks.warnings.push("⚠️ HIGH RISK: System is under severe stress. Take corrective action soon.");
+        } else if (risks.risk_level === "medium") {
+          risks.warnings.push("⚠️ MODERATE RISK: Monitor system closely and address identified factors.");
+        } else {
+          risks.warnings.push("✓ System appears stable with low collapse risk.");
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(risks, null, 2),
             },
           ],
         };
