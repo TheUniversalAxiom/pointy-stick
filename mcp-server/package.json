@@ -1,0 +1,36 @@
+{
+  "name": "universal-axiom-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP Server for The Universal Axiom - Expose intelligence framework as tools and resources",
+  "type": "module",
+  "main": "build/mcp-server/index.js",
+  "bin": {
+    "universal-axiom-mcp": "./build/mcp-server/index.js"
+  },
+  "scripts": {
+    "build": "tsc && cp universal-axiom.js build/mcp-server/ && chmod +x build/mcp-server/index.js",
+    "start": "node build/mcp-server/index.js",
+    "dev": "tsc --watch",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "universal-axiom",
+    "intelligence",
+    "reasoning",
+    "ai-tools"
+  ],
+  "author": "Matt Belanger",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.30",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

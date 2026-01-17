@@ -2,11 +2,14 @@
   "name": "pointy-stick",
   "version": "0.1.0",
   "description": "The Universal Axiom & The Epiphany Engine - Multi-language implementation",
+  "type": "module",
   "main": "src/javascript/universal-axiom.js",
   "types": "src/javascript/universal-axiom.d.ts",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
+    "build:mcp": "cd mcp-server && npm run build",
+    "mcp:start": "cd mcp-server && npm start",
     "example:js": "node examples/javascript/basic-usage.js",
     "example:ts": "ts-node examples/javascript/basic-usage.ts",
     "test": "jest",
@@ -35,5 +38,8 @@
   },
   "engines": {
     "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.2"
   }
 }

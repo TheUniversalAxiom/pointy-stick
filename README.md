@@ -431,6 +431,53 @@ Visit [www.epiphanyengine.ai](https://www.epiphanyengine.ai) to explore:
 
 ---
 
+## 🔌 MCP Server Integration
+
+### Use The Universal Axiom with AI Assistants
+
+The **MCP (Model Context Protocol) Server** exposes The Universal Axiom framework as tools and resources for AI assistants like Claude Desktop.
+
+#### Features
+
+- **8 Powerful Tools**: Compute intelligence, simulate evolution, resolve contradictions, analyze permutations
+- **Rich Resources**: Framework documentation, examples, reasoning guides
+- **Prompt Templates**: Pre-built patterns for common reasoning tasks
+- **Local Execution**: No cloud dependencies, runs on your machine
+
+#### Quick Setup
+
+1. **Build the MCP server**:
+   ```bash
+   npm run build:mcp
+   ```
+
+2. **Add to Claude Desktop** configuration (`claude_desktop_config.json`):
+   ```json
+   {
+     "mcpServers": {
+       "universal-axiom": {
+         "command": "node",
+         "args": ["/absolute/path/to/pointy-stick/mcp-server/build/mcp-server/index.js"]
+       }
+     }
+   }
+   ```
+
+3. **Restart Claude Desktop** and start using The Universal Axiom for reasoning!
+
+#### What You Can Do
+
+Once connected, AI assistants can:
+- Apply The Universal Axiom to any problem domain
+- Compute intelligence values using the formula
+- Simulate system evolution and contradiction resolution
+- Get diagnostic analysis with recommendations
+- Access framework documentation and examples
+
+**See [mcp-server/README.md](mcp-server/README.md) for detailed setup and usage.**
+
+---
+
 ## 📖 Further Reading
 
 The Universal Axiom unifies concepts from:
