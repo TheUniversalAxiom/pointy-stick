@@ -2,10 +2,21 @@
 name = "universal-axiom"
 version = "0.1.0"
 edition = "2021"
-authors = ["Matt Belanger"]
-description = "The Universal Axiom - Core implementation in Rust"
+authors = ["Matt Belanger <matt@epiphanyengine.ai>"]
+description = "The Universal Axiom & The Epiphany Engine - A fundamental framework for modeling intelligence through immutable natural laws"
 license = "MIT"
-keywords = ["axiom", "intelligence", "reasoning", "ai"]
+readme = "../../README.md"
+homepage = "https://www.epiphanyengine.ai"
+repository = "https://github.com/TheUniversalAxiom/pointy-stick"
+documentation = "https://docs.rs/universal-axiom"
+keywords = ["axiom", "intelligence", "reasoning", "ai", "fibonacci"]
+categories = ["science", "mathematics", "algorithms"]
+exclude = [
+    "target/*",
+    "examples/*",
+    "benchmarks/*",
+    "tests/*",
+]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
