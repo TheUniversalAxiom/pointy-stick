@@ -12,7 +12,7 @@
     "mcp:start": "cd mcp-server && npm start",
     "example:js": "node examples/javascript/basic-usage.js",
     "example:ts": "ts-node examples/javascript/basic-usage.ts",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint src/**/*.ts"
   },
   "keywords": [
