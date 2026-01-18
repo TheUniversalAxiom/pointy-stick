@@ -1,7 +1,7 @@
 # Makefile for The Universal Axiom Multi-Language Project
 # Provides unified commands for development across Python, JavaScript/TypeScript, Rust, and Julia
 
-.PHONY: all help install build test lint clean benchmark run-examples
+.PHONY: all help install build test lint clean benchmark run-examples verify publish-npm publish-pypi publish-crates publish-all
 
 # Default target
 all: install build test
@@ -55,6 +55,18 @@ help:
 	@echo "Cleanup:"
 	@echo "  make clean            Remove all build artifacts and dependencies"
 	@echo "  make clean-build      Remove build artifacts only"
+	@echo ""
+	@echo "Publishing:"
+	@echo "  make publish-npm      Publish to NPM (@universal-axiom/core)"
+	@echo "  make publish-pypi     Publish to PyPI (universal-axiom)"
+	@echo "  make publish-crates   Publish to Crates.io (universal-axiom)"
+	@echo "  make publish-all      Publish to all package registries"
+	@echo "  make verify           Verify cross-language outputs match"
+	@echo ""
+	@echo "Version Management:"
+	@echo "  make version-bump-patch  Bump patch version (0.1.0 -> 0.1.1)"
+	@echo "  make version-bump-minor  Bump minor version (0.1.0 -> 0.2.0)"
+	@echo "  make version-bump-major  Bump major version (0.1.0 -> 1.0.0)"
 	@echo ""
 
 # ============================================================================
@@ -280,3 +292,120 @@ versions:
 	@echo "  Cargo:      $$(cargo --version 2>/dev/null | cut -d' ' -f2 || echo 'not installed')"
 	@echo "  Julia:      $$(julia --version 2>/dev/null | cut -d' ' -f3 || echo 'not installed')"
 	@echo "  TypeScript: $$(npx tsc --version 2>/dev/null || echo 'not installed')"
+
+# ============================================================================
+# Verification targets
+# ============================================================================
+
+verify:
+	@echo "🔍 Verifying cross-language outputs..."
+	python verify_outputs.py
+
+verify-verbose:
+	@echo "🔍 Verifying cross-language outputs (verbose)..."
+	python verify_outputs.py --verbose
+
+verify-language:
+	@echo "🔍 Verifying specific language..."
+	@read -p "Enter language (python/javascript/rust/julia): " lang; \
+	python verify_outputs.py --language $$lang
+
+# ============================================================================
+# Publishing targets
+# ============================================================================
+
+publish-npm: build-js test-js
+	@echo "📦 Publishing to NPM (@universal-axiom/core)..."
+	@echo "⚠️  Make sure you're logged in: npm login"
+	@read -p "Continue with NPM publish? (y/N): " confirm; \
+	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
+		npm publish --access public; \
+		echo "✅ Published to NPM!"; \
+	else \
+		echo "❌ NPM publish cancelled."; \
+	fi
+
+publish-pypi: test-python
+	@echo "📦 Publishing to PyPI (universal-axiom)..."
+	@echo "⚠️  Make sure your ~/.pypirc is configured"
+	@echo "🧹 Cleaning previous builds..."
+	rm -rf build/ dist/ *.egg-info
+	@echo "🔨 Building Python package..."
+	python -m build
+	@echo "🔍 Checking distribution..."
+	twine check dist/*
+	@read -p "Publish to TestPyPI first? (y/N): " test; \
+	if [ "$$test" = "y" ] || [ "$$test" = "Y" ]; then \
+		echo "📤 Uploading to TestPyPI..."; \
+		twine upload --repository testpypi dist/*; \
+		echo "✅ Published to TestPyPI: https://test.pypi.org/project/universal-axiom/"; \
+		read -p "Continue to production PyPI? (y/N): " prod; \
+		if [ "$$prod" != "y" ] && [ "$$prod" != "Y" ]; then \
+			echo "❌ PyPI publish cancelled."; \
+			exit 0; \
+		fi; \
+	fi
+	@echo "📤 Uploading to PyPI..."
+	twine upload dist/*
+	@echo "✅ Published to PyPI!"
+
+publish-crates: test-rust
+	@echo "📦 Publishing to Crates.io (universal-axiom)..."
+	@echo "⚠️  Make sure you're logged in: cargo login"
+	@echo "🔍 Verifying package..."
+	cd src/rust && cargo package --list
+	@echo ""
+	@read -p "Continue with Crates.io publish? (y/N): " confirm; \
+	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
+		cd src/rust && cargo publish; \
+		echo "✅ Published to Crates.io!"; \
+	else \
+		echo "❌ Crates.io publish cancelled."; \
+	fi
+
+publish-all: verify publish-npm publish-pypi publish-crates
+	@echo "🎉 Published to all package registries!"
+	@echo ""
+	@echo "Package URLs:"
+	@echo "  NPM:       https://www.npmjs.com/package/@universal-axiom/core"
+	@echo "  PyPI:      https://pypi.org/project/universal-axiom/"
+	@echo "  Crates.io: https://crates.io/crates/universal-axiom"
+
+# Dry run for publishing (no actual upload)
+publish-dry-run:
+	@echo "🧪 Dry run: Testing package builds..."
+	@echo ""
+	@echo "NPM package contents:"
+	npm pack --dry-run
+	@echo ""
+	@echo "Python package contents:"
+	rm -rf build/ dist/ *.egg-info
+	python -m build
+	twine check dist/*
+	@echo ""
+	@echo "Rust package contents:"
+	cd src/rust && cargo package --list
+	@echo ""
+	@echo "✅ Dry run complete. Packages ready for publishing."
+
+# ============================================================================
+# Version management targets
+# ============================================================================
+
+version-bump-patch:
+	@echo "📌 Bumping patch version..."
+	@./scripts/bump-version.sh patch
+
+version-bump-minor:
+	@echo "📌 Bumping minor version..."
+	@./scripts/bump-version.sh minor
+
+version-bump-major:
+	@echo "📌 Bumping major version..."
+	@./scripts/bump-version.sh major
+
+version-show:
+	@echo "Current versions:"
+	@echo "  NPM:    $$(node -p "require('./package.json').version")"
+	@echo "  Python: $$(grep '^version = ' pyproject.toml | cut -d'"' -f2)"
+	@echo "  Rust:   $$(grep '^version = ' src/rust/Cargo.toml | head -n1 | cut -d'"' -f2)"
