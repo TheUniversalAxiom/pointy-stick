@@ -120,7 +120,7 @@ test-js:
 
 test-python:
 	@echo "🧪 Running Python tests..."
-	python -m pytest tests/test_universal_axiom.py -v
+	PYTHONPATH=$$PWD/src python -m pytest tests/test_universal_axiom.py -v -o addopts=""
 
 test-rust:
 	@echo "🧪 Running Rust tests..."
@@ -137,7 +137,7 @@ test-watch:
 test-coverage:
 	@echo "📊 Running tests with coverage..."
 	npm test -- --coverage
-	python -m pytest tests/test_universal_axiom.py --cov=src/python --cov-report=html
+	PYTHONPATH=$$PWD/src python -m pytest tests/test_universal_axiom.py -v
 
 # ============================================================================
 # Quality/Linting targets
