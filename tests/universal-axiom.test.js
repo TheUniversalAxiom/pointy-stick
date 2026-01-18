@@ -4,10 +4,14 @@
  * Based on PROMPT.md principles and The Epiphany Engine specifications
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const { UniversalAxiom, AxiomSimulator, fibonacciSequence } = require('../dist/javascript/universal-axiom');
+import { UniversalAxiom, AxiomSimulator, fibonacciSequence } from '../dist/javascript/universal-axiom.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 describe('Foundation Layer (A·B·C)', () => {
   test('initializes with correct values', () => {
