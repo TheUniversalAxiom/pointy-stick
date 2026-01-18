@@ -209,7 +209,7 @@ impl UniversalAxiom {
     pub fn adjust_subjectivity(&mut self, subjectivity_delta: f64) -> f64 {
         self.cognitive.subjectivity += subjectivity_delta;
         // Clamp between 0 and 1
-        self.cognitive.subjectivity = self.cognitive.subjectivity.max(0.0).min(1.0);
+        self.cognitive.subjectivity = self.cognitive.subjectivity.clamp(0.0, 1.0);
 
         self.compute_intelligence()
     }

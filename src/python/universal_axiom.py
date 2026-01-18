@@ -15,6 +15,7 @@ from dataclasses import dataclass
 @dataclass
 class FoundationLayer:
     """Foundation Layer: A · B · C"""
+
     impulses: float  # A - Fundamental drives
     elements: float  # B - Core components
     pressure: float  # C - Constraints and forces
@@ -27,12 +28,13 @@ class FoundationLayer:
 @dataclass
 class DynamicLayer:
     """Dynamic Layer: E_n · (1 + F_n)"""
+
     n: int  # Current iteration/step
     base_exponential: float = 3.0  # Base for exponential growth
 
     def exponential_growth(self) -> float:
         """E_n - Exponential growth component"""
-        return (2 * (self.base_exponential ** self.n)) - 1
+        return (2 * (self.base_exponential**self.n)) - 1
 
     def fibonacci(self) -> int:
         """F_n - Fibonacci sequence for natural regulation"""
@@ -54,9 +56,12 @@ class DynamicLayer:
 @dataclass
 class CognitiveLayer:
     """Cognitive Layer: X · Y · Z"""
-    subjectivity: float  # X - Objectivity measure (0 = fully objective, 1 = fully subjective)
-    purpose: float       # Y - Purpose-driven reasoning strength
-    time: float          # Z - Temporal continuity and irreversibility
+
+    subjectivity: (
+        float  # X - Objectivity measure (0 = fully objective, 1 = fully subjective)
+    )
+    purpose: float  # Y - Purpose-driven reasoning strength
+    time: float  # Z - Temporal continuity and irreversibility
 
     def compute(self) -> float:
         """Compute cognitive layer product"""
@@ -80,7 +85,7 @@ class UniversalAxiom:
         subjectivity: float = 0.0,
         purpose: float = 1.0,
         time: float = 1.0,
-        n: int = 1
+        n: int = 1,
     ):
         """
         Initialize The Universal Axiom
@@ -184,26 +189,26 @@ class UniversalAxiom:
             Dict: Complete state dictionary
         """
         return {
-            'n': self.n,
-            'foundation': {
-                'A_impulses': self.foundation.impulses,
-                'B_elements': self.foundation.elements,
-                'C_pressure': self.foundation.pressure,
-                'product': self.foundation.compute()
+            "n": self.n,
+            "foundation": {
+                "A_impulses": self.foundation.impulses,
+                "B_elements": self.foundation.elements,
+                "C_pressure": self.foundation.pressure,
+                "product": self.foundation.compute(),
             },
-            'dynamic': {
-                'E_n': self.dynamic.exponential_growth(),
-                'F_n': self.dynamic.fibonacci(),
-                'product': self.dynamic.compute()
+            "dynamic": {
+                "E_n": self.dynamic.exponential_growth(),
+                "F_n": self.dynamic.fibonacci(),
+                "product": self.dynamic.compute(),
             },
-            'cognitive': {
-                'X_subjectivity': self.cognitive.subjectivity,
-                'X_objectivity': 1 - self.cognitive.subjectivity,
-                'Y_purpose': self.cognitive.purpose,
-                'Z_time': self.cognitive.time,
-                'product': self.cognitive.compute()
+            "cognitive": {
+                "X_subjectivity": self.cognitive.subjectivity,
+                "X_objectivity": 1 - self.cognitive.subjectivity,
+                "Y_purpose": self.cognitive.purpose,
+                "Z_time": self.cognitive.time,
+                "product": self.cognitive.compute(),
             },
-            'intelligence': self.compute_intelligence()
+            "intelligence": self.compute_intelligence(),
         }
 
     def __repr__(self) -> str:
@@ -222,7 +227,9 @@ class AxiomSimulator:
         """Record current state to history"""
         self.history.append(self.axiom.get_state())
 
-    def simulate_evolution(self, steps: int = 10, delta_time: float = 1.0) -> List[Dict]:
+    def simulate_evolution(
+        self, steps: int = 10, delta_time: float = 1.0
+    ) -> List[Dict]:
         """
         Simulate evolution over multiple time steps
 
@@ -243,9 +250,7 @@ class AxiomSimulator:
         return self.history
 
     def simulate_contradiction_resolution(
-        self,
-        initial_pressure: float = 2.0,
-        resolution_steps: int = 5
+        self, initial_pressure: float = 2.0, resolution_steps: int = 5
     ) -> List[Dict]:
         """
         Simulate how the system handles contradiction
@@ -294,9 +299,9 @@ class AxiomSimulator:
         # - Pressure is moderate (not too high or low)
         # - Components are balanced
 
-        objectivity_score = state['cognitive']['X_objectivity']
-        purpose_score = min(state['cognitive']['Y_purpose'] / 2.0, 1.0)
-        pressure_score = 1.0 / (1.0 + abs(state['foundation']['C_pressure'] - 1.0))
+        objectivity_score = state["cognitive"]["X_objectivity"]
+        purpose_score = min(state["cognitive"]["Y_purpose"] / 2.0, 1.0)
+        pressure_score = 1.0 / (1.0 + abs(state["foundation"]["C_pressure"] - 1.0))
 
         coherence = (objectivity_score + purpose_score + pressure_score) / 3.0
         return coherence
@@ -311,5 +316,5 @@ def fibonacci_sequence(n: int) -> List[int]:
 
     sequence = [1, 1]
     for i in range(2, n):
-        sequence.append(sequence[i-1] + sequence[i-2])
+        sequence.append(sequence[i - 1] + sequence[i - 2])
     return sequence

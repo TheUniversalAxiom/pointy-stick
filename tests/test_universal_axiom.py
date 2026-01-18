@@ -15,7 +15,7 @@ from src.python.universal_axiom import (
     CognitiveLayer,
     UniversalAxiom,
     AxiomSimulator,
-    fibonacci_sequence
+    fibonacci_sequence,
 )
 
 
@@ -180,11 +180,11 @@ class TestUniversalAxiom:
         axiom = UniversalAxiom()
         state = axiom.get_state()
 
-        assert 'n' in state
-        assert 'intelligence' in state
-        assert 'foundation' in state
-        assert 'dynamic' in state
-        assert 'cognitive' in state
+        assert "n" in state
+        assert "intelligence" in state
+        assert "foundation" in state
+        assert "dynamic" in state
+        assert "cognitive" in state
 
     def test_negative_impulses(self):
         """Test negative impulses (per PROMPT.md A can be positive or negative)"""
@@ -221,8 +221,8 @@ class TestAxiomSimulator:
         history = simulator.simulate_evolution(steps=5)
 
         assert len(history) == 6  # initial + 5 steps
-        assert history[0]['n'] == 1
-        assert history[-1]['n'] == 6
+        assert history[0]["n"] == 1
+        assert history[-1]["n"] == 6
 
     def test_contradiction_resolution_reduces_subjectivity(self):
         """Test contradiction resolution per PROMPT.md pressure dynamics"""
@@ -231,11 +231,10 @@ class TestAxiomSimulator:
 
         initial_subjectivity = axiom.cognitive.subjectivity
         history = simulator.simulate_contradiction_resolution(
-            initial_pressure=2.0,
-            resolution_steps=5
+            initial_pressure=2.0, resolution_steps=5
         )
 
-        final_subjectivity = history[-1]['cognitive']['X_subjectivity']
+        final_subjectivity = history[-1]["cognitive"]["X_subjectivity"]
         assert final_subjectivity < initial_subjectivity
 
     def test_coherence_metric_high_objectivity(self):
@@ -263,11 +262,11 @@ class TestAxiomSimulator:
         simulator = AxiomSimulator(axiom)
         history = simulator.simulate_evolution(steps=10)
 
-        intelligences = [state['intelligence'] for state in history]
+        intelligences = [state["intelligence"] for state in history]
 
         # Verify monotonic increase
         for i in range(1, len(intelligences)):
-            assert intelligences[i] > intelligences[i-1]
+            assert intelligences[i] > intelligences[i - 1]
 
 
 class TestGoldenCases:
@@ -312,7 +311,7 @@ class TestPROMPTCompliance:
         history = simulator.simulate_evolution(steps=10)
 
         # Extract Fibonacci values
-        fib_values = [state['dynamic']['F_n'] for state in history[:10]]
+        fib_values = [state["dynamic"]["F_n"] for state in history[:10]]
         expected = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
 
         assert fib_values == expected
@@ -334,7 +333,7 @@ class TestPROMPTCompliance:
         history = simulator.simulate_evolution(steps=5)
 
         # Time should advance with evolution
-        times = [state['cognitive']['Z_time'] for state in history]
+        times = [state["cognitive"]["Z_time"] for state in history]
         assert times == [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
 
     def test_foundation_abc_variables(self):
@@ -343,16 +342,16 @@ class TestPROMPTCompliance:
         state = axiom.get_state()
 
         # A = Impulses (Current)
-        assert state['foundation']['A_impulses'] == 2.0
+        assert state["foundation"]["A_impulses"] == 2.0
 
         # B = Elements (Energy, Matter, State)
-        assert state['foundation']['B_elements'] == 3.0
+        assert state["foundation"]["B_elements"] == 3.0
 
         # C = Pressure (Direction, Momentum, Integrity)
-        assert state['foundation']['C_pressure'] == 1.5
+        assert state["foundation"]["C_pressure"] == 1.5
 
         # Product = A·B·C
-        assert state['foundation']['product'] == 2.0 * 3.0 * 1.5
+        assert state["foundation"]["product"] == 2.0 * 3.0 * 1.5
 
     def test_cognitive_xyz_variables(self):
         """Test Cognitive Layer X, Y, Z per PROMPT.md definitions"""
@@ -360,14 +359,14 @@ class TestPROMPTCompliance:
         state = axiom.get_state()
 
         # X = subjectivity scaling aggregate (0 to 1)
-        assert state['cognitive']['X_subjectivity'] == 0.3
-        assert state['cognitive']['X_objectivity'] == 0.7
+        assert state["cognitive"]["X_subjectivity"] == 0.3
+        assert state["cognitive"]["X_objectivity"] == 0.7
 
         # Y = The Why Axis scale (purpose)
-        assert state['cognitive']['Y_purpose'] == 1.5
+        assert state["cognitive"]["Y_purpose"] == 1.5
 
         # Z = flux of Time (TimeSphere)
-        assert state['cognitive']['Z_time'] == 2.0
+        assert state["cognitive"]["Z_time"] == 2.0
 
     def test_large_n_fibonacci_growth(self):
         """Test system handles large n values with Fibonacci regulation"""
@@ -380,5 +379,5 @@ class TestPROMPTCompliance:
         assert math.isfinite(intelligence)
 
 
-if __name__ == '__main__':
-    pytest.main([__file__, '-v'])
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
