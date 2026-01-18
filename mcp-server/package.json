@@ -9,6 +9,8 @@
   },
   "scripts": {
     "build": "tsc && cp universal-axiom.js build/mcp-server/ && chmod +x build/mcp-server/index.js",
+    "build:test": "tsc test-mcp-server.ts --outDir build --module ESNext --target ES2020 --moduleResolution node --esModuleInterop",
+    "test": "npm run build && npm run build:test && node --experimental-vm-modules build/test-mcp-server.js",
     "start": "node build/mcp-server/index.js",
     "dev": "tsc --watch",
     "prepare": "npm run build"

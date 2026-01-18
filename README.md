@@ -1,5 +1,9 @@
 # The Universal Axiom & The Epiphany Engine
 
+![CI](https://github.com/TheUniversalAxiom/pointy-stick/workflows/CI/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/universal-axiom-mcp-server.svg)](https://www.npmjs.com/package/universal-axiom-mcp-server)
+
 **A fundamental reimagining of intelligence — not as something we possess, but something we participate in.**
 
 IF: Intelligence is an organic process
@@ -490,13 +494,36 @@ It is **open-source in principle** — built on observable, testable, reproducib
 
 ---
 
+## 📚 Documentation
+
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines and development workflow
+- **[SECURITY.md](SECURITY.md)** - Security policy and vulnerability reporting
+- **[CLAUDE.md](CLAUDE.md)** - Guide for applying The Universal Axiom framework (for AI assistants)
+- **[PROMPT.md](PROMPT.md)** - Technical specifications and mathematical foundations
+- **[AGENTS.md](AGENTS.md)** - Developer role definitions and essential commands
+- **[docs/API_REFERENCE.md](docs/API_REFERENCE.md)** - Complete API documentation
+- **[docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md)** - Multi-language implementation guide
+- **[mcp-server/README.md](mcp-server/README.md)** - MCP Server setup and usage
+
+---
+
 ## 🤝 Contributing
 
-This repository welcomes contributions that:
-- Extend the framework's applications
-- Provide empirical validation
-- Develop implementation tools
-- Document use cases and insights
+We welcome contributions! Whether you're fixing bugs, adding features, improving documentation, or extending to new languages, your help is appreciated.
+
+**Quick Start:**
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes with tests
+4. Run the test suite
+5. Submit a pull request
+
+**See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines** including:
+- Development workflow
+- Code style guide
+- Testing requirements
+- Multi-language development
+- Pull request process
 
 All contributions should align with the core principle: **derive from structure, not assumption**.
 
@@ -504,7 +531,13 @@ All contributions should align with the core principle: **derive from structure,
 
 ## 📜 License
 
-*[To be determined based on project requirements]*
+MIT License - See [LICENSE](LICENSE) file for details.
+
+## 🔒 Security
+
+Security is important to us. If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for how to report it responsibly.
+
+**Current Status:** ✅ Secure (8 low-severity npm dev dependencies)
 
 ---
 
