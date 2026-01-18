@@ -24,6 +24,274 @@ import {
   AxiomState,
 } from "./universal-axiom.js";
 
+/**
+ * Rate Limiting Module
+ */
+interface RateLimitConfig {
+  maxRequestsPerMinute: number;
+  maxRequestsPerHour: number;
+}
+
+class RateLimiter {
+  private requestTimestamps: Map<string, number[]> = new Map();
+  private config: RateLimitConfig;
+
+  constructor(config: RateLimitConfig = {
+    maxRequestsPerMinute: 60,
+    maxRequestsPerHour: 1000,
+  }) {
+    this.config = config;
+  }
+
+  checkRateLimit(toolName: string): { allowed: boolean; reason?: string } {
+    const now = Date.now();
+    const timestamps = this.requestTimestamps.get(toolName) || [];
+
+    // Remove timestamps older than 1 hour
+    const recentTimestamps = timestamps.filter(ts => now - ts < 3600000);
+
+    // Check hourly limit
+    if (recentTimestamps.length >= this.config.maxRequestsPerHour) {
+      return {
+        allowed: false,
+        reason: `Rate limit exceeded: Maximum ${this.config.maxRequestsPerHour} requests per hour for ${toolName}`,
+      };
+    }
+
+    // Check per-minute limit
+    const lastMinuteTimestamps = recentTimestamps.filter(ts => now - ts < 60000);
+    if (lastMinuteTimestamps.length >= this.config.maxRequestsPerMinute) {
+      return {
+        allowed: false,
+        reason: `Rate limit exceeded: Maximum ${this.config.maxRequestsPerMinute} requests per minute for ${toolName}`,
+      };
+    }
+
+    // Record this request
+    recentTimestamps.push(now);
+    this.requestTimestamps.set(toolName, recentTimestamps);
+
+    return { allowed: true };
+  }
+
+  getStats(toolName: string): {
+    requestsLastMinute: number;
+    requestsLastHour: number;
+  } {
+    const now = Date.now();
+    const timestamps = this.requestTimestamps.get(toolName) || [];
+
+    return {
+      requestsLastMinute: timestamps.filter(ts => now - ts < 60000).length,
+      requestsLastHour: timestamps.filter(ts => now - ts < 3600000).length,
+    };
+  }
+}
+
+const rateLimiter = new RateLimiter();
+
+/**
+ * Input Validation Module
+ */
+interface ValidationResult {
+  valid: boolean;
+  errors: string[];
+}
+
+function validateNumber(
+  value: any,
+  name: string,
+  options: {
+    required?: boolean;
+    min?: number;
+    max?: number;
+    integer?: boolean;
+  } = {}
+): ValidationResult {
+  const errors: string[] = [];
+
+  // Check if value exists
+  if (value === undefined || value === null) {
+    if (options.required) {
+      errors.push(`${name} is required`);
+    }
+    return { valid: errors.length === 0, errors };
+  }
+
+  // Check type
+  if (typeof value !== "number") {
+    errors.push(`${name} must be a number, got ${typeof value}`);
+    return { valid: false, errors };
+  }
+
+  // Check for NaN and Infinity
+  if (isNaN(value)) {
+    errors.push(`${name} cannot be NaN`);
+  }
+  if (!isFinite(value)) {
+    errors.push(`${name} must be finite (not Infinity or -Infinity)`);
+  }
+
+  // Check integer constraint
+  if (options.integer && !Number.isInteger(value)) {
+    errors.push(`${name} must be an integer, got ${value}`);
+  }
+
+  // Check range
+  if (options.min !== undefined && value < options.min) {
+    errors.push(`${name} must be >= ${options.min}, got ${value}`);
+  }
+  if (options.max !== undefined && value > options.max) {
+    errors.push(`${name} must be <= ${options.max}, got ${value}`);
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+function validateAxiomParams(params: any): ValidationResult {
+  const allErrors: string[] = [];
+
+  // Validate each parameter
+  const validations = [
+    validateNumber(params.impulses, "impulses", {}),
+    validateNumber(params.elements, "elements", {}),
+    validateNumber(params.pressure, "pressure", { min: 0.01 }),
+    validateNumber(params.subjectivity, "subjectivity", { min: 0, max: 1 }),
+    validateNumber(params.purpose, "purpose", { min: 0.01 }),
+    validateNumber(params.time, "time", { min: 0 }),
+    validateNumber(params.n, "n", { integer: true, min: 1 }),
+  ];
+
+  validations.forEach(v => {
+    if (!v.valid) {
+      allErrors.push(...v.errors);
+    }
+  });
+
+  return { valid: allErrors.length === 0, errors: allErrors };
+}
+
+function validateState(state: any): ValidationResult {
+  const errors: string[] = [];
+
+  if (!state || typeof state !== "object") {
+    errors.push("current_state must be a valid object");
+    return { valid: false, errors };
+  }
+
+  // Check required properties
+  if (!state.foundation || typeof state.foundation !== "object") {
+    errors.push("current_state.foundation is required and must be an object");
+  }
+  if (!state.dynamic || typeof state.dynamic !== "object") {
+    errors.push("current_state.dynamic is required and must be an object");
+  }
+  if (!state.cognitive || typeof state.cognitive !== "object") {
+    errors.push("current_state.cognitive is required and must be an object");
+  }
+  if (typeof state.n !== "number") {
+    errors.push("current_state.n is required and must be a number");
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+function validateToolInput(toolName: string, args: any): ValidationResult {
+  const allErrors: string[] = [];
+
+  switch (toolName) {
+    case "compute_intelligence":
+    case "simulate_evolution":
+    case "simulate_contradiction_resolution":
+    case "analyze_permutation": {
+      const validation = validateAxiomParams(args || {});
+      if (!validation.valid) {
+        allErrors.push(...validation.errors);
+      }
+      break;
+    }
+
+    case "evolve_system": {
+      const stateValidation = validateState(args.current_state);
+      if (!stateValidation.valid) {
+        allErrors.push(...stateValidation.errors);
+      }
+      const stepsValidation = validateNumber(args.steps, "steps", {
+        integer: true,
+        min: 1,
+        max: 1000,
+      });
+      if (!stepsValidation.valid) {
+        allErrors.push(...stepsValidation.errors);
+      }
+      const deltaValidation = validateNumber(args.delta_time, "delta_time", {
+        min: 0.001,
+        max: 100,
+      });
+      if (!deltaValidation.valid) {
+        allErrors.push(...deltaValidation.errors);
+      }
+      break;
+    }
+
+    case "apply_pressure": {
+      const stateValidation = validateState(args.current_state);
+      if (!stateValidation.valid) {
+        allErrors.push(...stateValidation.errors);
+      }
+      const deltaValidation = validateNumber(args.pressure_delta, "pressure_delta", {
+        required: true,
+        min: -100,
+        max: 100,
+      });
+      if (!deltaValidation.valid) {
+        allErrors.push(...deltaValidation.errors);
+      }
+      break;
+    }
+
+    case "adjust_subjectivity": {
+      const stateValidation = validateState(args.current_state);
+      if (!stateValidation.valid) {
+        allErrors.push(...stateValidation.errors);
+      }
+      const deltaValidation = validateNumber(args.subjectivity_delta, "subjectivity_delta", {
+        required: true,
+        min: -1,
+        max: 1,
+      });
+      if (!deltaValidation.valid) {
+        allErrors.push(...deltaValidation.errors);
+      }
+      break;
+    }
+
+    case "get_coherence_metric": {
+      const stateValidation = validateState(args.current_state);
+      if (!stateValidation.valid) {
+        allErrors.push(...stateValidation.errors);
+      }
+      break;
+    }
+
+    case "compare_permutations": {
+      if (!args.permutation_a || typeof args.permutation_a !== "object") {
+        allErrors.push("permutation_a is required and must be an object");
+      }
+      if (!args.permutation_b || typeof args.permutation_b !== "object") {
+        allErrors.push("permutation_b is required and must be an object");
+      }
+      break;
+    }
+
+    default:
+      // Unknown tool - no specific validation
+      break;
+  }
+
+  return { valid: allErrors.length === 0, errors: allErrors };
+}
+
 // Server instance
 const server = new Server(
   {
@@ -349,6 +617,57 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
   try {
+    // Check rate limit
+    const rateLimitResult = rateLimiter.checkRateLimit(name);
+    if (!rateLimitResult.allowed) {
+      const stats = rateLimiter.getStats(name);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                error: "Rate limit exceeded",
+                tool: name,
+                reason: rateLimitResult.reason,
+                stats: {
+                  requestsLastMinute: stats.requestsLastMinute,
+                  requestsLastHour: stats.requestsLastHour,
+                },
+                message: "Please wait before making additional requests",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+        isError: true,
+      };
+    }
+
+    // Validate input parameters
+    const validation = validateToolInput(name, args || {});
+    if (!validation.valid) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                error: "Input validation failed",
+                tool: name,
+                validationErrors: validation.errors,
+                message: "Please check your input parameters and try again",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+        isError: true,
+      };
+    }
+
     switch (name) {
       case "compute_intelligence": {
         const axiom = new UniversalAxiom(args as any);
