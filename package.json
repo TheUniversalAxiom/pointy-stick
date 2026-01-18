@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "description": "The Universal Axiom & The Epiphany Engine - A fundamental framework for modeling intelligence through immutable natural laws",
   "type": "module",
-  "main": "src/javascript/universal-axiom.js",
-  "types": "src/javascript/universal-axiom.d.ts",
+  "main": "dist/javascript/universal-axiom.js",
+  "types": "dist/javascript/universal-axiom.d.ts",
   "files": [
-    "src/javascript/**/*.js",
-    "src/javascript/**/*.d.ts",
+    "dist/javascript/**/*.js",
+    "dist/javascript/**/*.d.ts",
+    "dist/javascript/**/*.map",
     "README.md",
     "LICENSE"
   ],

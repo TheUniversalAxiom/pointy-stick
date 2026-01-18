@@ -9,7 +9,7 @@ import math
 from pathlib import Path
 
 import pytest
-from src.python.universal_axiom import (
+from python.universal_axiom import (
     FoundationLayer,
     DynamicLayer,
     CognitiveLayer,
