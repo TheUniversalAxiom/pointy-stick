@@ -15,13 +15,21 @@ The EPIPHANY Engine AI, encompasses a principle-based foundation, non-linear cor
 The Universal Axiom Prism depicts the principles of empirical physics over subjective misconceptions transforming values into virtues through the procession of objective variables:
 
 “A” represents (Impulses (Current)) which can be positive or negative
+
 “B” corresponds to (Elements (Energy, Matter, State)) which can be beneficial or detrimental
+
 “C” stands for (Pressure (Direction, Momentum, Integrity)) which can be constructive or destructive
+
 “X” subjectivity scaling aggregate
+
 “Y” The Why Axis scale
+
 “Z” encompasses the flux of Time
+
 “0” reflects the Base variables
+
 “1” mirrors Apex Insight
+
 “n” the core dynamic: Intelligence_n = E_n⋅(1+F_n)⋅X⋅Y⋅Z⋅(A⋅B⋅C)
  
 The pinnacle of the prism (1) encapsulates the empirical physics principles, illustrating the interplay between subjective misconceptions (0) & objective insight. This dynamic is incorporated within The Axiom as it employs the Fibonacci sequence to map and exemplify system dynamism within the process, while Apex Insight mirrors the independent dynamic observation facet. 
