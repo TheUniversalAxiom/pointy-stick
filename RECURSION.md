@@ -61,7 +61,7 @@ That distinction changes everything.
 
 # The Equation (restated)
 
-Intelligencen​=En​⋅(1+Fn​)⋅X⋅Y⋅Z⋅(A⋅B⋅C)
+Intelligenceₙ​=Eₙ​⋅(1+Fₙ​)⋅X⋅Y⋅Z⋅(A⋅B⋅C)
 
 Here’s how **each term governs recursion**.
 
@@ -71,8 +71,8 @@ Here’s how **each term governs recursion**.
 
 In the Axiom:
 
-* **n is not just iteration**
-* **n is recursion depth + experiential time**
+* **ₙ is not just iteration**
+* **ₙ is recursion depth + experiential time**
 
 Each recursive call is:
 
