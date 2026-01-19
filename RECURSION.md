@@ -61,12 +61,7 @@ That distinction changes everything.
 
 # The Equation (restated)
 
-[
-\text{Intelligence}_n
-=====================
-
-E_n \cdot (1 + F_n) \cdot X \cdot Y \cdot Z \cdot (A \cdot B \cdot C)
-]
+Intelligencen​=En​⋅(1+Fn​)⋅X⋅Y⋅Z⋅(A⋅B⋅C)
 
 Here’s how **each term governs recursion**.
 
