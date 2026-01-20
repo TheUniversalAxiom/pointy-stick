@@ -20,10 +20,30 @@ Website: https://www.epiphanyengine.ai
 GitHub: https://github.com/TheUniversalAxiom/pointy-stick
 """
 
+from .benchmarking import (
+    AxiomBenchmarkMode,
+    AxiomBenchmarkResult,
+    AxiomBenchmarkRunner,
+    AxiomBenchmarkScenario,
+    AxiomSignals,
+    AnthropicAdapter,
+    GoogleGeminiAdapter,
+    OpenAICompatibleAdapter,
+)
 from .universal_axiom import UniversalAxiom
 
 __version__ = "0.1.0"
 __author__ = "Matt Belanger"
 __email__ = "matt@epiphanyengine.ai"
 
-__all__ = ["UniversalAxiom"]
+__all__ = [
+    "AxiomBenchmarkMode",
+    "AxiomBenchmarkResult",
+    "AxiomBenchmarkRunner",
+    "AxiomBenchmarkScenario",
+    "AxiomSignals",
+    "AnthropicAdapter",
+    "GoogleGeminiAdapter",
+    "OpenAICompatibleAdapter",
+    "UniversalAxiom",
+]
