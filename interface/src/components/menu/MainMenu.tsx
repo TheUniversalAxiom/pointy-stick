@@ -3,17 +3,16 @@ import './MainMenu.css'
 type MainMenuProps = {
   onSelectDashboard: () => void
   onSelectBenchmarking: () => void
-  onSelectChatbot: () => void
 }
 
-export function MainMenu({ onSelectDashboard, onSelectBenchmarking, onSelectChatbot }: MainMenuProps) {
+export function MainMenu({ onSelectDashboard, onSelectBenchmarking }: MainMenuProps) {
   return (
     <div className="main-menu">
       <header className="main-menu__header">
         <p className="main-menu__eyebrow">Universal Axiom Interface</p>
         <h1 className="main-menu__title">Command the Intelligence Stack</h1>
         <p className="main-menu__subtitle">
-          Orchestrate the Universal Axiom engine, brief Sonny, and benchmark emergent systems from a single launchpad.
+          Orchestrate the Universal Axiom engine and benchmark emergent systems from a single launchpad.
         </p>
         <div className="main-menu__highlights">
           <div className="main-menu__highlight">
@@ -22,7 +21,7 @@ export function MainMenu({ onSelectDashboard, onSelectBenchmarking, onSelectChat
           </div>
           <div className="main-menu__highlight">
             <p className="main-menu__highlight-label">Active modules</p>
-            <p className="main-menu__highlight-value">Dashboard · Sonny · Benchmarks</p>
+            <p className="main-menu__highlight-value">Dashboard · Benchmarks</p>
           </div>
           <div className="main-menu__highlight">
             <p className="main-menu__highlight-label">Last pulse</p>
@@ -41,17 +40,6 @@ export function MainMenu({ onSelectDashboard, onSelectBenchmarking, onSelectChat
             Tune A/B/C, trace Intelligence<sub>n</sub>, and watch coherence react in real time across the stack.
           </p>
           <span className="main-menu__card-action">Enter command view →</span>
-        </button>
-
-        <button type="button" className="main-menu__card" onClick={onSelectChatbot}>
-          <div className="main-menu__card-header">
-            <span className="main-menu__card-icon">🧠</span>
-            <h2 className="main-menu__card-title">Sonny Strategic Briefing</h2>
-          </div>
-          <p className="main-menu__card-description">
-            Partner with Sonny to translate signals into narrative, decisions, and next actions grounded in the PROMPT.
-          </p>
-          <span className="main-menu__card-action">Engage Sonny →</span>
         </button>
 
         <button type="button" className="main-menu__card" onClick={onSelectBenchmarking}>
