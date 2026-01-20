@@ -58,6 +58,25 @@ export function MainDashboard() {
                 <span className="formula">Intelligence<sub>n</sub> = E<sub>n</sub> · (1 + F<sub>n</sub>) · X · Y · Z · (A · B · C)</span>
             </div>
 
+            <div className="dashboard__visualization">
+                <IntelligenceGraph
+                    currentParams={{
+                        impulses: params.impulses,
+                        elements: params.elements,
+                        pressure: params.pressure,
+                        subjectivity: params.subjectivity,
+                        purpose: params.purpose,
+                        time: params.time
+                    }}
+                    currentN={params.n}
+                />
+                <ScenarioLibrary
+                    onLoadScenario={handleLoadScenario}
+                    currentScenario={currentScenario}
+                    onScenarioSelect={handleScenarioSelect}
+                />
+            </div>
+
             <div className="dashboard__layers">
                 <FoundationPanel
                     impulses={state.foundation.A_impulses}
@@ -99,25 +118,6 @@ export function MainDashboard() {
                         <span className="coherence-percent">{Math.round(coherence * 100)}%</span>
                     </div>
                 </div>
-            </div>
-
-            <div className="dashboard__visualization">
-                <IntelligenceGraph
-                    currentParams={{
-                        impulses: params.impulses,
-                        elements: params.elements,
-                        pressure: params.pressure,
-                        subjectivity: params.subjectivity,
-                        purpose: params.purpose,
-                        time: params.time
-                    }}
-                    currentN={params.n}
-                />
-                <ScenarioLibrary
-                    onLoadScenario={handleLoadScenario}
-                    currentScenario={currentScenario}
-                    onScenarioSelect={handleScenarioSelect}
-                />
             </div>
 
             <div className="dashboard__controls">
