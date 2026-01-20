@@ -22,7 +22,14 @@
 .scenario-library__filters {
     display: flex;
     gap: 8px;
-    flex-wrap: wrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.scenario-library__filters::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
 }
 
 .scenario-filter {
