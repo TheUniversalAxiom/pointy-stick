@@ -82,8 +82,21 @@
     font-size: 0.9rem;
     font-style: italic;
     color: var(--color-cognitive);
-    animation: fadeIn 0.3s ease-out;
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 
 .dynamic-context__cta {
     margin-top: 20px;
