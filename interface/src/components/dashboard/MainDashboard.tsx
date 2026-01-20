@@ -120,7 +120,7 @@ export function MainDashboard() {
                     </div>
                 </div>
 
-                <DynamicContext scenario={currentScenario} />
+                <DynamicContext scenario={currentScenario} currentParams={params} />
             </div>
 
             <div className="dashboard__controls">
