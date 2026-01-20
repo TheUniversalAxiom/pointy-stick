@@ -3,10 +3,12 @@ Tests for the AI model benchmarking utilities.
 """
 
 from python.benchmarking import (
+    AxiomBenchmarkAggregator,
     AxiomBenchmarkMode,
     AxiomBenchmarkRunner,
     AxiomBenchmarkScenario,
     AxiomSignals,
+    BenchmarkRunConfig,
 )
 from python.universal_axiom import AxiomSimulator
 
@@ -61,3 +63,19 @@ class TestAxiomBenchmarking:
         expected_coherence = AxiomSimulator(result.signals.to_axiom()).get_coherence_metric()
 
         assert result.coherence == expected_coherence
+
+    def test_run_with_config_repetitions_and_summary(self):
+        runner = AxiomBenchmarkRunner(adapter=DummyAdapter(), extractor=DummyExtractor())
+        scenario = AxiomBenchmarkScenario(scenario_id="s3", prompt="Repeat scenario")
+        config = BenchmarkRunConfig(
+            modes=[AxiomBenchmarkMode.BASELINE, AxiomBenchmarkMode.AXIOM_GUIDED],
+            repetitions=2,
+        )
+
+        results = runner.run_with_config([scenario], config)
+        summary = AxiomBenchmarkAggregator.summarize(results)
+
+        assert len(results) == 4
+        assert summary.per_mode[AxiomBenchmarkMode.BASELINE].count == 2
+        assert summary.per_mode[AxiomBenchmarkMode.AXIOM_GUIDED].count == 2
+        assert summary.intelligence_delta is not None
