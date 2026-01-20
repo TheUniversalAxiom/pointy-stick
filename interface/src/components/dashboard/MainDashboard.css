@@ -66,8 +66,12 @@
 
 .formula {
     font-family: var(--font-mono);
-    font-size: 1.125rem;
+    font-size: 0.85rem;
     color: var(--color-text);
+    white-space: nowrap;
+    overflow-x: auto;
+    display: block;
+    max-width: 100%;
 }
 
 .dashboard__layers {
@@ -185,30 +189,31 @@
 .controls-section__grid--single {
     justify-content: center;
 }
+
 /* Visualization Section */
 .dashboard__visualization {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
 }
 
 @media (max-width: 900px) {
-  .dashboard__visualization {
-    grid-template-columns: 1fr;
-  }
+    .dashboard__visualization {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Scenario Badge */
 .dashboard__scenario-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
-  border: 1px solid var(--color-cognitive);
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border: 1px solid var(--color-cognitive);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text);
 }
