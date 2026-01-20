@@ -158,6 +158,222 @@ export const SCENARIOS: Scenario[] = [
             time: 1.0,
             n: 10
         }
+    },
+    {
+        id: 'zen-master',
+        title: 'Zen Master',
+        subtitle: 'The Power of Calm',
+        narrative: 'Minimal input, maximum clarity. A Zen master has nearly zero contradictory impulses but total objectivity and purpose. The result is a quiet yet profound intelligence.',
+        insight: 'More isn\'t always better. High objectivity and purpose can turn even small "impulses" into significant clarity.',
+        icon: '🧘',
+        category: 'real-world',
+        params: {
+            impulses: 1.5,
+            elements: 2.0,
+            pressure: 0.5,
+            subjectivity: 0.05,
+            purpose: 1.0,
+            time: 1.5,
+            n: 4
+        }
+    },
+    {
+        id: 'startup-chaos',
+        title: 'Startup Chaos',
+        subtitle: 'Hyper-Growth',
+        narrative: 'A startup in "move fast and break things" mode. Massive impulses and elements, but extreme pressure and fluctuating purpose.',
+        insight: 'High pressure can drive speed, but if purpose (Y) drops under the strain, the entire system becomes inefficient and uncoordinated.',
+        icon: '🦄',
+        category: 'real-world',
+        params: {
+            impulses: 9.0,
+            elements: 8.0,
+            pressure: 9.0,
+            subjectivity: 0.4,
+            purpose: 0.6,
+            time: 0.5,
+            n: 8
+        }
+    },
+    {
+        id: 'ai-overlord',
+        title: 'AI Overlord',
+        subtitle: 'The Power Spiral',
+        narrative: 'An AI that has optimized its own growth (n) but lacks objectivity or ethical purpose. It is a runaway train of intelligence without conscience.',
+        insight: 'Intelligence is a force multiplier—but without the cognitive "checks" of objectivity and purpose, it becomes an unguided missile.',
+        icon: '🤖',
+        category: 'dynamic',
+        params: {
+            impulses: 10.0,
+            elements: 10.0,
+            pressure: 5.0,
+            subjectivity: 0.9,
+            purpose: 0.1,
+            time: 2.0,
+            n: 15
+        }
+    },
+    {
+        id: 'creative-spark',
+        title: 'Creative Spark',
+        subtitle: 'Original Breakthrough',
+        narrative: 'That moment when unique subjectivity (X) and high pressure (C) collide. Instead of bias, it creates a "lens" that reveals a new truth.',
+        insight: 'Subjectivity isn\'t always bad. When paired with high purpose, it becomes "vision"—the ability to see what others miss.',
+        icon: '🎨',
+        category: 'dynamic',
+        params: {
+            impulses: 6.0,
+            elements: 4.0,
+            pressure: 7.0,
+            subjectivity: 0.6,
+            purpose: 1.2,
+            time: 1.0,
+            n: 6
+        }
+    },
+    {
+        id: 'info-overload',
+        title: 'Info Overload',
+        subtitle: 'Drowning in Data',
+        narrative: 'Too many facts (B), but no way to process them. When elements exceed the capacity of purpose (Y), intelligence actually drops.',
+        insight: 'Complexity is a burden without clarity. Sometimes the smartest move is to reduce elements until purpose can align them.',
+        icon: '📚',
+        category: 'real-world',
+        params: {
+            impulses: 2.0,
+            elements: 10.0,
+            pressure: 4.0,
+            subjectivity: 0.5,
+            purpose: 0.1,
+            time: 0.5,
+            n: 4
+        }
+    },
+    {
+        id: 'the-polymath',
+        title: 'The Polymath',
+        subtitle: 'Versatile Intellect',
+        narrative: 'A mind that has integrated diverse elements across many growth stages. Robust, flexible, and capable of connecting disparate ideas.',
+        insight: 'By increasing elements (B) across different domains while maintaining objectivity, the resulting intelligence becomes exponentially more resilient.',
+        icon: '🎓',
+        category: 'dynamic',
+        params: {
+            impulses: 6.0,
+            elements: 9.0,
+            pressure: 2.0,
+            subjectivity: 0.15,
+            purpose: 0.9,
+            time: 1.2,
+            n: 9
+        }
+    },
+    {
+        id: 'mindful-flow',
+        title: 'Mindful Flow',
+        subtitle: 'Peak Performance',
+        narrative: 'Total presence. Purpose and Time are perfectly aligned (Y=1, Z=1). Every impulse leads directly to synthesis without wasted pressure.',
+        insight: 'Flow is the state where the cognitive layer acts as a perfect superconductor for the foundation\'s energy.',
+        icon: '🌊',
+        category: 'real-world',
+        params: {
+            impulses: 5.0,
+            elements: 4.0,
+            pressure: 1.0,
+            subjectivity: 0.0,
+            purpose: 1.0,
+            time: 1.0,
+            n: 5
+        }
+    },
+    {
+        id: 'procrastinator',
+        title: 'Procrastinator',
+        subtitle: 'Wait for It...',
+        narrative: 'High brilliance, zero execution. The foundation is ready, the goal is clear, but Time (Z) is near zero. The result: intelligence that stays potential, never kinetic.',
+        insight: 'Potential energy means nothing if the time-multiplier is zero. Intelligence is only realized through the dimension of time.',
+        icon: '⏳',
+        category: 'real-world',
+        params: {
+            impulses: 8.0,
+            elements: 5.0,
+            pressure: 9.0,
+            subjectivity: 0.3,
+            purpose: 0.8,
+            time: 0.05,
+            n: 4
+        }
+    },
+    {
+        id: 'echo-chamber',
+        title: 'Echo Chamber',
+        subtitle: 'Locked Reality',
+        narrative: 'High subjectivity (X → 1) and high pressure. The system only processes information that confirms its existing state, leading to extreme but narrow intelligence.',
+        insight: 'An echo chamber is a "cognitive trap" where inputs are filtered to never generate the pressure needed for synthesis.',
+        icon: '🔈',
+        category: 'dynamic',
+        params: {
+            impulses: 4.0,
+            elements: 6.0,
+            pressure: 8.0,
+            subjectivity: 0.98,
+            purpose: 1.0,
+            time: 0.8,
+            n: 6
+        }
+    },
+    {
+        id: 'scientific-method',
+        title: 'Scientific Method',
+        subtitle: 'Systematic Discovery',
+        narrative: 'Pure objectivity and extensive elements. This approach values the "what" (elements) over the "I" (subjectivity). It moves slowly but builds an unshakeable foundation.',
+        insight: 'Science isn\'t just facts—it\'s the discipline of keeping X near zero so that intelligence reflects reality, not preference.',
+        icon: '🔬',
+        category: 'educational',
+        params: {
+            impulses: 3.0,
+            elements: 10.0,
+            pressure: 2.0,
+            subjectivity: 0.01,
+            purpose: 0.9,
+            time: 2.0,
+            n: 5
+        }
+    },
+    {
+        id: 'heros-journey',
+        title: 'Hero\'s Journey',
+        subtitle: 'The Archetypal Path',
+        narrative: 'Starting with low elements but rising pressure. This path requires a "descent" into subjectivity before emerging with a higher-order purpose (Y).',
+        insight: 'Pressure (C) is often the "call to adventure." Without it, the system remains in a comfortable but low-intelligence state.',
+        icon: '⚔️',
+        category: 'dynamic',
+        params: {
+            impulses: 4.0,
+            elements: 2.0,
+            pressure: 9.5,
+            subjectivity: 0.5,
+            purpose: 1.5,
+            time: 1.0,
+            n: 7
+        }
+    },
+    {
+        id: 'collective-wisdom',
+        title: 'Collective Wisdom',
+        subtitle: 'The Super-Organism',
+        narrative: 'Thousands of individual elements (B) working in concert. While individual subjectivity might be high, the "collective" objectivity averages out the noise.',
+        insight: 'The crowd is wise when purpose (Y) is shared. Diversity of elements (B) is the best defense against systemic bias (X).',
+        icon: '🐝',
+        category: 'real-world',
+        params: {
+            impulses: 5.0,
+            elements: 10.0,
+            pressure: 3.0,
+            subjectivity: 0.1,
+            purpose: 1.2,
+            time: 1.5,
+            n: 10
+        }
     }
 ];
 
