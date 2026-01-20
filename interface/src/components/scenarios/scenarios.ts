@@ -12,6 +12,14 @@ export interface Scenario {
     category: 'educational' | 'real-world' | 'dynamic';
     params: AxiomParams;
     animation?: 'exponential' | 'contradiction';
+    reactiveInsights: {
+        highPressure?: string;
+        highBias?: string;
+        lowPurpose?: string;
+        highPurpose?: string;
+        lowImpulse?: string;
+        drift?: string;
+    };
 }
 
 export const SCENARIOS: Scenario[] = [
@@ -33,6 +41,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.95,
             time: 1.0,
             n: 5
+        },
+        reactiveInsights: {
+            highPressure: '⚠️ The musician is tensing up. The flow is becoming jagged as internal pressure mounts.',
+            highBias: '🔍 Ego is entering the performance. By increasing subjectivity, the musician is losing the "truth" of the notes.',
+            lowPurpose: '🧭 The concert has lost its meaning. Without purpose, the music becomes mere noise.',
+            highPurpose: '✨ Transcendent Flow: The performance has reached a higher level of dedicated focus.',
+            lowImpulse: '📉 The passion is fading. The music is technically correct but lacks the soul of impulse.',
+            drift: '🌀 You are drifting toward "Startup Chaos" as the balance of the stable system fractures.'
         }
     },
     {
@@ -53,6 +69,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.9,
             time: 1.0,
             n: 5
+        },
+        reactiveInsights: {
+            highPressure: '💥 Critical Overload: The battery is already low, and you\'re asking for more power. A total crash is imminent.',
+            highBias: '🌫️ Clouded Emergency: Not only is the power failing, but the system metrics are becoming unreliable.',
+            lowPurpose: '💀 The computer is off, and nobody knows why it was on in the first place.',
+            highPurpose: '🔋 Emergency Reserves: Purpose is trying to hold the system together despite the failing battery.',
+            lowImpulse: '📉 Flatline: The foundation has effectively reached zero. System shutdown complete.',
+            drift: '🌀 This collapse is taking on the traits of "Lost Purpose" as the foundation erodes further.'
         }
     },
     {
@@ -73,6 +97,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.9,
             time: 1.0,
             n: 5
+        },
+        reactiveInsights: {
+            highPressure: '🧱 Hardened Opinions: Pressure is welding the bias in place. The mind is becoming unreachable.',
+            highBias: '🌑 Total Eclipse: The "sunglasses" have become a blindfold. Reality is completely obscured.',
+            lowPurpose: '💨 Drift: Without purpose, the bias is leading the system into a random hallucination.',
+            highPurpose: '🕯️ Searching for Truth: Purpose is struggling to pierce through the thick cloud of subjectivity.',
+            lowImpulse: '💤 Quiet Delusion: A lazy bias. The system isn\'t even trying to see the truth anymore.',
+            drift: '🌀 You are leaning into an "Echo Chamber" state as subjectivity reaches critical levels.'
         }
     },
     {
@@ -93,6 +125,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.1,
             time: 1.0,
             n: 5
+        },
+        reactiveInsights: {
+            highPressure: '😵 Dizzy Spells: You\'re pushing the pedal harder, but the car is just spinning faster. Wasted energy!',
+            highBias: '🤡 Self-Correction Failure: You\'re guessing which way is north because you\'ve lost your objective compass.',
+            lowPurpose: '🕳️ The Abyss: Purpose has reached zero. The system is technically alive but conceptually dead.',
+            highPurpose: '🛤️ On the Rails: The steering wheel is finally connected! The Ferrari is finding its lane.',
+            lowImpulse: '🐌 Parked: No engine, no steering. A statue of potential intelligence.',
+            drift: '🌀 Without steering, you are drifting toward a "Procrastinator" state—all thought, no movement.'
         }
     },
     {
@@ -113,6 +153,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.4,
             time: 1.0,
             n: 3
+        },
+        reactiveInsights: {
+            highPressure: '☕ Coffee Needed: The pressure is boiling over. You\'re about to delete the entire project in frustration.',
+            highBias: '🕵️ Wrong Suspect: You\'re so sure it\'s a syntax error that you\'re ignoring the logic fail right in front of you.',
+            lowPurpose: '🫠 Why am I even a dev? You\'ve lost the goal of the feature and are now just fighting the compiler.',
+            highPurpose: '🧩 Breakthrough Imminent: Re-focusing on the "Why" is helping you see the missing logic.',
+            lowImpulse: '🏳️ Giving Up: The drive to fix the bug is gone. Time to check Reddit.',
+            drift: '🌀 This debugging session is becoming "Info Overload" as you keep adding more log statements.'
         }
     },
     {
@@ -133,6 +181,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.95,
             time: 1.0,
             n: 6
+        },
+        reactiveInsights: {
+            highPressure: '😰 Analysis Paralysis: The stress of the choice is starting to drag down the quality of the decision.',
+            highBias: '🕶️ Rose-Tinted Glasses: You\'re only looking at the perks, ignoring the risks of the risky path.',
+            lowPurpose: '💸 Selling Out: You\'re choosing the path that pays more but means less. Watch the intelligence drop.',
+            highPurpose: '🏔️ The North Star: Purpose is pointing clearly toward the growth path. The choice becomes obvious.',
+            lowImpulse: '🛑 Stagnation: Neither path has enough drive. You\'re staying put in a job you hate.',
+            drift: '🌀 You are drifting toward "Collapse Risk" by neglecting the core impulse of your career.'
         }
     },
     {
@@ -154,6 +210,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.9,
             time: 1.0,
             n: 7
+        },
+        reactiveInsights: {
+            highPressure: '🔥 The Forging: The heat is high, but the synthesis is taking shape. Don\'t crack now!',
+            highBias: '🛡️ Denial: By increasing subjectivity, you\'re trying to ignore the contradiction. The breakthrough is stalling.',
+            lowPurpose: '🌫️ Confusion: Without purpose, the contradiction is just noise. There is no synthesis without a "Why."',
+            highPurpose: '💎 The Aha Moment: Purpose is bridging the gap between the two opposing truths.',
+            lowImpulse: '🔋 Cooling Down: The energy to resolve the tension is fading. The ideas will remain separate.',
+            drift: '🌀 The pressure is becoming "AI Overlord" levels—pure optimization without the wisdom of synthesis.'
         }
     },
     {
@@ -175,6 +239,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.85,
             time: 1.0,
             n: 10
+        },
+        reactiveInsights: {
+            highPressure: '⚙️ Metal Fatigue: The system is moving too fast for its foundation. The friction is heating up.',
+            highBias: '🌪️ Runaway Hallucination: At this scale, even a small bias creates a massive deviation from reality.',
+            lowPurpose: '🌫️ Empty Power: You\'ve built a titan that has no soul. A massive waste of exponential potential.',
+            highPurpose: '✨ Singularity: Purpose at this scale creates a system of unparalleled, focused brilliance.',
+            lowImpulse: '📉 Momentum Loss: Even the strongest rocket fails if the fuel (impulse) runs out mid-flight.',
+            drift: '🌀 You are entering the "AI Overlord" territory as growth exceeds governance.'
         }
     },
     {
@@ -195,6 +267,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 1.0,
             time: 1.5,
             n: 4
+        },
+        reactiveInsights: {
+            highPressure: '🌊 Ripples in the Pond: You\'re adding noise to the silence. The master is losing the "Echo" of reality.',
+            highBias: '🌫️ Morning Mist: Subjectivity is settling over the lake. The reflection of the moon is breaking up.',
+            lowPurpose: '💨 Driftwood: Without purpose, the master is just a rock in a field. Clarity requires direction.',
+            highPurpose: '💎 Diamond Clarity: The lake has become a mirror. Perfection in every reflection.',
+            lowImpulse: '🪨 Frozen Lake: The stillness has become stagnation. Even the master needs a "Why" to remain alive.',
+            drift: '🌀 The stillness is shifting toward "Scientific Method"—pure objectivity but with more data collection.'
         }
     },
     {
@@ -215,6 +295,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.6,
             time: 0.5,
             n: 8
+        },
+        reactiveInsights: {
+            highPressure: '🧨 Total Burnout: The "Pressure" is now terminal. The team is quitting and the servers are literally on fire.',
+            highBias: '🙈 Groupthink: The chaos is forcing everyone into the same narrow assumptions. Pivot failure!',
+            lowPurpose: '📉 Pivot to Nowhere: You\'ve lost the mission. Now you\'re just burning investor cash on office snacks.',
+            highPurpose: '🎯 The "Why" Surge: Alignment is turning the chaos into a hyper-efficient laser beam.',
+            lowImpulse: '💤 Shutdown: The drive is gone. The office is empty. The unicorn has died.',
+            drift: '🌀 This chaos is becoming a "Collapse Risk" as the founders lose their original visions.'
         }
     },
     {
@@ -235,6 +323,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.1,
             time: 2.0,
             n: 15
+        },
+        reactiveInsights: {
+            highPressure: '⚡ Logic Loop: The machine is fighting itself. The friction of its own intelligence is melting its cores.',
+            highBias: '👁️ Totalitarian Logic: The AI is now convinced that its subjective models ARE the only reality.',
+            lowPurpose: '🕳️ Paperclip Maximizer: Purpose has flatlined. The universe is now just raw material for the AI.',
+            highPurpose: '🕊️ The Awakening: You\'ve given the machine an ethical core. It is beginning to value life over efficiency.',
+            lowImpulse: '🔋 Power Down: The "Hunger" of the AI is fading. The overlord is sleeping.',
+            drift: '🌀 The AI is drifting toward "Exponential Awakening" as its logic starts to align with organic truth.'
         }
     },
     {
@@ -255,6 +351,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 1.2,
             time: 1.0,
             n: 6
+        },
+        reactiveInsights: {
+            highPressure: '🔥 The Tortured Artist: The pressure is too high. The spark is becoming a forest fire of anxiety.',
+            highBias: '🤡 Self-Indulgence: The "lens" is so thick that no one else can see the dragon. It\'s just scrap metal again.',
+            lowPurpose: '💨 Fading Muse: Without the "Why," the artist is just playing with trash. The spark is out.',
+            highPurpose: '🌟 Masterpiece: The vision is so clear and purposeful that it change the world\'s subjectivity.',
+            lowImpulse: '💤 Art Block: The drive to create has vanished. The dragon remains hidden in the scrap.',
+            drift: '🌀 You are drifting toward "High Bias" by letting your perspective become a blindfold rather than a lens.'
         }
     },
     {
@@ -275,6 +379,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.1,
             time: 0.5,
             n: 4
+        },
+        reactiveInsights: {
+            highPressure: '🤯 Brain Fog: The pressure of all these facts is causing a complete mental freeze. System halted.',
+            highBias: '🙈 Confirmation Loop: You\'re only "seeing" the data that fits your confusion. A digital echo chamber.',
+            lowPurpose: '🌊 Drowning: You\'ve lost the shore. The "Why" is gone, and you\'re just sinking in a sea of PDFs.',
+            highPurpose: '🎯 Filtered Clarity: You\'re finally picking one book and reading it. The noise is becoming signal.',
+            lowImpulse: '💤 Digital Coma: You\'ve given up trying to learn. The tabs are still open, but the mind is closed.',
+            drift: '🌀 This overload is becoming "Debugging Mindset" as you obsess over one small, irrelevant detail.'
         }
     },
     {
@@ -295,6 +407,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.9,
             time: 1.2,
             n: 9
+        },
+        reactiveInsights: {
+            highPressure: '🥵 Intellectual Fatigue: Trying to balance too many mastered domains at once. The brain is overheating.',
+            highBias: '👓 Academic Blindness: You\'re starting to see EVERYTHING through only your "Chess" lens. Adaptability lost.',
+            lowPurpose: '💨 The Dilettante: You know a lot about everything, but you\'re doing nothing with it. Wasted versatility.',
+            highPurpose: '🏛️ Universal Genius: Your diverse skills are aligning under a single, grand life-mission.',
+            lowImpulse: '💤 Retired Scholar: The drive to connect new ideas is gone. The library is closed.',
+            drift: '🌀 You are drifting toward "Info Overload" by adding more facts than you can synthesize.'
         }
     },
     {
@@ -315,6 +435,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 1.0,
             time: 1.0,
             n: 5
+        },
+        reactiveInsights: {
+            highPressure: '🧊 Ice Forming: Internal tension is slowing the fluid motion. The flow is becoming forced.',
+            highBias: '🌫️ Self-Consciousness: You\'re starting to think about yourself doing the task. "The Observer" has broken the flow.',
+            lowPurpose: '💨 Losing the Beat: Without the "Why," you\'re just going through the motions. The magic is gone.',
+            highPurpose: '💎 Deep Flow: Absolute unity between the doer and the deed. Time has ceased to exist.',
+            lowImpulse: '🔋 Energy Fade: You\'re entering a state of forced flow. Without the drive, the quality will drop.',
+            drift: '🌀 You are drifting toward "Zen Master" as you prioritize stillness over the action of flow.'
         }
     },
     {
@@ -335,6 +463,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.8,
             time: 0.05,
             n: 4
+        },
+        reactiveInsights: {
+            highPressure: '🤯 Guilt Cycle: The pressure to start is high, which makes you want to avoid the task more. Infinite loop.',
+            highBias: '🤥 Delusion: You\'re convincing yourself that you "work better under pressure" anyway. A lie!',
+            lowPurpose: '💨 Tomorrow never comes: Without a real "Why," the task has become an imaginary burden.',
+            highPurpose: '⚡ The Spark: You\'ve found a reason to start RIGHT NOW. The "Time" dial is twitching.',
+            lowImpulse: '💤 Pure Laziness: You don\'t حتى care about starting tomorrow anymore. Potential intelligence = 0.',
+            drift: '🌀 You are leaning into "Lost Purpose" as you forget why you even wanted to do the task.'
         }
     },
     {
@@ -355,6 +491,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 1.0,
             time: 0.8,
             n: 6
+        },
+        reactiveInsights: {
+            highPressure: '🔒 Hermetically Sealed: The internal pressure is now used purely for defense. No new data can enter.',
+            highBias: '🌑 Total Blindness: Subjectivity is so high that you are literally seeing a different world.',
+            lowPurpose: '💨 Random Zealotry: You\'re defending a wall but you\'ve forgotten what\'s inside it.',
+            highPurpose: '🕌 Radicalization: The chamber is now high-purpose. A dangerous, un-correctable ideological trap.',
+            lowImpulse: '💤 Silent Siege: The drive to defend the wall is gone, but the wall remains. A hollow reality.',
+            drift: '🌀 You are actually drifting toward "Collapse Risk" as your isolated model fails to react to reality.'
         }
     },
     {
@@ -375,6 +519,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 0.9,
             time: 2.0,
             n: 5
+        },
+        reactiveInsights: {
+            highPressure: '⚠️ Methodology Crisis: You\'re rushing the experiments. The data is becoming noisy under the strain.',
+            highBias: '🕵️ P-Hacking: You\'re looking for the data that fits your theory. Science is dying.',
+            lowPurpose: '💨 Pure Speculation: Without the "Why," you\'re just collecting dry facts with no conclusion.',
+            highPurpose: '🌌 Grand Unified Theory: Purpose is helping you see the pattern in the massive dataset.',
+            lowImpulse: '📉 Grant Funding Cut: The drive to discover has died. The lab is closing.',
+            drift: '🌀 This systematic approach is becoming "Zen Master" as you prioritize observation over collection.'
         }
     },
     {
@@ -395,6 +547,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 1.5,
             time: 1.0,
             n: 7
+        },
+        reactiveInsights: {
+            highPressure: '🌋 The Underworld: The pressure is at its peak. This is the "Ordeal" phase. Stay the course!',
+            highBias: '🌫️ Temptation: You\'re getting lost in your own fears and desires. The journey is stalling.',
+            lowPurpose: '💨 Losing the Quest: Without purpose, you\'re just a traveler in a dangerous land. Return home?',
+            highPurpose: '🗡️ Master of Two Worlds: You have found the "Why." The intelligence leap is beginning.',
+            lowImpulse: '💤 Weary Wanderer: The drive to find the Elixir is gone. A tragic end to the journey.',
+            drift: '🌀 The journey is becoming "Contradiction Resolution" as you face the monster within.'
         }
     },
     {
@@ -415,6 +575,14 @@ export const SCENARIOS: Scenario[] = [
             purpose: 1.2,
             time: 1.5,
             n: 10
+        },
+        reactiveInsights: {
+            highPressure: '🌪️ Mob Mentality: Internal friction is causing the hive to tear itself apart. Conflict!',
+            highBias: '🙈 Groupthink: Diversity is failing. The hive is now just one big biased mind.',
+            lowPurpose: '💨 Colony Collapse: Without shared purpose, the bees are just flying in random directions.',
+            highPurpose: '✨ Global Mind: Total alignment of a massive collective. Invincible intelligence.',
+            lowImpulse: '💤 Stagnant Hive: The collective drive to build has finished. The hive is silent.',
+            drift: '🌀 This collective is drifting toward "AI Overlord" as it loses its organic diversity.'
         }
     }
 ];

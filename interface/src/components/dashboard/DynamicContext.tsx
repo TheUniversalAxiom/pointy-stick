@@ -1,5 +1,5 @@
 import './DynamicContext.css';
-import { Scenario } from '../scenarios/scenarios';
+import { Scenario, SCENARIOS } from '../scenarios/scenarios';
 import { AxiomParams } from '../../hooks/useAxiom';
 
 interface DynamicContextProps {
@@ -17,10 +17,14 @@ export function DynamicContext({ scenario, currentParams }: DynamicContextProps)
     const content = scenario ? scenario.detailedContext : defaultText;
     const cta = scenario ? scenario.cta : 'Experiment with the "Growth Stage (n)" slider to see how intelligence compounds over time.';
 
-    // Reactive Commentary Logic
+    /**
+     * Contextual Logic Engine
+     * Prioritizes scenario-specific insights, then drifts, then general state feedback.
+     */
     const getReactiveInsight = () => {
         if (scenario) {
             const base = scenario.params;
+            const insights = scenario.reactiveInsights;
             const diffs = {
                 impulses: currentParams.impulses - base.impulses,
                 pressure: currentParams.pressure - base.pressure,
@@ -28,15 +32,36 @@ export function DynamicContext({ scenario, currentParams }: DynamicContextProps)
                 purpose: currentParams.purpose - base.purpose
             };
 
-            if (diffs.pressure > 3) return `⚠️ High Pressure Alert: You've added a lot of internal friction to this ${scenario.title}. It's getting harder for the cognitive layer to synthesize a clear output.`;
-            if (diffs.subjectivity > 0.4) return `🔍 Bias Warning: By increasing Subjectivity, you're "clouding" the ${scenario.title}. Notice how the Intelligence Sum drops as your "lens" gets darker.`;
-            if (diffs.impulses < -3) return `📉 Power Loss: The foundation is weakening. Without drive, even a ${scenario.title} starts to stall out.`;
-            if (diffs.purpose > 0.5) return `✨ Purpose Boost: You've aligned this state even further. Watch how a small increase in "Why" leads to a massive jump in "Intelligence."`;
-            if (diffs.purpose < -0.4) return `🧭 Drift: You're losing site of the "Purpose" for this scenario. The alignment is breaking down.`;
+            // 1. Check for Contextual Drift (Am I becoming a different scenario?)
+            // We search for a scenario that matches our current params better than the active one
+            const driftScenario = SCENARIOS.find(s => {
+                if (s.id === scenario.id) return false;
+                const dist = Math.sqrt(
+                    Math.pow(currentParams.impulses - s.params.impulses, 2) +
+                    Math.pow(currentParams.pressure - s.params.pressure, 2) +
+                    Math.pow(currentParams.subjectivity * 10 - s.params.subjectivity * 10, 2) +
+                    Math.pow(currentParams.purpose * 10 - s.params.purpose * 10, 2)
+                );
+                return dist < 1.5; // Threshold for drift detection
+            });
+
+            if (driftScenario) {
+                return `🌀 Drift Detected: Your current balance is beginning to resemble "${driftScenario.title}." ${insights.drift || "The context is shifting."}`;
+            }
+
+            // 2. Scenario-Specific Reactions
+            if (diffs.pressure > 3 && insights.highPressure) return insights.highPressure;
+            if (diffs.subjectivity > 0.4 && insights.highBias) return insights.highBias;
+            if (currentParams.purpose < 0.2 && insights.lowPurpose) return insights.lowPurpose;
+            if (currentParams.purpose > 1.2 && insights.highPurpose) return insights.highPurpose;
+            if (currentParams.impulses < base.impulses - 4 && insights.lowImpulse) return insights.lowImpulse;
+
+            // 3. Fallback to specific but generic alerts if scenario insight is missing
+            if (diffs.pressure > 4) return `⚠️ High Pressure Alert: You've added a lot of internal friction to this ${scenario.title}. It's getting harder for the cognitive layer to synthesize a clear output.`;
 
             return `🎯 Live State: Currently tracking close to the ${scenario.title} ideal. Keep exploring!`;
         } else {
-            // General balance feedback
+            // General balance feedback for default view
             if (currentParams.pressure > 7 && currentParams.subjectivity > 0.6) return "🧱 Stuck State: High Pressure and High Bias usually mean you're in a rabbit hole. Try lowering both to see clearly.";
             if (currentParams.purpose > 1.2) return "🏹 Focused Drive: Your Purpose is exceptionally high. This is where breakthroughs happen.";
             if (currentParams.impulses < 1) return "💤 Dormant Mind: Without foundational impulse, the multipliers have nothing to work with.";
@@ -62,7 +87,7 @@ export function DynamicContext({ scenario, currentParams }: DynamicContextProps)
             <div className="dynamic-context__body">
                 <p className="dynamic-context__text">{content}</p>
 
-                <div className="dynamic-context__reactive">
+                <div className="dynamic-context__reactive" key={reactiveInsight}>
                     <span>{reactiveInsight}</span>
                 </div>
 
