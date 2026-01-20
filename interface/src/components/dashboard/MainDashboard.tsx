@@ -9,6 +9,7 @@ import { NarrativeOverlay } from '../scenarios/NarrativeOverlay';
 import { AnimatedNumber } from '../effects/AnimatedNumber';
 import { Scenario } from '../scenarios/scenarios';
 import { useAxiom } from '../../hooks/useAxiom';
+import { DynamicContext } from './DynamicContext';
 import '../layers/LayerPanel.css';
 import './MainDashboard.css';
 
@@ -118,6 +119,8 @@ export function MainDashboard() {
                         <span className="coherence-percent">{Math.round(coherence * 100)}%</span>
                     </div>
                 </div>
+
+                <DynamicContext scenario={currentScenario} currentParams={params} />
             </div>
 
             <div className="dashboard__controls">
