@@ -3,16 +3,17 @@ import './MainMenu.css'
 type MainMenuProps = {
   onSelectDashboard: () => void
   onSelectBenchmarking: () => void
+  onSelectChatbot: () => void
 }
 
-export function MainMenu({ onSelectDashboard, onSelectBenchmarking }: MainMenuProps) {
+export function MainMenu({ onSelectDashboard, onSelectBenchmarking, onSelectChatbot }: MainMenuProps) {
   return (
     <div className="main-menu">
       <header className="main-menu__header">
         <p className="main-menu__eyebrow">Universal Axiom Interface</p>
         <h1 className="main-menu__title">Command Center</h1>
         <p className="main-menu__subtitle">
-          Choose a destination to explore the dynamic intelligence engine or evaluate AI model benchmarks.
+          Choose a destination to explore the dynamic intelligence engine, engage Sonny, or evaluate AI model benchmarks.
         </p>
       </header>
 
@@ -26,6 +27,17 @@ export function MainMenu({ onSelectDashboard, onSelectBenchmarking }: MainMenuPr
             Interact with the Intelligence<sub>n</sub> model, tune parameters, and visualize system coherence in real time.
           </p>
           <span className="main-menu__card-action">Enter Dashboard →</span>
+        </button>
+
+        <button type="button" className="main-menu__card" onClick={onSelectChatbot}>
+          <div className="main-menu__card-header">
+            <span className="main-menu__card-icon">🧠</span>
+            <h2 className="main-menu__card-title">Sonny Chatbot Module</h2>
+          </div>
+          <p className="main-menu__card-description">
+            Converse with Sonny, grounded in the PROMPT context and Universal Axiom, to translate inputs into actionable insight.
+          </p>
+          <span className="main-menu__card-action">Engage Sonny →</span>
         </button>
 
         <button type="button" className="main-menu__card" onClick={onSelectBenchmarking}>
