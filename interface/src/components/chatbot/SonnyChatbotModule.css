@@ -15,6 +15,12 @@
   gap: 24px;
 }
 
+.sonny-chatbot__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .sonny-chatbot__title {
   font-size: 2.25rem;
   font-weight: 800;
@@ -40,6 +46,90 @@
   font-weight: 600;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.sonny-chatbot__settings {
+  position: relative;
+}
+
+.sonny-chatbot__settings-btn {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sonny-chatbot__settings-btn:hover {
+  border-color: var(--color-dynamic);
+  color: var(--color-dynamic);
+  box-shadow: 0 10px 18px rgba(16, 185, 129, 0.2);
+}
+
+.sonny-chatbot__settings-panel {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  width: 320px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.35);
+  z-index: 10;
+}
+
+.sonny-chatbot__settings-title {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+}
+
+.sonny-chatbot__settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sonny-chatbot__settings-item {
+  display: flex;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.sonny-chatbot__settings-description {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.sonny-chatbot__settings-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sonny-chatbot__settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.sonny-chatbot__settings-field input {
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  padding: 10px 12px;
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
 }
 
 .sonny-chatbot__back-btn:hover {
@@ -80,6 +170,31 @@
   background: var(--color-surface-elevated);
   color: var(--color-text);
   min-width: 180px;
+}
+
+.sonny-chatbot__status {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.sonny-chatbot__status-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.sonny-chatbot__status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: var(--color-text);
+  font-size: 0.85rem;
 }
 
 .sonny-chatbot__cta {
