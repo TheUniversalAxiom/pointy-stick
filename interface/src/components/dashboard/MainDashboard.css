@@ -38,6 +38,23 @@
     gap: 12px;
 }
 
+.dashboard__nav-btn {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dashboard__nav-btn:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-text-muted);
+}
+
 .dashboard__reset-btn {
     background: var(--color-surface);
     border: 1px solid var(--color-border);

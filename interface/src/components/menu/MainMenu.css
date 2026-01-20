@@ -1,0 +1,133 @@
+.main-menu {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.main-menu__header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.main-menu__eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.main-menu__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, var(--color-dynamic) 0%, var(--color-cognitive) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.main-menu__subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  max-width: 640px;
+}
+
+.main-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.main-menu__card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: left;
+  color: var(--color-text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 220px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.main-menu__card:hover {
+  border-color: var(--color-cognitive);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+}
+
+.main-menu__card:focus-visible {
+  outline: 2px solid var(--color-cognitive);
+  outline-offset: 2px;
+}
+
+.main-menu__card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.main-menu__card-icon {
+  font-size: 1.5rem;
+}
+
+.main-menu__card-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.main-menu__card-description {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.main-menu__card-action {
+  font-weight: 600;
+  color: var(--color-cognitive);
+}
+
+.main-menu__footer {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 20px 24px;
+}
+
+.main-menu__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.main-menu__status h3 {
+  margin: 0 0 6px 0;
+  font-size: 1rem;
+}
+
+.main-menu__status p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.main-menu__status-pill {
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: var(--color-positive);
+  font-weight: 600;
+  font-size: 0.85rem;
+}

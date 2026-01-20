@@ -13,7 +13,11 @@ import { DynamicContext } from './DynamicContext';
 import '../layers/LayerPanel.css';
 import './MainDashboard.css';
 
-export function MainDashboard() {
+type MainDashboardProps = {
+    onBackToMenu?: () => void;
+};
+
+export function MainDashboard({ onBackToMenu }: MainDashboardProps) {
     const { params, state, coherence, setParam, setParams, resetParams } = useAxiom();
     const [currentScenario, setCurrentScenario] = useState<Scenario | null>(null);
     const [showNarrative, setShowNarrative] = useState(false);
@@ -44,6 +48,11 @@ export function MainDashboard() {
                     <span className="dashboard__subtitle">Dynamic Explorer</span>
                 </div>
                 <div className="dashboard__actions">
+                    {onBackToMenu && (
+                        <button className="dashboard__nav-btn" onClick={onBackToMenu}>
+                            ← Main Menu
+                        </button>
+                    )}
                     {currentScenario && (
                         <span className="dashboard__scenario-badge">
                             {currentScenario.icon} {currentScenario.title}
