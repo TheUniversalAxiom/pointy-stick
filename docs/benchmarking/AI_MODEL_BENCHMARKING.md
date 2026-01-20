@@ -72,6 +72,29 @@ scenarios = [
 results = runner.run(scenarios)
 ```
 
+## Interface Extensions
+
+The benchmarking interface also provides optional components for more advanced
+use cases:
+
+- **BenchmarkRunConfig**: control modes and repetitions without changing the
+  runner defaults.
+- **AxiomBenchmarkAggregator**: summarize per-mode statistics and baseline vs.
+  guided deltas.
+- **AxiomScenarioSource**: load scenarios from structured data sources.
+- **AxiomBenchmarkResultWriter**: persist results and summaries.
+
+```python
+from python.benchmarking import (
+    AxiomBenchmarkAggregator,
+    BenchmarkRunConfig,
+)
+
+config = BenchmarkRunConfig(repetitions=3)
+results = runner.run_with_config(scenarios, config)
+summary = AxiomBenchmarkAggregator.summarize(results)
+```
+
 ## Design Notes
 
 - The module is **adapter-based**: model APIs stay out of core logic.

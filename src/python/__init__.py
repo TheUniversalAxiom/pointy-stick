@@ -22,10 +22,16 @@ GitHub: https://github.com/TheUniversalAxiom/pointy-stick
 
 from .benchmarking import (
     AxiomBenchmarkMode,
+    AxiomBenchmarkModeStats,
     AxiomBenchmarkResult,
     AxiomBenchmarkRunner,
     AxiomBenchmarkScenario,
+    AxiomBenchmarkSummary,
+    AxiomBenchmarkAggregator,
+    AxiomBenchmarkResultWriter,
+    AxiomScenarioSource,
     AxiomSignals,
+    BenchmarkRunConfig,
 )
 from .universal_axiom import UniversalAxiom
 
@@ -34,10 +40,16 @@ __author__ = "Matt Belanger"
 __email__ = "matt@epiphanyengine.ai"
 
 __all__ = [
+    "AxiomBenchmarkAggregator",
+    "AxiomBenchmarkModeStats",
     "AxiomBenchmarkMode",
     "AxiomBenchmarkResult",
+    "AxiomBenchmarkResultWriter",
     "AxiomBenchmarkRunner",
     "AxiomBenchmarkScenario",
+    "AxiomBenchmarkSummary",
+    "AxiomScenarioSource",
     "AxiomSignals",
+    "BenchmarkRunConfig",
     "UniversalAxiom",
 ]
