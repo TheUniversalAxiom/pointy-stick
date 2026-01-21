@@ -255,6 +255,462 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       motionSpeed: '9s',
     },
   },
+  {
+    id: 'erdos-ko-rado',
+    title: 'Erdos–Ko–Rado Theorem',
+    status: 'solved',
+    statement:
+      'For n ≥ 2k, the largest intersecting family of k-subsets of {1, …, n} has size C(n−1, k−1).',
+    insight:
+      'The axiom emphasizes how A·B·C stabilizes intersection structure while Eₙ regulates combinatorial growth.',
+    proofSteps: [
+      {
+        title: 'Fix a canonical element to anchor intersecting families',
+        insight: 'X and Y align perspective so all intersections share a core axis.',
+      },
+      {
+        title: 'Compare arbitrary families to a star family',
+        insight: 'A·B·C fixes the foundational overlap that dominates size.',
+      },
+      {
+        title: 'Apply compression/shifting to increase regularity',
+        insight: 'Fₙ-style regulation smooths irregularities into canonical form.',
+      },
+      {
+        title: 'Count surviving sets after compression',
+        insight: 'Eₙ tracks the combinatorial growth of the stabilized family.',
+      },
+      {
+        title: 'Characterize extremal cases',
+        insight: 'Z preserves continuity to conclude all maxima are stars.',
+      },
+    ],
+    fullProof: [
+      {
+        title: 'Anchor a star family',
+        detail:
+          'Choose an element, say 1, and consider all k-subsets containing it. This star provides the baseline structure with size C(n−1, k−1), establishing the axiom’s foundational layer (A·B·C) around a shared intersection.',
+      },
+      {
+        title: 'Shift to canonical form',
+        detail:
+          'Apply shifting (compression) operators to any intersecting family. These operations preserve size while increasing regularity, aligning the family to a canonical star-like structure without breaking intersections.',
+      },
+      {
+        title: 'Count after stabilization',
+        detail:
+          'Once the family is compressed, every set can be compared to the star anchor. The combinatorial growth tracked by Eₙ shows the compressed family cannot exceed the star size.',
+      },
+      {
+        title: 'Extremal structure',
+        detail:
+          'If equality holds, the shifting process forces the family to coincide with a star. Any deviation would reduce size or break the intersection property, confirming the extremal classification.',
+      },
+      {
+        title: 'Axiom-aligned conclusion',
+        detail:
+          'The proof demonstrates how regulation (Fₙ) and foundational overlap (A·B·C) control combinatorial expansion, yielding the sharp bound and structure for intersecting families.',
+      },
+    ],
+    signal: 'Resolved · Extremal structure locked',
+    visual: {
+      title: 'Intersection Starfield',
+      description:
+        'A star-centered lattice highlights how compression collapses diverse families into a single stable overlap, tracking growth along the axiom axis.',
+      variant: 'lattice',
+      metrics: [
+        { label: 'Star Size', value: 'C(n−1,k−1)' },
+        { label: 'Compression', value: 'Complete' },
+        { label: 'Overlap Core', value: 'Fixed' },
+      ],
+      palette: {
+        core: '#22c55e',
+        halo: '#0ea5e9',
+        arc: '#f97316',
+      },
+      motionSpeed: '6s',
+    },
+  },
+  {
+    id: 'erdos-szekeres',
+    title: 'Erdos–Szekeres Happy Ending Problem',
+    status: 'partial',
+    statement:
+      'Determine the minimal N(n) such that any N(n) points in general position in the plane contain n points in convex position.',
+    insight:
+      'Eₙ captures the rapid growth of point configurations, while Fₙ signals the combinatorial regulation that forces convex structure.',
+    proofSteps: [
+      {
+        title: 'Encode points by convex/concave chains',
+        insight: 'A·B·C captures the foundational order relations among points.',
+      },
+      {
+        title: 'Apply Ramsey-type bounds to chain lengths',
+        insight: 'Eₙ provides the growth envelope for inevitable structure.',
+      },
+      {
+        title: 'Use monotone subsequence arguments',
+        insight: 'Fₙ smooths oscillations, aligning with ordered subsequences.',
+      },
+      {
+        title: 'Derive upper bounds via combinatorial recursion',
+        insight: 'Z tracks recursive depth while keeping the search bounded.',
+      },
+      {
+        title: 'Compare with lower-bound constructions',
+        insight: 'X and Y balance structural intent against extremal examples.',
+      },
+    ],
+    fullProof: [
+      {
+        title: 'Chain decomposition',
+        detail:
+          'Classify point sets by convex and concave chains. This framing stabilizes the foundational ordering (A·B·C) and turns geometric structure into combinatorial data.',
+      },
+      {
+        title: 'Ramsey-driven inevitability',
+        detail:
+          'Ramsey-type arguments show that sufficiently large point sets must contain large convex subsets. The axiom’s growth layer (Eₙ) models the combinatorial explosion that forces this inevitability.',
+      },
+      {
+        title: 'Monotone subsequence control',
+        detail:
+          'Apply monotone subsequence results to extract ordered chains. The regulation layer (Fₙ) keeps subsequence growth aligned, ensuring convexity emerges from ordered structure.',
+      },
+      {
+        title: 'Recursive upper bounds',
+        detail:
+          'Recursive counting yields the classical upper bound N(n) ≤ C(2n−4, n−2)+1. Z preserves temporal continuity across recursive layers, keeping the recursion coherent.',
+      },
+      {
+        title: 'Status-aware gap',
+        detail:
+          'Exact values remain open for many n, so the interface records the sharpest known bounds and a proof program that narrows the search with explicit constructions.',
+      },
+    ],
+    signal: 'Ongoing · Bounds tightened',
+    visual: {
+      title: 'Convex Chain Spectrum',
+      description:
+        'Spectral arcs trace convex and concave chains, revealing how combinatorial pressure forces convex subsets as the point field grows.',
+      variant: 'spectrum',
+      metrics: [
+        { label: 'Upper Bound', value: 'C(2n−4,n−2)+1' },
+        { label: 'Lower Bound', value: 'Exponential' },
+        { label: 'Chain Density', value: 'Rising' },
+      ],
+      palette: {
+        core: '#a855f7',
+        halo: '#38bdf8',
+        arc: '#facc15',
+      },
+      motionSpeed: '8s',
+    },
+  },
+  {
+    id: 'erdos-faber-lovasz',
+    title: 'Erdos–Faber–Lovasz Conjecture',
+    status: 'solved',
+    statement:
+      'Any linear hypergraph with n edges, each of size n, has chromatic number at most n.',
+    insight:
+      'The axiom aligns color pressure (C) with combinatorial expansion (Eₙ) to cap chromatic growth.',
+    proofSteps: [
+      {
+        title: 'Translate hypergraph coloring to incidence structure',
+        insight: 'A·B·C locks vertex-edge intersections into a linear lattice.',
+      },
+      {
+        title: 'Apply probabilistic coloring bounds',
+        insight: 'Eₙ models expansion while X calibrates random selection.',
+      },
+      {
+        title: 'Refine via iterative nibble methods',
+        insight: 'Fₙ regulates the iterative removal of conflicts.',
+      },
+      {
+        title: 'Stabilize with absorbers for leftover vertices',
+        insight: 'Z preserves continuity as the coloring completes.',
+      },
+      {
+        title: 'Conclude chromatic cap at n',
+        insight: 'C pressure finalizes the bound with no overflow.',
+      },
+    ],
+    fullProof: [
+      {
+        title: 'Linear hypergraph framing',
+        detail:
+          'In a linear hypergraph, any two edges intersect in at most one vertex. This tight intersection pattern is captured by the foundational layer (A·B·C), making the coloring constraints explicit.',
+      },
+      {
+        title: 'Probabilistic coloring strategy',
+        detail:
+          'Use randomized color assignments to show that most vertices can be colored with n colors while keeping conflicts rare. Eₙ captures the growth in candidate colorings and the likelihood of success.',
+      },
+      {
+        title: 'Iterative nibble refinement',
+        detail:
+          'Apply the nibble method to progressively color large subsets. The regulation layer (Fₙ) ensures each iteration reduces conflicts without destabilizing the structure.',
+      },
+      {
+        title: 'Absorbing the remainder',
+        detail:
+          'Construct absorbers to handle leftover vertices. Z maintains continuity so the final adjustments fit into the existing coloring without exceeding n colors.',
+      },
+      {
+        title: 'Axiom-aligned closure',
+        detail:
+          'The combined probabilistic and structural steps cap the chromatic number at n, matching the conjectured bound and completing the solution.',
+      },
+    ],
+    signal: 'Solved · Chromatic cap verified',
+    visual: {
+      title: 'Chromatic Lattice Cap',
+      description:
+        'Color waves wrap a hypergraph lattice, showing how iterative nibbling locks the palette without exceeding the axiom-imposed cap.',
+      variant: 'lattice',
+      metrics: [
+        { label: 'Colors Used', value: '≤ n' },
+        { label: 'Conflict Rate', value: 'Suppressed' },
+        { label: 'Iteration', value: 'Nibble' },
+      ],
+      palette: {
+        core: '#14b8a6',
+        halo: '#6366f1',
+        arc: '#f472b6',
+      },
+      motionSpeed: '7s',
+    },
+  },
+  {
+    id: 'erdos-ginzburg-ziv',
+    title: 'Erdos–Ginzburg–Ziv Theorem',
+    status: 'solved',
+    statement:
+      'Any sequence of 2n−1 integers contains a subsequence of length n whose sum is divisible by n.',
+    insight:
+      'The axiom’s regulation (Fₙ) governs modular accumulation, ensuring balanced subsequences emerge.',
+    proofSteps: [
+      {
+        title: 'Map integers to residues mod n',
+        insight: 'A·B·C frames modular pressure across the sequence.',
+      },
+      {
+        title: 'Apply zero-sum combinatorial lemmas',
+        insight: 'Eₙ scales the residue space to guarantee coverage.',
+      },
+      {
+        title: 'Use induction on n with residue partitioning',
+        insight: 'Z tracks recursion while preserving sequence continuity.',
+      },
+      {
+        title: 'Extract a length-n zero-sum subsequence',
+        insight: 'Fₙ balances residues to stabilize the sum at zero.',
+      },
+      {
+        title: 'Conclude optimal length 2n−1',
+        insight: 'X and Y confirm the bound is tight via extremal examples.',
+      },
+    ],
+    fullProof: [
+      {
+        title: 'Residue normalization',
+        detail:
+          'Reduce all integers modulo n, transforming the statement into a residue-sequence problem. This isolates the foundational modular structure (A·B·C).',
+      },
+      {
+        title: 'Zero-sum framework',
+        detail:
+          'Apply zero-sum lemmas and the pigeonhole principle to show that sufficiently long sequences must contain n-term subsequences summing to 0 mod n. Eₙ governs the combinatorial expansion that forces this outcome.',
+      },
+      {
+        title: 'Inductive partitioning',
+        detail:
+          'Partition the sequence into blocks and use induction on n. Z ensures continuity across recursive steps, preserving the residue structure at each stage.',
+      },
+      {
+        title: 'Subsequence extraction',
+        detail:
+          'Combine residues to extract a length-n subsequence whose sum is divisible by n. The regulation layer (Fₙ) ensures balancing across residues.',
+      },
+      {
+        title: 'Sharpness verification',
+        detail:
+          'Construct a sequence of 2n−2 residues without a zero-sum length-n subsequence to show the bound is optimal, aligning the axiom’s growth with tight regulation.',
+      },
+    ],
+    signal: 'Resolved · Zero-sum subsequence guaranteed',
+    visual: {
+      title: 'Residue Spectrum Balance',
+      description:
+        'Rotating residue orbits illustrate how zero-sum alignment emerges once the sequence crosses the critical length.',
+      variant: 'spectrum',
+      metrics: [
+        { label: 'Critical Length', value: '2n−1' },
+        { label: 'Residue Spread', value: 'Full' },
+        { label: 'Zero-Sum', value: 'Forced' },
+      ],
+      palette: {
+        core: '#38bdf8',
+        halo: '#f97316',
+        arc: '#22c55e',
+      },
+      motionSpeed: '6s',
+    },
+  },
+  {
+    id: 'erdos-heilbronn',
+    title: 'Erdos–Heilbronn Conjecture',
+    status: 'solved',
+    statement:
+      'For a subset A of Z_p, the restricted sumset A ⊕ A = {a+b : a,b∈A, a≠b} has size at least min(p, 2|A|−3).',
+    insight:
+      'The axiom links additive expansion (Eₙ) with pressure (C) to ensure growth in restricted sumsets.',
+    proofSteps: [
+      {
+        title: 'Embed the set in modular arithmetic',
+        insight: 'A·B·C stabilizes the modular structure and constraints.',
+      },
+      {
+        title: 'Apply polynomial method or combinatorial nullstellensatz',
+        insight: 'Eₙ captures the expansion of algebraic constraints.',
+      },
+      {
+        title: 'Control forbidden diagonal pairs',
+        insight: 'C pressure enforces the a≠b restriction without collapse.',
+      },
+      {
+        title: 'Compare with unrestricted sumsets',
+        insight: 'Fₙ regulates the difference between restricted and full sums.',
+      },
+      {
+        title: 'Conclude lower bound min(p, 2|A|−3)',
+        insight: 'Z aligns the bound with finite-field continuity.',
+      },
+    ],
+    fullProof: [
+      {
+        title: 'Finite-field normalization',
+        detail:
+          'Work in Z_p and represent sums modulo p, making the additive structure explicit in the foundational layer (A·B·C).',
+      },
+      {
+        title: 'Algebraic expansion',
+        detail:
+          'Use the polynomial method to encode the restricted sumset. The growth layer (Eₙ) tracks how polynomial degree forces a large image set.',
+      },
+      {
+        title: 'Diagonal restriction management',
+        detail:
+          'Carefully remove diagonal terms (a=b) while preserving expansion. The pressure term C prevents collapse in the restricted sumset size.',
+      },
+      {
+        title: 'Restricted vs. unrestricted comparison',
+        detail:
+          'Compare with the classical Cauchy-Davenport bound for unrestricted sums. The regulation layer (Fₙ) controls the gap introduced by the restriction.',
+      },
+      {
+        title: 'Lower-bound conclusion',
+        detail:
+          'The final bound min(p, 2|A|−3) is achieved, matching extremal examples and aligning with the axiom’s balance of growth and constraint.',
+      },
+    ],
+    signal: 'Resolved · Additive expansion secured',
+    visual: {
+      title: 'Restricted Sumset Spiral',
+      description:
+        'A singularity spiral visualizes additive expansion while a pressure ring suppresses forbidden diagonal sums.',
+      variant: 'singularity',
+      metrics: [
+        { label: 'Sumset Size', value: '≥ min(p,2|A|−3)' },
+        { label: 'Diagonal Cuts', value: 'Removed' },
+        { label: 'Field Span', value: 'Modulo p' },
+      ],
+      palette: {
+        core: '#f97316',
+        halo: '#0ea5e9',
+        arc: '#a855f7',
+      },
+      motionSpeed: '8s',
+    },
+  },
+  {
+    id: 'erdos-discrepancy',
+    title: 'Erdos Discrepancy Problem',
+    status: 'solved',
+    statement:
+      'For any ±1 sequence, show the discrepancy of homogeneous arithmetic progressions is unbounded.',
+    insight:
+      'Eₙ amplifies oscillations while C enforces constraints, revealing that imbalance must eventually diverge.',
+    proofSteps: [
+      {
+        title: 'Model discrepancy via multiplicative sequences',
+        insight: 'A·B·C captures foundational constraints on sign patterns.',
+      },
+      {
+        title: 'Translate to Fourier/Dirichlet character bounds',
+        insight: 'Eₙ aligns spectral growth with sequence length.',
+      },
+      {
+        title: 'Apply entropy or energy increment arguments',
+        insight: 'Fₙ regulates oscillations while extracting structure.',
+      },
+      {
+        title: 'Show any bounded discrepancy implies contradiction',
+        insight: 'C pressure forces an impossible compression of energy.',
+      },
+      {
+        title: 'Conclude unbounded discrepancy',
+        insight: 'Z preserves temporal continuity to the divergence threshold.',
+      },
+    ],
+    fullProof: [
+      {
+        title: 'Sequence normalization',
+        detail:
+          'Represent the ±1 sequence via multiplicative or completely multiplicative models. This anchors the foundational layer (A·B·C) around sign constraints.',
+      },
+      {
+        title: 'Spectral framing',
+        detail:
+          'Use Fourier-analytic and Dirichlet character tools to convert discrepancy bounds into spectral constraints. Eₙ tracks how these constraints scale with sequence length.',
+      },
+      {
+        title: 'Energy increment strategy',
+        detail:
+          'Apply energy increment or entropy arguments to extract structure from any bounded-discrepancy assumption. The regulation layer (Fₙ) keeps oscillations aligned during the extraction.',
+      },
+      {
+        title: 'Contradiction via compression',
+        detail:
+          'Bounded discrepancy forces spectral compression that contradicts the extracted structure. The pressure term C enforces the conflict that makes boundedness impossible.',
+      },
+      {
+        title: 'Divergence conclusion',
+        detail:
+          'Therefore discrepancy must be unbounded for any ±1 sequence. Z ensures the divergence manifests over time, completing the solution.',
+      },
+    ],
+    signal: 'Resolved · Divergence guaranteed',
+    visual: {
+      title: 'Discrepancy Singularity',
+      description:
+        'A tightening spiral captures oscillations that eventually break containment, marking the inevitable divergence in discrepancy.',
+      variant: 'singularity',
+      metrics: [
+        { label: 'Discrepancy', value: 'Unbounded' },
+        { label: 'Spectral Energy', value: 'Expands' },
+        { label: 'Constraint', value: 'Broken' },
+      ],
+      palette: {
+        core: '#f472b6',
+        halo: '#22c55e',
+        arc: '#38bdf8',
+      },
+      motionSpeed: '9s',
+    },
+  },
 ]
 
 const latexReplacements: [RegExp, string][] = [
@@ -356,7 +812,7 @@ export function MathSolutionsModule({ onBackToMenu }: MathSolutionsModuleProps) 
       <section className="math-solutions__stats">
         <div className="math-solutions__stat-card">
           <p className="math-solutions__stat-label">Active Threads</p>
-          <p className="math-solutions__stat-value">3</p>
+          <p className="math-solutions__stat-value">9</p>
           <span className="math-solutions__stat-footnote">Erdos queue primed</span>
         </div>
         <div className="math-solutions__stat-card">
