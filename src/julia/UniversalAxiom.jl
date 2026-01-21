@@ -521,7 +521,215 @@ function seed_erdos_problems()::Vector{ErdosProblem}
         "Z keeps the search temporal and bounded; Y focuses viable regimes."
     )
 
-    [erdos_straus, erdos_distinct, erdos_moser]
+    erdos_ko_rado = ErdosProblem(
+        "erdos-ko-rado",
+        "Erdos–Ko–Rado Theorem",
+        "For n ≥ 2k, the largest intersecting family of k-subsets of {1, …, n} has size C(n−1, k−1).",
+        "solved",
+        "The axiom emphasizes how A·B·C stabilizes intersection structure while E_n regulates combinatorial growth."
+    )
+    add_proof_step!(
+        erdos_ko_rado,
+        "Fix a canonical element to anchor intersecting families.",
+        "X and Y align perspective so all intersections share a core axis."
+    )
+    add_proof_step!(
+        erdos_ko_rado,
+        "Compare arbitrary families to a star family.",
+        "A·B·C fixes the foundational overlap that dominates size."
+    )
+    add_proof_step!(
+        erdos_ko_rado,
+        "Apply compression/shifting to increase regularity.",
+        "F_n-style regulation smooths irregularities into canonical form."
+    )
+    add_proof_step!(
+        erdos_ko_rado,
+        "Count surviving sets after compression.",
+        "E_n tracks the combinatorial growth of the stabilized family."
+    )
+    add_proof_step!(
+        erdos_ko_rado,
+        "Characterize extremal cases.",
+        "Z preserves continuity to conclude all maxima are stars."
+    )
+
+    erdos_szekeres = ErdosProblem(
+        "erdos-szekeres",
+        "Erdos–Szekeres Happy Ending Problem",
+        "Determine the minimal N(n) such that any N(n) points in general position in the plane contain n points in convex position.",
+        "partial",
+        "E_n captures the rapid growth of point configurations, while F_n signals the combinatorial regulation that forces convex structure."
+    )
+    add_proof_step!(
+        erdos_szekeres,
+        "Encode points by convex/concave chains.",
+        "A·B·C captures the foundational order relations among points."
+    )
+    add_proof_step!(
+        erdos_szekeres,
+        "Apply Ramsey-type bounds to chain lengths.",
+        "E_n provides the growth envelope for inevitable structure."
+    )
+    add_proof_step!(
+        erdos_szekeres,
+        "Use monotone subsequence arguments.",
+        "F_n smooths oscillations, aligning with ordered subsequences."
+    )
+    add_proof_step!(
+        erdos_szekeres,
+        "Derive upper bounds via combinatorial recursion.",
+        "Z tracks recursive depth while keeping the search bounded."
+    )
+    add_proof_step!(
+        erdos_szekeres,
+        "Compare with lower-bound constructions.",
+        "X and Y balance structural intent against extremal examples."
+    )
+
+    erdos_faber_lovasz = ErdosProblem(
+        "erdos-faber-lovasz",
+        "Erdos–Faber–Lovasz Conjecture",
+        "Any linear hypergraph with n edges, each of size n, has chromatic number at most n.",
+        "solved",
+        "The axiom aligns color pressure (C) with combinatorial expansion (E_n) to cap chromatic growth."
+    )
+    add_proof_step!(
+        erdos_faber_lovasz,
+        "Translate hypergraph coloring to incidence structure.",
+        "A·B·C locks vertex-edge intersections into a linear lattice."
+    )
+    add_proof_step!(
+        erdos_faber_lovasz,
+        "Apply probabilistic coloring bounds.",
+        "E_n models expansion while X calibrates random selection."
+    )
+    add_proof_step!(
+        erdos_faber_lovasz,
+        "Refine via iterative nibble methods.",
+        "F_n regulates the iterative removal of conflicts."
+    )
+    add_proof_step!(
+        erdos_faber_lovasz,
+        "Stabilize with absorbers for leftover vertices.",
+        "Z preserves continuity as the coloring completes."
+    )
+    add_proof_step!(
+        erdos_faber_lovasz,
+        "Conclude chromatic cap at n.",
+        "C pressure finalizes the bound with no overflow."
+    )
+
+    erdos_ginzburg_ziv = ErdosProblem(
+        "erdos-ginzburg-ziv",
+        "Erdos–Ginzburg–Ziv Theorem",
+        "Any sequence of 2n−1 integers contains a subsequence of length n whose sum is divisible by n.",
+        "solved",
+        "The axiom’s regulation (F_n) governs modular accumulation, ensuring balanced subsequences emerge."
+    )
+    add_proof_step!(
+        erdos_ginzburg_ziv,
+        "Map integers to residues mod n.",
+        "A·B·C frames modular pressure across the sequence."
+    )
+    add_proof_step!(
+        erdos_ginzburg_ziv,
+        "Apply zero-sum combinatorial lemmas.",
+        "E_n scales the residue space to guarantee coverage."
+    )
+    add_proof_step!(
+        erdos_ginzburg_ziv,
+        "Use induction on n with residue partitioning.",
+        "Z tracks recursion while preserving sequence continuity."
+    )
+    add_proof_step!(
+        erdos_ginzburg_ziv,
+        "Extract a length-n zero-sum subsequence.",
+        "F_n balances residues to stabilize the sum at zero."
+    )
+    add_proof_step!(
+        erdos_ginzburg_ziv,
+        "Conclude optimal length 2n−1.",
+        "X and Y confirm the bound is tight via extremal examples."
+    )
+
+    erdos_heilbronn = ErdosProblem(
+        "erdos-heilbronn",
+        "Erdos–Heilbronn Conjecture",
+        "For a subset A of Z_p, the restricted sumset A ⊕ A = {a+b : a,b∈A, a≠b} has size at least min(p, 2|A|−3).",
+        "solved",
+        "The axiom links additive expansion (E_n) with pressure (C) to ensure growth in restricted sumsets."
+    )
+    add_proof_step!(
+        erdos_heilbronn,
+        "Embed the set in modular arithmetic.",
+        "A·B·C stabilizes the modular structure and constraints."
+    )
+    add_proof_step!(
+        erdos_heilbronn,
+        "Apply polynomial method or combinatorial nullstellensatz.",
+        "E_n captures the expansion of algebraic constraints."
+    )
+    add_proof_step!(
+        erdos_heilbronn,
+        "Control forbidden diagonal pairs.",
+        "C pressure enforces the a≠b restriction without collapse."
+    )
+    add_proof_step!(
+        erdos_heilbronn,
+        "Compare with unrestricted sumsets.",
+        "F_n regulates the difference between restricted and full sums."
+    )
+    add_proof_step!(
+        erdos_heilbronn,
+        "Conclude lower bound min(p, 2|A|−3).",
+        "Z aligns the bound with finite-field continuity."
+    )
+
+    erdos_discrepancy = ErdosProblem(
+        "erdos-discrepancy",
+        "Erdos Discrepancy Problem",
+        "For any ±1 sequence, show the discrepancy of homogeneous arithmetic progressions is unbounded.",
+        "solved",
+        "E_n amplifies oscillations while C enforces constraints, revealing that imbalance must eventually diverge."
+    )
+    add_proof_step!(
+        erdos_discrepancy,
+        "Model discrepancy via multiplicative sequences.",
+        "A·B·C captures foundational constraints on sign patterns."
+    )
+    add_proof_step!(
+        erdos_discrepancy,
+        "Translate to Fourier/Dirichlet character bounds.",
+        "E_n aligns spectral growth with sequence length."
+    )
+    add_proof_step!(
+        erdos_discrepancy,
+        "Apply entropy or energy increment arguments.",
+        "F_n regulates oscillations while extracting structure."
+    )
+    add_proof_step!(
+        erdos_discrepancy,
+        "Show any bounded discrepancy implies contradiction.",
+        "C pressure forces an impossible compression of energy."
+    )
+    add_proof_step!(
+        erdos_discrepancy,
+        "Conclude unbounded discrepancy.",
+        "Z preserves temporal continuity to the divergence threshold."
+    )
+
+    [
+        erdos_straus,
+        erdos_distinct,
+        erdos_moser,
+        erdos_ko_rado,
+        erdos_szekeres,
+        erdos_faber_lovasz,
+        erdos_ginzburg_ziv,
+        erdos_heilbronn,
+        erdos_discrepancy,
+    ]
 end
 
 # String representation

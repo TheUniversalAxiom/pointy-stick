@@ -578,7 +578,197 @@ fn seed_erdos_problems() -> Vec<ErdosProblem> {
         ),
     ]);
 
-    vec![erdos_straus, erdos_distinct, erdos_moser]
+    let mut erdos_ko_rado = ErdosProblem::new(
+        "erdos-ko-rado",
+        "Erdos–Ko–Rado Theorem",
+        "For n ≥ 2k, the largest intersecting family of k-subsets of {1, …, n} has size C(n−1, k−1).",
+        "solved",
+        "The axiom emphasizes how A·B·C stabilizes intersection structure while E_n regulates combinatorial growth.",
+    );
+    erdos_ko_rado.add_proof_steps(vec![
+        ProofStep::new(
+            "Fix a canonical element to anchor intersecting families.",
+            "X and Y align perspective so all intersections share a core axis.",
+        ),
+        ProofStep::new(
+            "Compare arbitrary families to a star family.",
+            "A·B·C fixes the foundational overlap that dominates size.",
+        ),
+        ProofStep::new(
+            "Apply compression/shifting to increase regularity.",
+            "F_n-style regulation smooths irregularities into canonical form.",
+        ),
+        ProofStep::new(
+            "Count surviving sets after compression.",
+            "E_n tracks the combinatorial growth of the stabilized family.",
+        ),
+        ProofStep::new(
+            "Characterize extremal cases.",
+            "Z preserves continuity to conclude all maxima are stars.",
+        ),
+    ]);
+
+    let mut erdos_szekeres = ErdosProblem::new(
+        "erdos-szekeres",
+        "Erdos–Szekeres Happy Ending Problem",
+        "Determine the minimal N(n) such that any N(n) points in general position in the plane contain n points in convex position.",
+        "partial",
+        "E_n captures the rapid growth of point configurations, while F_n signals the combinatorial regulation that forces convex structure.",
+    );
+    erdos_szekeres.add_proof_steps(vec![
+        ProofStep::new(
+            "Encode points by convex/concave chains.",
+            "A·B·C captures the foundational order relations among points.",
+        ),
+        ProofStep::new(
+            "Apply Ramsey-type bounds to chain lengths.",
+            "E_n provides the growth envelope for inevitable structure.",
+        ),
+        ProofStep::new(
+            "Use monotone subsequence arguments.",
+            "F_n smooths oscillations, aligning with ordered subsequences.",
+        ),
+        ProofStep::new(
+            "Derive upper bounds via combinatorial recursion.",
+            "Z tracks recursive depth while keeping the search bounded.",
+        ),
+        ProofStep::new(
+            "Compare with lower-bound constructions.",
+            "X and Y balance structural intent against extremal examples.",
+        ),
+    ]);
+
+    let mut erdos_faber_lovasz = ErdosProblem::new(
+        "erdos-faber-lovasz",
+        "Erdos–Faber–Lovasz Conjecture",
+        "Any linear hypergraph with n edges, each of size n, has chromatic number at most n.",
+        "solved",
+        "The axiom aligns color pressure (C) with combinatorial expansion (E_n) to cap chromatic growth.",
+    );
+    erdos_faber_lovasz.add_proof_steps(vec![
+        ProofStep::new(
+            "Translate hypergraph coloring to incidence structure.",
+            "A·B·C locks vertex-edge intersections into a linear lattice.",
+        ),
+        ProofStep::new(
+            "Apply probabilistic coloring bounds.",
+            "E_n models expansion while X calibrates random selection.",
+        ),
+        ProofStep::new(
+            "Refine via iterative nibble methods.",
+            "F_n regulates the iterative removal of conflicts.",
+        ),
+        ProofStep::new(
+            "Stabilize with absorbers for leftover vertices.",
+            "Z preserves continuity as the coloring completes.",
+        ),
+        ProofStep::new(
+            "Conclude chromatic cap at n.",
+            "C pressure finalizes the bound with no overflow.",
+        ),
+    ]);
+
+    let mut erdos_ginzburg_ziv = ErdosProblem::new(
+        "erdos-ginzburg-ziv",
+        "Erdos–Ginzburg–Ziv Theorem",
+        "Any sequence of 2n−1 integers contains a subsequence of length n whose sum is divisible by n.",
+        "solved",
+        "The axiom’s regulation (F_n) governs modular accumulation, ensuring balanced subsequences emerge.",
+    );
+    erdos_ginzburg_ziv.add_proof_steps(vec![
+        ProofStep::new(
+            "Map integers to residues mod n.",
+            "A·B·C frames modular pressure across the sequence.",
+        ),
+        ProofStep::new(
+            "Apply zero-sum combinatorial lemmas.",
+            "E_n scales the residue space to guarantee coverage.",
+        ),
+        ProofStep::new(
+            "Use induction on n with residue partitioning.",
+            "Z tracks recursion while preserving sequence continuity.",
+        ),
+        ProofStep::new(
+            "Extract a length-n zero-sum subsequence.",
+            "F_n balances residues to stabilize the sum at zero.",
+        ),
+        ProofStep::new(
+            "Conclude optimal length 2n−1.",
+            "X and Y confirm the bound is tight via extremal examples.",
+        ),
+    ]);
+
+    let mut erdos_heilbronn = ErdosProblem::new(
+        "erdos-heilbronn",
+        "Erdos–Heilbronn Conjecture",
+        "For a subset A of Z_p, the restricted sumset A ⊕ A = {a+b : a,b∈A, a≠b} has size at least min(p, 2|A|−3).",
+        "solved",
+        "The axiom links additive expansion (E_n) with pressure (C) to ensure growth in restricted sumsets.",
+    );
+    erdos_heilbronn.add_proof_steps(vec![
+        ProofStep::new(
+            "Embed the set in modular arithmetic.",
+            "A·B·C stabilizes the modular structure and constraints.",
+        ),
+        ProofStep::new(
+            "Apply polynomial method or combinatorial nullstellensatz.",
+            "E_n captures the expansion of algebraic constraints.",
+        ),
+        ProofStep::new(
+            "Control forbidden diagonal pairs.",
+            "C pressure enforces the a≠b restriction without collapse.",
+        ),
+        ProofStep::new(
+            "Compare with unrestricted sumsets.",
+            "F_n regulates the difference between restricted and full sums.",
+        ),
+        ProofStep::new(
+            "Conclude lower bound min(p, 2|A|−3).",
+            "Z aligns the bound with finite-field continuity.",
+        ),
+    ]);
+
+    let mut erdos_discrepancy = ErdosProblem::new(
+        "erdos-discrepancy",
+        "Erdos Discrepancy Problem",
+        "For any ±1 sequence, show the discrepancy of homogeneous arithmetic progressions is unbounded.",
+        "solved",
+        "E_n amplifies oscillations while C enforces constraints, revealing that imbalance must eventually diverge.",
+    );
+    erdos_discrepancy.add_proof_steps(vec![
+        ProofStep::new(
+            "Model discrepancy via multiplicative sequences.",
+            "A·B·C captures foundational constraints on sign patterns.",
+        ),
+        ProofStep::new(
+            "Translate to Fourier/Dirichlet character bounds.",
+            "E_n aligns spectral growth with sequence length.",
+        ),
+        ProofStep::new(
+            "Apply entropy or energy increment arguments.",
+            "F_n regulates oscillations while extracting structure.",
+        ),
+        ProofStep::new(
+            "Show any bounded discrepancy implies contradiction.",
+            "C pressure forces an impossible compression of energy.",
+        ),
+        ProofStep::new(
+            "Conclude unbounded discrepancy.",
+            "Z preserves temporal continuity to the divergence threshold.",
+        ),
+    ]);
+
+    vec![
+        erdos_straus,
+        erdos_distinct,
+        erdos_moser,
+        erdos_ko_rado,
+        erdos_szekeres,
+        erdos_faber_lovasz,
+        erdos_ginzburg_ziv,
+        erdos_heilbronn,
+        erdos_discrepancy,
+    ]
 }
 
 #[cfg(test)]
@@ -818,11 +1008,26 @@ mod tests {
     #[test]
     fn test_math_solutions_seed_contains_problem() {
         let solutions = MathSolutions::erdos_seed();
-        let problem = solutions.get_problem("erdos-straus");
-        assert!(problem.is_some());
-        let problem = problem.unwrap();
-        assert_eq!(problem.status, "open");
-        assert!(problem.proof_steps.is_empty());
+        let expected = vec![
+            ("erdos-straus", "open"),
+            ("erdos-distinct-distances", "solved"),
+            ("erdos-moser", "partial"),
+            ("erdos-ko-rado", "solved"),
+            ("erdos-szekeres", "partial"),
+            ("erdos-faber-lovasz", "solved"),
+            ("erdos-ginzburg-ziv", "solved"),
+            ("erdos-heilbronn", "solved"),
+            ("erdos-discrepancy", "solved"),
+        ];
+
+        assert_eq!(solutions.list_problems().len(), expected.len());
+        for (identifier, status) in expected {
+            let problem = solutions.get_problem(identifier);
+            assert!(problem.is_some());
+            let problem = problem.unwrap();
+            assert_eq!(problem.status, status);
+            assert_eq!(problem.proof_steps.len(), 5);
+        }
     }
 
     #[test]
@@ -835,10 +1040,9 @@ mod tests {
         );
         assert!(result.is_ok());
         let problem = solutions.get_problem("erdos-straus").unwrap();
-        assert_eq!(problem.proof_steps.len(), 1);
-        assert!(problem.proof_steps[0]
-            .statement
-            .contains("Normalize the equation"));
+        assert_eq!(problem.proof_steps.len(), 6);
+        let last_step = problem.proof_steps.last().unwrap();
+        assert!(last_step.statement.contains("Normalize the equation"));
     }
 
     #[test]

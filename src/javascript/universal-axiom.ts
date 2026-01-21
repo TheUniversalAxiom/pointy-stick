@@ -513,6 +513,180 @@ function seedErdosProblems(): ErdosProblem[] {
           'Z keeps the search temporal and bounded; Y focuses viable regimes.'
         )
       ]
+    ),
+    new ErdosProblem(
+      'erdos-ko-rado',
+      'Erdos–Ko–Rado Theorem',
+      'For n ≥ 2k, the largest intersecting family of k-subsets of {1, …, n} has size C(n−1, k−1).',
+      'solved',
+      'The axiom emphasizes how A·B·C stabilizes intersection structure while E_n regulates combinatorial growth.',
+      [
+        new ProofStep(
+          'Fix a canonical element to anchor intersecting families.',
+          'X and Y align perspective so all intersections share a core axis.'
+        ),
+        new ProofStep(
+          'Compare arbitrary families to a star family.',
+          'A·B·C fixes the foundational overlap that dominates size.'
+        ),
+        new ProofStep(
+          'Apply compression/shifting to increase regularity.',
+          'F_n-style regulation smooths irregularities into canonical form.'
+        ),
+        new ProofStep(
+          'Count surviving sets after compression.',
+          'E_n tracks the combinatorial growth of the stabilized family.'
+        ),
+        new ProofStep(
+          'Characterize extremal cases.',
+          'Z preserves continuity to conclude all maxima are stars.'
+        )
+      ]
+    ),
+    new ErdosProblem(
+      'erdos-szekeres',
+      'Erdos–Szekeres Happy Ending Problem',
+      'Determine the minimal N(n) such that any N(n) points in general position in the plane contain n points in convex position.',
+      'partial',
+      'E_n captures the rapid growth of point configurations, while F_n signals the combinatorial regulation that forces convex structure.',
+      [
+        new ProofStep(
+          'Encode points by convex/concave chains.',
+          'A·B·C captures the foundational order relations among points.'
+        ),
+        new ProofStep(
+          'Apply Ramsey-type bounds to chain lengths.',
+          'E_n provides the growth envelope for inevitable structure.'
+        ),
+        new ProofStep(
+          'Use monotone subsequence arguments.',
+          'F_n smooths oscillations, aligning with ordered subsequences.'
+        ),
+        new ProofStep(
+          'Derive upper bounds via combinatorial recursion.',
+          'Z tracks recursive depth while keeping the search bounded.'
+        ),
+        new ProofStep(
+          'Compare with lower-bound constructions.',
+          'X and Y balance structural intent against extremal examples.'
+        )
+      ]
+    ),
+    new ErdosProblem(
+      'erdos-faber-lovasz',
+      'Erdos–Faber–Lovasz Conjecture',
+      'Any linear hypergraph with n edges, each of size n, has chromatic number at most n.',
+      'solved',
+      'The axiom aligns color pressure (C) with combinatorial expansion (E_n) to cap chromatic growth.',
+      [
+        new ProofStep(
+          'Translate hypergraph coloring to incidence structure.',
+          'A·B·C locks vertex-edge intersections into a linear lattice.'
+        ),
+        new ProofStep(
+          'Apply probabilistic coloring bounds.',
+          'E_n models expansion while X calibrates random selection.'
+        ),
+        new ProofStep(
+          'Refine via iterative nibble methods.',
+          'F_n regulates the iterative removal of conflicts.'
+        ),
+        new ProofStep(
+          'Stabilize with absorbers for leftover vertices.',
+          'Z preserves continuity as the coloring completes.'
+        ),
+        new ProofStep(
+          'Conclude chromatic cap at n.',
+          'C pressure finalizes the bound with no overflow.'
+        )
+      ]
+    ),
+    new ErdosProblem(
+      'erdos-ginzburg-ziv',
+      'Erdos–Ginzburg–Ziv Theorem',
+      'Any sequence of 2n−1 integers contains a subsequence of length n whose sum is divisible by n.',
+      'solved',
+      'The axiom’s regulation (F_n) governs modular accumulation, ensuring balanced subsequences emerge.',
+      [
+        new ProofStep(
+          'Map integers to residues mod n.',
+          'A·B·C frames modular pressure across the sequence.'
+        ),
+        new ProofStep(
+          'Apply zero-sum combinatorial lemmas.',
+          'E_n scales the residue space to guarantee coverage.'
+        ),
+        new ProofStep(
+          'Use induction on n with residue partitioning.',
+          'Z tracks recursion while preserving sequence continuity.'
+        ),
+        new ProofStep(
+          'Extract a length-n zero-sum subsequence.',
+          'F_n balances residues to stabilize the sum at zero.'
+        ),
+        new ProofStep(
+          'Conclude optimal length 2n−1.',
+          'X and Y confirm the bound is tight via extremal examples.'
+        )
+      ]
+    ),
+    new ErdosProblem(
+      'erdos-heilbronn',
+      'Erdos–Heilbronn Conjecture',
+      'For a subset A of Z_p, the restricted sumset A ⊕ A = {a+b : a,b∈A, a≠b} has size at least min(p, 2|A|−3).',
+      'solved',
+      'The axiom links additive expansion (E_n) with pressure (C) to ensure growth in restricted sumsets.',
+      [
+        new ProofStep(
+          'Embed the set in modular arithmetic.',
+          'A·B·C stabilizes the modular structure and constraints.'
+        ),
+        new ProofStep(
+          'Apply polynomial method or combinatorial nullstellensatz.',
+          'E_n captures the expansion of algebraic constraints.'
+        ),
+        new ProofStep(
+          'Control forbidden diagonal pairs.',
+          'C pressure enforces the a≠b restriction without collapse.'
+        ),
+        new ProofStep(
+          'Compare with unrestricted sumsets.',
+          'F_n regulates the difference between restricted and full sums.'
+        ),
+        new ProofStep(
+          'Conclude lower bound min(p, 2|A|−3).',
+          'Z aligns the bound with finite-field continuity.'
+        )
+      ]
+    ),
+    new ErdosProblem(
+      'erdos-discrepancy',
+      'Erdos Discrepancy Problem',
+      'For any ±1 sequence, show the discrepancy of homogeneous arithmetic progressions is unbounded.',
+      'solved',
+      'E_n amplifies oscillations while C enforces constraints, revealing that imbalance must eventually diverge.',
+      [
+        new ProofStep(
+          'Model discrepancy via multiplicative sequences.',
+          'A·B·C captures foundational constraints on sign patterns.'
+        ),
+        new ProofStep(
+          'Translate to Fourier/Dirichlet character bounds.',
+          'E_n aligns spectral growth with sequence length.'
+        ),
+        new ProofStep(
+          'Apply entropy or energy increment arguments.',
+          'F_n regulates oscillations while extracting structure.'
+        ),
+        new ProofStep(
+          'Show any bounded discrepancy implies contradiction.',
+          'C pressure forces an impossible compression of energy.'
+        ),
+        new ProofStep(
+          'Conclude unbounded discrepancy.',
+          'Z preserves temporal continuity to the divergence threshold.'
+        )
+      ]
     )
   ];
 }

@@ -205,15 +205,26 @@ class TestMathSolutions:
 
     def test_erdos_seed_contains_problem(self):
         solutions = MathSolutions.erdos_seed()
-        problem = solutions.get_problem("erdos-straus")
+        expected = {
+            "erdos-straus": "open",
+            "erdos-distinct-distances": "solved",
+            "erdos-moser": "partial",
+            "erdos-ko-rado": "solved",
+            "erdos-szekeres": "partial",
+            "erdos-faber-lovasz": "solved",
+            "erdos-ginzburg-ziv": "solved",
+            "erdos-heilbronn": "solved",
+            "erdos-discrepancy": "solved",
+        }
 
-        assert isinstance(problem, ErdosProblem)
-        assert problem.status == "open"
-        assert len(problem.proof_steps) == 5
+        problems = solutions.list_problems()
+        assert len(problems) == len(expected)
 
-        erdos_moser = solutions.get_problem("erdos-moser")
-        assert erdos_moser.status == "partial"
-        assert len(erdos_moser.proof_steps) == 5
+        for identifier, status in expected.items():
+            problem = solutions.get_problem(identifier)
+            assert isinstance(problem, ErdosProblem)
+            assert problem.status == status
+            assert len(problem.proof_steps) == 5
 
     def test_add_proof_step(self):
         solutions = MathSolutions.erdos_seed()

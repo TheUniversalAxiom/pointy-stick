@@ -394,14 +394,25 @@ describe('PROMPT.md Compliance', () => {
 describe('MathSolutions (Erdos problems)', () => {
   test('seeded Erdos problem is available', () => {
     const solutions = MathSolutions.erdosSeed();
-    const problem = solutions.getProblem('erdos-straus');
+    const expected = {
+      'erdos-straus': 'open',
+      'erdos-distinct-distances': 'solved',
+      'erdos-moser': 'partial',
+      'erdos-ko-rado': 'solved',
+      'erdos-szekeres': 'partial',
+      'erdos-faber-lovasz': 'solved',
+      'erdos-ginzburg-ziv': 'solved',
+      'erdos-heilbronn': 'solved',
+      'erdos-discrepancy': 'solved',
+    };
 
-    expect(problem.status).toBe('open');
-    expect(problem.proofSteps).toHaveLength(5);
+    expect(solutions.listProblems()).toHaveLength(Object.keys(expected).length);
 
-    const erdosMoser = solutions.getProblem('erdos-moser');
-    expect(erdosMoser.status).toBe('partial');
-    expect(erdosMoser.proofSteps).toHaveLength(5);
+    Object.entries(expected).forEach(([identifier, status]) => {
+      const problem = solutions.getProblem(identifier);
+      expect(problem.status).toBe(status);
+      expect(problem.proofSteps).toHaveLength(5);
+    });
   });
 
   test('adds proof steps with axiom insights', () => {
