@@ -351,6 +351,161 @@ pub fn fibonacci_sequence(n: usize) -> Vec<u64> {
     sequence
 }
 
+/// A proof step annotated with an axiom-aligned insight.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ProofStep {
+    pub statement: String,
+    pub axiom_insight: String,
+}
+
+impl ProofStep {
+    pub fn new(statement: impl Into<String>, axiom_insight: impl Into<String>) -> Self {
+        Self {
+            statement: statement.into(),
+            axiom_insight: axiom_insight.into(),
+        }
+    }
+}
+
+/// Container for an Erdos problem and its axiom-aligned proof steps.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ErdosProblem {
+    pub identifier: String,
+    pub title: String,
+    pub statement: String,
+    pub status: String,
+    pub axiom_insight: String,
+    pub proof_steps: Vec<ProofStep>,
+}
+
+impl ErdosProblem {
+    pub fn new(
+        identifier: impl Into<String>,
+        title: impl Into<String>,
+        statement: impl Into<String>,
+        status: impl Into<String>,
+        axiom_insight: impl Into<String>,
+    ) -> Self {
+        Self {
+            identifier: identifier.into(),
+            title: title.into(),
+            statement: statement.into(),
+            status: status.into(),
+            axiom_insight: axiom_insight.into(),
+            proof_steps: Vec::new(),
+        }
+    }
+
+    pub fn add_proof_step(&mut self, statement: impl Into<String>, axiom_insight: impl Into<String>) {
+        self.proof_steps
+            .push(ProofStep::new(statement, axiom_insight));
+    }
+
+    pub fn add_proof_steps(&mut self, steps: Vec<ProofStep>) {
+        self.proof_steps.extend(steps);
+    }
+}
+
+/// Registry for mathematical problems and axiom-aligned proof steps.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct MathSolutions {
+    pub problems: Vec<ErdosProblem>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ProblemSummary {
+    pub identifier: String,
+    pub title: String,
+    pub status: String,
+}
+
+impl MathSolutions {
+    pub fn new() -> Self {
+        Self {
+            problems: Vec::new(),
+        }
+    }
+
+    pub fn erdos_seed() -> Self {
+        Self {
+            problems: seed_erdos_problems(),
+        }
+    }
+
+    pub fn add_problem(&mut self, problem: ErdosProblem) {
+        if let Some(existing) = self
+            .problems
+            .iter_mut()
+            .find(|item| item.identifier == problem.identifier)
+        {
+            *existing = problem;
+        } else {
+            self.problems.push(problem);
+        }
+    }
+
+    pub fn get_problem(&self, identifier: &str) -> Option<&ErdosProblem> {
+        self.problems
+            .iter()
+            .find(|problem| problem.identifier == identifier)
+    }
+
+    pub fn get_problem_mut(&mut self, identifier: &str) -> Option<&mut ErdosProblem> {
+        self.problems
+            .iter_mut()
+            .find(|problem| problem.identifier == identifier)
+    }
+
+    pub fn list_problems(&self) -> &Vec<ErdosProblem> {
+        &self.problems
+    }
+
+    pub fn summaries(&self) -> Vec<ProblemSummary> {
+        self.problems
+            .iter()
+            .map(|problem| ProblemSummary {
+                identifier: problem.identifier.clone(),
+                title: problem.title.clone(),
+                status: problem.status.clone(),
+            })
+            .collect()
+    }
+
+    pub fn add_proof_step(
+        &mut self,
+        identifier: &str,
+        statement: impl Into<String>,
+        axiom_insight: impl Into<String>,
+    ) -> Result<(), String> {
+        match self.get_problem_mut(identifier) {
+            Some(problem) => {
+                problem.add_proof_step(statement, axiom_insight);
+                Ok(())
+            }
+            None => Err(format!("Unknown problem identifier: {identifier}")),
+        }
+    }
+}
+
+fn seed_erdos_problems() -> Vec<ErdosProblem> {
+    vec![
+        ErdosProblem::new(
+            "erdos-straus",
+            "Erdos–Straus Conjecture",
+            "For every integer n ≥ 2, the rational 4/n can be expressed as the sum of three unit fractions: 4/n = 1/x + 1/y + 1/z for integers x, y, z.",
+            "open",
+            "The axiom highlights how constraints (C) and growth (E_n, F_n) interact, suggesting structured pathways to decompositions.",
+        ),
+        ErdosProblem::new(
+            "erdos-distinct-distances",
+            "Erdos Distinct Distances Problem",
+            "Determine the minimum number of distinct distances defined by n points in the plane.",
+            "solved",
+            "Balancing combinatorial growth (E_n) with structural regulation (F_n) mirrors the tension between point density and distance diversity.",
+        ),
+    ]
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -583,6 +738,32 @@ mod tests {
         let axiom = UniversalAxiom::with_params(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1);
         let intelligence = axiom.compute_intelligence();
         assert_eq!(intelligence, 0.0);
+    }
+
+    #[test]
+    fn test_math_solutions_seed_contains_problem() {
+        let solutions = MathSolutions::erdos_seed();
+        let problem = solutions.get_problem("erdos-straus");
+        assert!(problem.is_some());
+        let problem = problem.unwrap();
+        assert_eq!(problem.status, "open");
+        assert!(problem.proof_steps.is_empty());
+    }
+
+    #[test]
+    fn test_math_solutions_add_proof_step() {
+        let mut solutions = MathSolutions::erdos_seed();
+        let result = solutions.add_proof_step(
+            "erdos-straus",
+            "Normalize the equation to isolate reciprocal structure.",
+            "Use the axiom's foundation layer (A·B·C) to align constraints.",
+        );
+        assert!(result.is_ok());
+        let problem = solutions.get_problem("erdos-straus").unwrap();
+        assert_eq!(problem.proof_steps.len(), 1);
+        assert!(problem.proof_steps[0]
+            .statement
+            .contains("Normalize the equation"));
     }
 
     #[test]

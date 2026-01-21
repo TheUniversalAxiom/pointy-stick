@@ -140,4 +140,50 @@ export declare class AxiomSimulator {
  * Generate Fibonacci sequence up to n terms
  */
 export declare function fibonacciSequence(n: number): number[];
+export type ProblemStatus = 'open' | 'solved' | 'partial';
+export declare class ProofStep {
+    statement: string;
+    axiomInsight: string;
+    constructor(statement: string, axiomInsight: string);
+    toJSON(): {
+        statement: string;
+        axiom_insight: string;
+    };
+}
+export declare class ErdosProblem {
+    identifier: string;
+    title: string;
+    statement: string;
+    status: ProblemStatus;
+    axiomInsight: string;
+    proofSteps: ProofStep[];
+    constructor(identifier: string, title: string, statement: string, status: ProblemStatus, axiomInsight: string, proofSteps?: ProofStep[]);
+    addProofStep(statement: string, axiomInsight: string): void;
+    addProofSteps(steps: ProofStep[]): void;
+    toJSON(): {
+        identifier: string;
+        title: string;
+        statement: string;
+        status: ProblemStatus;
+        axiom_insight: string;
+        proof_steps: {
+            statement: string;
+            axiom_insight: string;
+        }[];
+    };
+}
+export declare class MathSolutions {
+    private problems;
+    constructor(problems?: ErdosProblem[]);
+    static erdosSeed(): MathSolutions;
+    addProblem(problem: ErdosProblem): void;
+    getProblem(identifier: string): ErdosProblem;
+    listProblems(): ErdosProblem[];
+    addProofStep(identifier: string, statement: string, axiomInsight: string): void;
+    summaries(): {
+        identifier: string;
+        title: string;
+        status: ProblemStatus;
+    }[];
+}
 //# sourceMappingURL=universal-axiom.d.ts.map

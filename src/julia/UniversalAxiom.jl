@@ -15,6 +15,8 @@ export Axiom, AxiomSimulator, AxiomState
 export compute, compute_intelligence, evolve!, apply_pressure!, adjust_subjectivity!, strengthen_purpose!
 export get_state, state_to_dict, simulate_evolution, simulate_contradiction_resolution, get_coherence_metric
 export fibonacci_sequence, fibonacci, exponential_growth, objectivity
+export ProofStep, ErdosProblem, MathSolutions
+export add_proof_step!, add_problem!, get_problem, list_problems, summaries, erdos_seed
 
 """
 Foundation Layer: A · B · C
@@ -329,6 +331,113 @@ function fibonacci_sequence(n::Int64)::Vector{Int64}
     end
 
     sequence
+end
+
+"""
+Proof step aligned with the Universal Axiom.
+"""
+struct ProofStep
+    statement::String
+    axiom_insight::String
+end
+
+"""
+Container for an Erdos problem and its axiom-aligned proof steps.
+"""
+mutable struct ErdosProblem
+    identifier::String
+    title::String
+    statement::String
+    status::String
+    axiom_insight::String
+    proof_steps::Vector{ProofStep}
+end
+
+function ErdosProblem(
+    identifier::String,
+    title::String,
+    statement::String,
+    status::String,
+    axiom_insight::String
+)::ErdosProblem
+    ErdosProblem(identifier, title, statement, status, axiom_insight, ProofStep[])
+end
+
+function add_proof_step!(problem::ErdosProblem, statement::String, axiom_insight::String)::Nothing
+    push!(problem.proof_steps, ProofStep(statement, axiom_insight))
+    return nothing
+end
+
+"""
+Registry for mathematical problems and axiom-aligned proof steps.
+"""
+mutable struct MathSolutions
+    problems::Dict{String, ErdosProblem}
+end
+
+function MathSolutions(problems::Vector{ErdosProblem}=ErdosProblem[])::MathSolutions
+    mapping = Dict{String, ErdosProblem}()
+    for problem in problems
+        mapping[problem.identifier] = problem
+    end
+    MathSolutions(mapping)
+end
+
+function erdos_seed()::MathSolutions
+    MathSolutions(seed_erdos_problems())
+end
+
+function add_problem!(solutions::MathSolutions, problem::ErdosProblem)::Nothing
+    solutions.problems[problem.identifier] = problem
+    return nothing
+end
+
+function get_problem(solutions::MathSolutions, identifier::String)::ErdosProblem
+    if !haskey(solutions.problems, identifier)
+        error("Unknown problem identifier: $(identifier)")
+    end
+    solutions.problems[identifier]
+end
+
+function list_problems(solutions::MathSolutions)::Vector{ErdosProblem}
+    collect(values(solutions.problems))
+end
+
+function add_proof_step!(
+    solutions::MathSolutions,
+    identifier::String,
+    statement::String,
+    axiom_insight::String
+)::Nothing
+    problem = get_problem(solutions, identifier)
+    add_proof_step!(problem, statement, axiom_insight)
+    return nothing
+end
+
+function summaries(solutions::MathSolutions)::Vector{NamedTuple}
+    [
+        (identifier=problem.identifier, title=problem.title, status=problem.status)
+        for problem in values(solutions.problems)
+    ]
+end
+
+function seed_erdos_problems()::Vector{ErdosProblem}
+    [
+        ErdosProblem(
+            "erdos-straus",
+            "Erdos–Straus Conjecture",
+            "For every integer n ≥ 2, the rational 4/n can be expressed as the sum of three unit fractions: 4/n = 1/x + 1/y + 1/z for integers x, y, z.",
+            "open",
+            "The axiom highlights how constraints (C) and growth (E_n, F_n) interact, suggesting structured pathways to decompositions."
+        ),
+        ErdosProblem(
+            "erdos-distinct-distances",
+            "Erdos Distinct Distances Problem",
+            "Determine the minimum number of distinct distances defined by n points in the plane.",
+            "solved",
+            "Balancing combinatorial growth (E_n) with structural regulation (F_n) mirrors the tension between point density and distance diversity."
+        )
+    ]
 end
 
 # String representation

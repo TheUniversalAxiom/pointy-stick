@@ -247,6 +247,28 @@ end
     end
 end
 
+@testset "MathSolutions" begin
+    @testset "Seeded Erdos problems" begin
+        solutions = erdos_seed()
+        problem = get_problem(solutions, "erdos-straus")
+        @test problem.status == "open"
+        @test length(problem.proof_steps) == 0
+    end
+
+    @testset "Add proof step" begin
+        solutions = erdos_seed()
+        add_proof_step!(
+            solutions,
+            "erdos-straus",
+            "Normalize the equation to isolate reciprocal structure.",
+            "Use the axiom's foundation layer (A·B·C) to align constraints."
+        )
+        problem = get_problem(solutions, "erdos-straus")
+        @test length(problem.proof_steps) == 1
+        @test occursin("Normalize the equation", problem.proof_steps[1].statement)
+    end
+end
+
 @testset "PROMPT.md Compliance" begin
     @testset "Axiom is deterministic" begin
         axiom1 = Axiom(n=5, impulses=1.0, elements=1.0)
