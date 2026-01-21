@@ -1,7 +1,7 @@
 .narrative-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: var(--color-overlay-bg);
     backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
@@ -120,8 +120,8 @@
 }
 
 .narrative-overlay__insight {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 100%);
-    border: 1px solid rgba(139, 92, 246, 0.3);
+    background: linear-gradient(135deg, var(--color-insight-border) 0%, var(--color-insight-bg) 100%);
+    border: 1px solid var(--color-insight-border);
     border-radius: 12px;
     padding: 16px 20px;
     margin-bottom: 24px;

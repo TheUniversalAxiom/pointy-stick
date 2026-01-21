@@ -47,11 +47,11 @@
 }
 
 .main-menu__highlight {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: var(--color-highlight-bg);
+  border: 1px solid var(--color-highlight-border);
   border-radius: 16px;
   padding: 16px 18px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--color-shadow-soft);
 }
 
 .main-menu__highlight-label {
@@ -76,8 +76,8 @@
 }
 
 .main-menu__card {
-  background: linear-gradient(160deg, rgba(26, 26, 36, 0.95) 0%, rgba(37, 37, 50, 0.98) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
   border-radius: 20px;
   padding: 26px;
   text-align: left;
@@ -91,9 +91,9 @@
 }
 
 .main-menu__card:hover {
-  border-color: rgba(139, 92, 246, 0.6);
+  border-color: var(--color-card-border-hover);
   transform: translateY(-6px);
-  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--color-shadow-strong);
 }
 
 .main-menu__card:focus-visible {
@@ -128,8 +128,8 @@
 }
 
 .main-menu__footer {
-  background: linear-gradient(120deg, rgba(37, 37, 50, 0.95), rgba(26, 26, 36, 0.95));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-footer-bg);
+  border: 1px solid var(--color-footer-border);
   border-radius: 18px;
   padding: 22px 26px;
 }
@@ -155,8 +155,8 @@
 .main-menu__status-pill {
   padding: 6px 16px;
   border-radius: 999px;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: var(--color-status-bg);
+  border: 1px solid var(--color-status-border);
   color: var(--color-positive);
   font-weight: 600;
   font-size: 0.85rem;
