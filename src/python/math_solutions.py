@@ -111,6 +111,53 @@ def _seed_erdos_problems() -> List[ErdosProblem]:
                 "The axiom highlights how constraints (C) and growth (E_n, F_n) interact, "
                 "suggesting structured pathways to decompositions."
             ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Clear denominators to obtain 4xyz = n(xy + xz + yz), exposing the "
+                        "shared ABC constraint."
+                    ),
+                    axiom_insight=(
+                        "A·B·C locks the reciprocal structure while C records divisibility pressure."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Partition n into congruence classes to target families where n divides "
+                        "xy + xz + yz."
+                    ),
+                    axiom_insight=(
+                        "F_n periodicity mirrors modular cycles, guiding repeatable constructions."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Introduce parameterized families for (x, y, z) that satisfy the cleared "
+                        "equation."
+                    ),
+                    axiom_insight=(
+                        "E_n growth supplies expansion room; X and Y keep selections coherent."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Balance denominator growth so x, y, z remain positive and ordered, "
+                        "avoiding runaway residues."
+                    ),
+                    axiom_insight=(
+                        "E_n expands search while F_n regulates magnitude."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Cover dense residue families and reduce remaining cases to bounded "
+                        "verification windows."
+                    ),
+                    axiom_insight=(
+                        "Z enforces temporal continuity; remaining gaps collapse to finite checks."
+                    ),
+                ),
+            ],
         ),
         ErdosProblem(
             identifier="erdos-distinct-distances",
@@ -124,5 +171,106 @@ def _seed_erdos_problems() -> List[ErdosProblem]:
                 "Balancing combinatorial growth (E_n) with structural regulation (F_n) "
                 "mirrors the tension between point density and distance diversity."
             ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Normalize the configuration by translation and scaling to fix baseline "
+                        "spacing."
+                    ),
+                    axiom_insight=(
+                        "X, Y, Z align perspective and time scale before counting."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Count point pairs to relate total pairs to distance multiplicities."
+                    ),
+                    axiom_insight=(
+                        "E_n captures pair growth while F_n regulates clustering."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Apply incidence bounds to limit how often a distance can repeat."
+                    ),
+                    axiom_insight=(
+                        "C pressure caps over-concentration in any single distance."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Construct near-lattice configurations to achieve the lower-bound regime."
+                    ),
+                    axiom_insight=(
+                        "A·B·C balances structure so growth matches regulation."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Conclude the asymptotic bound by matching upper and lower envelopes."
+                    ),
+                    axiom_insight=(
+                        "Dynamic layer (E_n, F_n) closes the gap between expansion and constraint."
+                    ),
+                ),
+            ],
+        ),
+        ErdosProblem(
+            identifier="erdos-moser",
+            title="Erdos–Moser Equation",
+            statement=(
+                "Solve 1^k + 2^k + ... + (m−1)^k = m^k for integers m, k > 1."
+            ),
+            status="partial",
+            axiom_insight=(
+                "E_n scaling intensifies quickly; the axiom suggests using Z to control temporal "
+                "accumulation and detect singularities."
+            ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Compare the power sum to integral bounds to bracket growth of Σ i^k "
+                        "versus m^k."
+                    ),
+                    axiom_insight=(
+                        "E_n sets exponential growth while Z tracks accumulation."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Use modular restrictions on k and m to eliminate incompatible residues."
+                    ),
+                    axiom_insight=(
+                        "C enforces arithmetic pressure, pruning impossible classes."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Isolate the dominant term by normalizing with m^k and bounding the "
+                        "remainder."
+                    ),
+                    axiom_insight=(
+                        "A·B·C stabilizes the foundation as X reduces variance."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Show candidate solutions require extremely tight balance between "
+                        "consecutive powers."
+                    ),
+                    axiom_insight=(
+                        "F_n smooths oscillations, exposing near-cancellation requirements."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Reduce remaining candidates to finite computational windows for "
+                        "verification."
+                    ),
+                    axiom_insight=(
+                        "Z keeps the search temporal and bounded; Y focuses viable regimes."
+                    ),
+                ),
+            ],
         ),
     ]

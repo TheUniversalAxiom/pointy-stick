@@ -209,7 +209,11 @@ class TestMathSolutions:
 
         assert isinstance(problem, ErdosProblem)
         assert problem.status == "open"
-        assert problem.proof_steps == []
+        assert len(problem.proof_steps) == 5
+
+        erdos_moser = solutions.get_problem("erdos-moser")
+        assert erdos_moser.status == "partial"
+        assert len(erdos_moser.proof_steps) == 5
 
     def test_add_proof_step(self):
         solutions = MathSolutions.erdos_seed()
@@ -220,8 +224,8 @@ class TestMathSolutions:
         )
 
         problem = solutions.get_problem("erdos-straus")
-        assert len(problem.proof_steps) == 1
-        step = problem.proof_steps[0]
+        assert len(problem.proof_steps) == 6
+        step = problem.proof_steps[-1]
         assert isinstance(step, ProofStep)
         assert "Normalize the equation" in step.statement
 
