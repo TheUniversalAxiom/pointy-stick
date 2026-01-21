@@ -252,7 +252,11 @@ end
         solutions = erdos_seed()
         problem = get_problem(solutions, "erdos-straus")
         @test problem.status == "open"
-        @test length(problem.proof_steps) == 0
+        @test length(problem.proof_steps) == 5
+
+        erdos_moser = get_problem(solutions, "erdos-moser")
+        @test erdos_moser.status == "partial"
+        @test length(erdos_moser.proof_steps) == 5
     end
 
     @testset "Add proof step" begin
@@ -264,8 +268,8 @@ end
             "Use the axiom's foundation layer (A·B·C) to align constraints."
         )
         problem = get_problem(solutions, "erdos-straus")
-        @test length(problem.proof_steps) == 1
-        @test occursin("Normalize the equation", problem.proof_steps[1].statement)
+        @test length(problem.proof_steps) == 6
+        @test occursin("Normalize the equation", problem.proof_steps[end].statement)
     end
 end
 

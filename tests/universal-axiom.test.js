@@ -397,7 +397,11 @@ describe('MathSolutions (Erdos problems)', () => {
     const problem = solutions.getProblem('erdos-straus');
 
     expect(problem.status).toBe('open');
-    expect(problem.proofSteps).toHaveLength(0);
+    expect(problem.proofSteps).toHaveLength(5);
+
+    const erdosMoser = solutions.getProblem('erdos-moser');
+    expect(erdosMoser.status).toBe('partial');
+    expect(erdosMoser.proofSteps).toHaveLength(5);
   });
 
   test('adds proof steps with axiom insights', () => {
@@ -409,7 +413,7 @@ describe('MathSolutions (Erdos problems)', () => {
     );
 
     const problem = solutions.getProblem('erdos-straus');
-    expect(problem.proofSteps).toHaveLength(1);
-    expect(problem.proofSteps[0].statement).toContain('Normalize the equation');
+    expect(problem.proofSteps).toHaveLength(6);
+    expect(problem.proofSteps[5].statement).toContain('Normalize the equation');
   });
 });

@@ -422,22 +422,106 @@ function summaries(solutions::MathSolutions)::Vector{NamedTuple}
 end
 
 function seed_erdos_problems()::Vector{ErdosProblem}
-    [
-        ErdosProblem(
-            "erdos-straus",
-            "Erdos–Straus Conjecture",
-            "For every integer n ≥ 2, the rational 4/n can be expressed as the sum of three unit fractions: 4/n = 1/x + 1/y + 1/z for integers x, y, z.",
-            "open",
-            "The axiom highlights how constraints (C) and growth (E_n, F_n) interact, suggesting structured pathways to decompositions."
-        ),
-        ErdosProblem(
-            "erdos-distinct-distances",
-            "Erdos Distinct Distances Problem",
-            "Determine the minimum number of distinct distances defined by n points in the plane.",
-            "solved",
-            "Balancing combinatorial growth (E_n) with structural regulation (F_n) mirrors the tension between point density and distance diversity."
-        )
-    ]
+    erdos_straus = ErdosProblem(
+        "erdos-straus",
+        "Erdos–Straus Conjecture",
+        "For every integer n ≥ 2, the rational 4/n can be expressed as the sum of three unit fractions: 4/n = 1/x + 1/y + 1/z for integers x, y, z.",
+        "open",
+        "The axiom highlights how constraints (C) and growth (E_n, F_n) interact, suggesting structured pathways to decompositions."
+    )
+    add_proof_step!(
+        erdos_straus,
+        "Clear denominators to obtain 4xyz = n(xy + xz + yz), exposing the shared ABC constraint.",
+        "A·B·C locks the reciprocal structure while C records divisibility pressure."
+    )
+    add_proof_step!(
+        erdos_straus,
+        "Partition n into congruence classes to target families where n divides xy + xz + yz.",
+        "F_n periodicity mirrors modular cycles, guiding repeatable constructions."
+    )
+    add_proof_step!(
+        erdos_straus,
+        "Introduce parameterized families for (x, y, z) that satisfy the cleared equation.",
+        "E_n growth supplies expansion room; X and Y keep selections coherent."
+    )
+    add_proof_step!(
+        erdos_straus,
+        "Balance denominator growth so x, y, z remain positive and ordered, avoiding runaway residues.",
+        "E_n expands search while F_n regulates magnitude."
+    )
+    add_proof_step!(
+        erdos_straus,
+        "Cover dense residue families and reduce remaining cases to bounded verification windows.",
+        "Z enforces temporal continuity; remaining gaps collapse to finite checks."
+    )
+
+    erdos_distinct = ErdosProblem(
+        "erdos-distinct-distances",
+        "Erdos Distinct Distances Problem",
+        "Determine the minimum number of distinct distances defined by n points in the plane.",
+        "solved",
+        "Balancing combinatorial growth (E_n) with structural regulation (F_n) mirrors the tension between point density and distance diversity."
+    )
+    add_proof_step!(
+        erdos_distinct,
+        "Normalize the configuration by translation and scaling to fix baseline spacing.",
+        "X, Y, Z align perspective and time scale before counting."
+    )
+    add_proof_step!(
+        erdos_distinct,
+        "Count point pairs to relate total pairs to distance multiplicities.",
+        "E_n captures pair growth while F_n regulates clustering."
+    )
+    add_proof_step!(
+        erdos_distinct,
+        "Apply incidence bounds to limit how often a distance can repeat.",
+        "C pressure caps over-concentration in any single distance."
+    )
+    add_proof_step!(
+        erdos_distinct,
+        "Construct near-lattice configurations to achieve the lower-bound regime.",
+        "A·B·C balances structure so growth matches regulation."
+    )
+    add_proof_step!(
+        erdos_distinct,
+        "Conclude the asymptotic bound by matching upper and lower envelopes.",
+        "Dynamic layer (E_n, F_n) closes the gap between expansion and constraint."
+    )
+
+    erdos_moser = ErdosProblem(
+        "erdos-moser",
+        "Erdos–Moser Equation",
+        "Solve 1^k + 2^k + ... + (m−1)^k = m^k for integers m, k > 1.",
+        "partial",
+        "E_n scaling intensifies quickly; the axiom suggests using Z to control temporal accumulation and detect singularities."
+    )
+    add_proof_step!(
+        erdos_moser,
+        "Compare the power sum to integral bounds to bracket growth of Σ i^k versus m^k.",
+        "E_n sets exponential growth while Z tracks accumulation."
+    )
+    add_proof_step!(
+        erdos_moser,
+        "Use modular restrictions on k and m to eliminate incompatible residues.",
+        "C enforces arithmetic pressure, pruning impossible classes."
+    )
+    add_proof_step!(
+        erdos_moser,
+        "Isolate the dominant term by normalizing with m^k and bounding the remainder.",
+        "A·B·C stabilizes the foundation as X reduces variance."
+    )
+    add_proof_step!(
+        erdos_moser,
+        "Show candidate solutions require extremely tight balance between consecutive powers.",
+        "F_n smooths oscillations, exposing near-cancellation requirements."
+    )
+    add_proof_step!(
+        erdos_moser,
+        "Reduce remaining candidates to finite computational windows for verification.",
+        "Z keeps the search temporal and bounded; Y focuses viable regimes."
+    )
+
+    [erdos_straus, erdos_distinct, erdos_moser]
 end
 
 # String representation

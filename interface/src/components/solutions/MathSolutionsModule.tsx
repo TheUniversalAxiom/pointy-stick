@@ -26,16 +26,24 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       'The axiom highlights how constraints (C) and growth (Eₙ, Fₙ) interact, suggesting structured pathways to decompositions.',
     proofSteps: [
       {
-        title: 'Normalize the reciprocal structure',
-        insight: 'Lock A·B·C to a shared denominator before scaling X·Y·Z.',
+        title: 'Clear denominators to obtain 4xyz = n(xy + xz + yz)',
+        insight: 'A·B·C locks the reciprocal structure while C records divisibility pressure.',
       },
       {
-        title: 'Anchor on Fibonacci-regulated partitions',
-        insight: 'Use Fₙ spacing to distribute unit fractions without collapsing C.',
+        title: 'Partition n into congruence classes to target solvable families',
+        insight: 'Fₙ periodicity mirrors modular cycles, guiding repeatable constructions.',
       },
       {
-        title: 'Track pressure release',
-        insight: 'Monitor C to detect residue terms that require rebalancing.',
+        title: 'Introduce parameterized families for (x, y, z)',
+        insight: 'Eₙ growth supplies expansion room; X and Y keep selections coherent.',
+      },
+      {
+        title: 'Balance denominator growth to preserve ordering',
+        insight: 'Eₙ expands search while Fₙ regulates magnitude.',
+      },
+      {
+        title: 'Reduce remaining cases to bounded verification windows',
+        insight: 'Z enforces temporal continuity; remaining gaps collapse to finite checks.',
       },
     ],
     signal: 'Constraint geometry aligned · 3 candidate families',
@@ -49,16 +57,24 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       'Balancing combinatorial growth (Eₙ) with structural regulation (Fₙ) mirrors the tension between point density and distance diversity.',
     proofSteps: [
       {
-        title: 'Stabilize lattice spacing',
-        insight: 'Use A·B·C to keep point pressure uniform across the grid.',
+        title: 'Normalize configuration by translation and scaling',
+        insight: 'X, Y, Z align perspective and time scale before counting.',
       },
       {
-        title: 'Apply incidence compression',
-        insight: 'Lower subjective variance (X) to expose distance regularities.',
+        title: 'Count point pairs to relate pairs to distance multiplicities',
+        insight: 'Eₙ captures pair growth while Fₙ regulates clustering.',
       },
       {
-        title: 'Confirm growth envelope',
-        insight: 'Eₙ expansion caps the lower bound, Fₙ smooths oscillations.',
+        title: 'Apply incidence bounds to limit repeated distances',
+        insight: 'C pressure caps over-concentration in any single distance.',
+      },
+      {
+        title: 'Construct near-lattice configurations for the lower bound',
+        insight: 'A·B·C balances structure so growth matches regulation.',
+      },
+      {
+        title: 'Match upper and lower envelopes to close the bound',
+        insight: 'Dynamic layer (Eₙ, Fₙ) closes the gap between expansion and constraint.',
       },
     ],
     signal: 'Resolved · Optimal lower bound confirmed',
@@ -72,16 +88,24 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       'Eₙ scaling intensifies quickly; the axiom suggests using Z to control temporal accumulation and detect singularities.',
     proofSteps: [
       {
-        title: 'Isolate growth imbalance',
-        insight: 'Compare Eₙ divergence against foundation growth in A·B·C.',
+        title: 'Compare power sums to integral bounds',
+        insight: 'Eₙ sets exponential growth while Z tracks accumulation.',
       },
       {
-        title: 'Bound subjectivity drift',
-        insight: 'Clamp X to prevent false equivalence across powers.',
+        title: 'Apply modular restrictions on k and m',
+        insight: 'C enforces arithmetic pressure, pruning impossible classes.',
       },
       {
-        title: 'Project asymptotic envelope',
-        insight: 'Use Y to constrain viable k regimes and avoid runaway C.',
+        title: 'Normalize with m^k to isolate the dominant term',
+        insight: 'A·B·C stabilizes the foundation as X reduces variance.',
+      },
+      {
+        title: 'Demand tight balance between consecutive powers',
+        insight: 'Fₙ smooths oscillations, exposing near-cancellation requirements.',
+      },
+      {
+        title: 'Reduce candidates to finite computational windows',
+        insight: 'Z keeps the search temporal and bounded; Y focuses viable regimes.',
       },
     ],
     signal: 'Monitoring · 2 candidate regimes remain',
