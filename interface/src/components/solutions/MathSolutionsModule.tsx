@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type CSSProperties } from 'react'
 import './MathSolutionsModule.css'
 
 type MathSolutionsModuleProps = {
@@ -14,6 +14,17 @@ type ErdosProblem = {
   proofSteps: { title: string; insight: string }[]
   fullProof: { title: string; detail: string }[]
   signal: string
+  visual: {
+    title: string
+    description: string
+    metrics: { label: string; value: string }[]
+    palette: {
+      core: string
+      halo: string
+      arc: string
+    }
+    motionSpeed: string
+  }
 }
 
 const ERDOS_PROBLEMS: ErdosProblem[] = [
@@ -75,6 +86,22 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       },
     ],
     signal: 'Constraint geometry aligned · 3 candidate families',
+    visual: {
+      title: 'Constraint Lattice Resonance',
+      description:
+        'A triadic field maps the unit-fraction decompositions, with regulated pulses echoing the axiom as it locks divisibility pressure into harmonic families.',
+      metrics: [
+        { label: 'Eₙ Growth', value: '4.3x' },
+        { label: 'Fₙ Regulation', value: 'Stable' },
+        { label: 'A·B·C Balance', value: 'Symmetric' },
+      ],
+      palette: {
+        core: '#f97316',
+        halo: '#a855f7',
+        arc: '#fef08a',
+      },
+      motionSpeed: '8s',
+    },
   },
   {
     id: 'erdos-distinct-distances',
@@ -133,6 +160,22 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       },
     ],
     signal: 'Resolved · Optimal lower bound confirmed',
+    visual: {
+      title: 'Distance Spectrum Bloom',
+      description:
+        'The axiom projects lattice harmonics into a distance spectrum, showing how incidence pressure bends expansion into an optimal asymptotic envelope.',
+      metrics: [
+        { label: 'Pair Density', value: 'n² field' },
+        { label: 'Incidence Cap', value: 'Bounded' },
+        { label: 'Θ Envelope', value: 'Tight' },
+      ],
+      palette: {
+        core: '#38bdf8',
+        halo: '#22c55e',
+        arc: '#a855f7',
+      },
+      motionSpeed: '7s',
+    },
   },
   {
     id: 'erdos-moser',
@@ -191,6 +234,22 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       },
     ],
     signal: 'Monitoring · 2 candidate regimes remain',
+    visual: {
+      title: 'Temporal Sum Singularity',
+      description:
+        'An accelerating wavefront illustrates the power-sum buildup, while Fibonacci damping highlights the narrow corridor where near-cancellation can survive.',
+      metrics: [
+        { label: 'Power Surge', value: 'k↑' },
+        { label: 'Z Horizon', value: 'Finite' },
+        { label: 'C Pressure', value: 'High' },
+      ],
+      palette: {
+        core: '#f472b6',
+        halo: '#0ea5e9',
+        arc: '#f97316',
+      },
+      motionSpeed: '9s',
+    },
   },
 ]
 
@@ -344,6 +403,44 @@ export function MathSolutionsModule({ onBackToMenu }: MathSolutionsModuleProps) 
             <div className="math-solutions__hero-insight">
               <h3>Axiom Insight</h3>
               <p>{selectedProblem.insight}</p>
+            </div>
+          </section>
+
+          <section className="math-solutions__visual">
+            <div className="math-solutions__panel-header">
+              <h2>Dynamic Axiom Visual</h2>
+              <span className="math-solutions__panel-tag">Erdos field</span>
+            </div>
+            <div className="math-solutions__visual-grid">
+              <div
+                className="math-solutions__visual-canvas"
+                style={
+                  {
+                    '--visual-core': selectedProblem.visual.palette.core,
+                    '--visual-halo': selectedProblem.visual.palette.halo,
+                    '--visual-arc': selectedProblem.visual.palette.arc,
+                    '--visual-speed': selectedProblem.visual.motionSpeed,
+                  } as CSSProperties
+                }
+              >
+                <div className="math-solutions__visual-orb" />
+                <div className="math-solutions__visual-orb math-solutions__visual-orb--secondary" />
+                <div className="math-solutions__visual-ring" />
+                <div className="math-solutions__visual-wave" />
+                <div className="math-solutions__visual-gridlines" />
+              </div>
+              <div className="math-solutions__visual-details">
+                <h3>{selectedProblem.visual.title}</h3>
+                <p>{selectedProblem.visual.description}</p>
+                <div className="math-solutions__visual-metrics">
+                  {selectedProblem.visual.metrics.map((metric) => (
+                    <div key={metric.label} className="math-solutions__visual-metric">
+                      <span>{metric.label}</span>
+                      <strong>{metric.value}</strong>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
 
