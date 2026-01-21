@@ -243,71 +243,174 @@
   box-shadow: var(--color-canvas-shadow);
 }
 
-.math-solutions__visual-canvas::after {
-  content: '';
-  position: absolute;
-  inset: 12% 12%;
-  border-radius: 50%;
-  border: 1px solid var(--color-border-subtle);
-  box-shadow: var(--color-canvas-ring-shadow);
-  animation: visual-rotate var(--visual-speed, 8s) linear infinite;
-}
-
-.math-solutions__visual-orb {
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, var(--visual-core, #f97316), transparent 65%);
-  filter: blur(0.2px);
-  top: 12%;
-  left: 15%;
-  animation: visual-pulse calc(var(--visual-speed, 8s) * 1.2) ease-in-out infinite;
-}
-
-.math-solutions__visual-orb--secondary {
-  width: 180px;
-  height: 180px;
-  top: 40%;
-  left: 50%;
-  opacity: 0.7;
-  background: radial-gradient(circle at 40% 40%, var(--visual-halo, #a855f7), transparent 70%);
-  animation: visual-float calc(var(--visual-speed, 8s) * 1.4) ease-in-out infinite;
-}
-
-.math-solutions__visual-ring {
-  position: absolute;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  border: 1px solid var(--color-canvas-ring-border);
-  box-shadow: var(--color-canvas-ring-shadow);
-  top: 10%;
-  right: -15%;
-  transform: rotate(18deg);
-  animation: visual-rotate calc(var(--visual-speed, 8s) * 1.5) linear infinite reverse;
-}
-
-.math-solutions__visual-wave {
+.math-solutions__visual-layer {
   position: absolute;
   inset: 0;
-  background: conic-gradient(from 180deg, transparent 0deg, var(--visual-arc, #fef08a) 140deg, transparent 240deg);
-  opacity: 0.25;
-  animation: visual-sweep calc(var(--visual-speed, 8s) * 1.1) ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.math-solutions__visual-gridlines {
+.math-solutions__visual-canvas--lattice .math-solutions__visual-layer--lattice,
+.math-solutions__visual-canvas--spectrum .math-solutions__visual-layer--spectrum,
+.math-solutions__visual-canvas--singularity .math-solutions__visual-layer--singularity {
+  opacity: 1;
+}
+
+.math-solutions__visual-lattice-grid {
   position: absolute;
-  inset: 0;
+  inset: 12%;
+  border-radius: 18px;
   background-image: linear-gradient(
-      120deg,
-      transparent 20%,
-      var(--color-gridline-soft) 45%,
-      transparent 70%
+      to right,
+      color-mix(in srgb, var(--visual-arc, #fef08a) 50%, transparent) 1px,
+      transparent 1px
     ),
-    radial-gradient(circle at 20% 20%, var(--color-gridline-spot) 0, transparent 45%);
-  mix-blend-mode: screen;
-  animation: visual-drift calc(var(--visual-speed, 8s) * 2) linear infinite;
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--visual-arc, #fef08a) 50%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 26px 26px;
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--visual-halo, #a855f7) 30%, transparent));
+  animation: lattice-drift calc(var(--visual-speed, 8s) * 2.2) linear infinite;
+}
+
+.math-solutions__visual-lattice-wave {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 90deg, transparent 0deg, var(--visual-core, #f97316) 120deg, transparent 220deg);
+  opacity: 0.25;
+  animation: lattice-sweep calc(var(--visual-speed, 8s) * 1.1) ease-in-out infinite;
+}
+
+.math-solutions__visual-lattice-node {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 30% 30%, var(--visual-core, #f97316), transparent 70%);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--visual-core, #f97316) 45%, transparent);
+  animation: lattice-pulse calc(var(--visual-speed, 8s) * 1.4) ease-in-out infinite;
+}
+
+.math-solutions__visual-lattice-node--alpha {
+  top: 16%;
+  left: 18%;
+}
+
+.math-solutions__visual-lattice-node--beta {
+  top: 42%;
+  left: 52%;
+  animation-delay: 0.6s;
+  background: radial-gradient(circle at 30% 30%, var(--visual-halo, #a855f7), transparent 70%);
+}
+
+.math-solutions__visual-lattice-node--gamma {
+  top: 58%;
+  left: 24%;
+  animation-delay: 1.2s;
+  background: radial-gradient(circle at 30% 30%, var(--visual-arc, #fef08a), transparent 70%);
+}
+
+.math-solutions__visual-spectrum-orbit {
+  position: absolute;
+  inset: 18%;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--visual-core, #38bdf8) 40%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--visual-core, #38bdf8) 40%, transparent);
+  animation: spectrum-rotate calc(var(--visual-speed, 8s) * 1.4) linear infinite;
+}
+
+.math-solutions__visual-spectrum-ring {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--visual-halo, #22c55e) 50%, transparent);
+  animation: spectrum-rotate calc(var(--visual-speed, 8s) * 2.1) linear infinite reverse;
+}
+
+.math-solutions__visual-spectrum-bars {
+  position: absolute;
+  inset: 20% 15%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: end;
+  gap: 8px;
+}
+
+.math-solutions__visual-spectrum-bars span {
+  display: block;
+  height: 40%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--visual-core, #38bdf8), transparent 85%);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--visual-core, #38bdf8) 45%, transparent);
+  animation: spectrum-rise calc(var(--visual-speed, 8s) * 1.3) ease-in-out infinite;
+}
+
+.math-solutions__visual-spectrum-bars span:nth-child(2) {
+  animation-delay: 0.2s;
+  height: 55%;
+  background: linear-gradient(180deg, var(--visual-halo, #22c55e), transparent 85%);
+}
+
+.math-solutions__visual-spectrum-bars span:nth-child(3) {
+  animation-delay: 0.4s;
+  height: 70%;
+}
+
+.math-solutions__visual-spectrum-bars span:nth-child(4) {
+  animation-delay: 0.6s;
+  height: 50%;
+  background: linear-gradient(180deg, var(--visual-arc, #a855f7), transparent 85%);
+}
+
+.math-solutions__visual-spectrum-bars span:nth-child(5) {
+  animation-delay: 0.8s;
+  height: 62%;
+}
+
+.math-solutions__visual-spectrum-bars span:nth-child(6) {
+  animation-delay: 1s;
+  height: 46%;
+  background: linear-gradient(180deg, var(--visual-halo, #22c55e), transparent 85%);
+}
+
+.math-solutions__visual-singularity-core {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  top: 42%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--visual-core, #f472b6) 0%, transparent 70%);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--visual-core, #f472b6) 60%, transparent);
+  animation: singularity-pulse calc(var(--visual-speed, 8s) * 1.1) ease-in-out infinite;
+}
+
+.math-solutions__visual-singularity-spiral {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 120deg,
+    transparent 0deg,
+    var(--visual-halo, #0ea5e9) 80deg,
+    transparent 160deg,
+    var(--visual-arc, #f97316) 240deg,
+    transparent 320deg
+  );
+  opacity: 0.4;
+  animation: singularity-spin calc(var(--visual-speed, 8s) * 1.6) linear infinite;
+}
+
+.math-solutions__visual-singularity-ripple {
+  position: absolute;
+  inset: 14%;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--visual-halo, #0ea5e9) 40%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--visual-halo, #0ea5e9) 50%, transparent);
+  animation: singularity-ripple calc(var(--visual-speed, 8s) * 1.8) ease-in-out infinite;
 }
 
 .math-solutions__visual-details h3 {
@@ -471,29 +574,40 @@
   }
 }
 
-@keyframes visual-pulse {
+@keyframes lattice-drift {
+  0% {
+    transform: translateX(-6%) translateY(-2%);
+  }
+  100% {
+    transform: translateX(6%) translateY(2%);
+  }
+}
+
+@keyframes lattice-sweep {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 0.45;
+    transform: rotate(18deg);
+  }
+}
+
+@keyframes lattice-pulse {
   0%,
   100% {
     transform: scale(0.9);
-    opacity: 0.85;
+    opacity: 0.8;
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.08);
     opacity: 1;
   }
 }
 
-@keyframes visual-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-@keyframes visual-rotate {
+@keyframes spectrum-rotate {
   0% {
     transform: rotate(0deg);
   }
@@ -502,23 +616,47 @@
   }
 }
 
-@keyframes visual-sweep {
+@keyframes spectrum-rise {
   0%,
   100% {
-    opacity: 0.15;
-    transform: scale(0.95);
+    transform: scaleY(0.8);
+    opacity: 0.7;
   }
   50% {
-    opacity: 0.35;
-    transform: scale(1.05);
+    transform: scaleY(1.2);
+    opacity: 1;
   }
 }
 
-@keyframes visual-drift {
+@keyframes singularity-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes singularity-spin {
   0% {
-    transform: translateX(-10%) translateY(0);
+    transform: rotate(0deg);
   }
   100% {
-    transform: translateX(10%) translateY(-6%);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes singularity-ripple {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
   }
 }
