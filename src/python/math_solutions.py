@@ -273,4 +273,334 @@ def _seed_erdos_problems() -> List[ErdosProblem]:
                 ),
             ],
         ),
+        ErdosProblem(
+            identifier="erdos-ko-rado",
+            title="Erdos–Ko–Rado Theorem",
+            statement=(
+                "For n ≥ 2k, the largest intersecting family of k-subsets of {1, …, n} "
+                "has size C(n−1, k−1)."
+            ),
+            status="solved",
+            axiom_insight=(
+                "The axiom emphasizes how A·B·C stabilizes intersection structure while "
+                "E_n regulates combinatorial growth."
+            ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Fix a canonical element to anchor intersecting families."
+                    ),
+                    axiom_insight=(
+                        "X and Y align perspective so all intersections share a core axis."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Compare arbitrary families to a star family."
+                    ),
+                    axiom_insight=(
+                        "A·B·C fixes the foundational overlap that dominates size."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Apply compression/shifting to increase regularity."
+                    ),
+                    axiom_insight=(
+                        "F_n-style regulation smooths irregularities into canonical form."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Count surviving sets after compression."
+                    ),
+                    axiom_insight=(
+                        "E_n tracks the combinatorial growth of the stabilized family."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Characterize extremal cases."
+                    ),
+                    axiom_insight=(
+                        "Z preserves continuity to conclude all maxima are stars."
+                    ),
+                ),
+            ],
+        ),
+        ErdosProblem(
+            identifier="erdos-szekeres",
+            title="Erdos–Szekeres Happy Ending Problem",
+            statement=(
+                "Determine the minimal N(n) such that any N(n) points in general position "
+                "in the plane contain n points in convex position."
+            ),
+            status="partial",
+            axiom_insight=(
+                "E_n captures the rapid growth of point configurations, while F_n signals "
+                "the combinatorial regulation that forces convex structure."
+            ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Encode points by convex/concave chains."
+                    ),
+                    axiom_insight=(
+                        "A·B·C captures the foundational order relations among points."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Apply Ramsey-type bounds to chain lengths."
+                    ),
+                    axiom_insight=(
+                        "E_n provides the growth envelope for inevitable structure."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Use monotone subsequence arguments."
+                    ),
+                    axiom_insight=(
+                        "F_n smooths oscillations, aligning with ordered subsequences."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Derive upper bounds via combinatorial recursion."
+                    ),
+                    axiom_insight=(
+                        "Z tracks recursive depth while keeping the search bounded."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Compare with lower-bound constructions."
+                    ),
+                    axiom_insight=(
+                        "X and Y balance structural intent against extremal examples."
+                    ),
+                ),
+            ],
+        ),
+        ErdosProblem(
+            identifier="erdos-faber-lovasz",
+            title="Erdos–Faber–Lovasz Conjecture",
+            statement=(
+                "Any linear hypergraph with n edges, each of size n, has chromatic number "
+                "at most n."
+            ),
+            status="solved",
+            axiom_insight=(
+                "The axiom aligns color pressure (C) with combinatorial expansion (E_n) "
+                "to cap chromatic growth."
+            ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Translate hypergraph coloring to incidence structure."
+                    ),
+                    axiom_insight=(
+                        "A·B·C locks vertex-edge intersections into a linear lattice."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Apply probabilistic coloring bounds."
+                    ),
+                    axiom_insight=(
+                        "E_n models expansion while X calibrates random selection."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Refine via iterative nibble methods."
+                    ),
+                    axiom_insight=(
+                        "F_n regulates the iterative removal of conflicts."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Stabilize with absorbers for leftover vertices."
+                    ),
+                    axiom_insight=(
+                        "Z preserves continuity as the coloring completes."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Conclude chromatic cap at n."
+                    ),
+                    axiom_insight=(
+                        "C pressure finalizes the bound with no overflow."
+                    ),
+                ),
+            ],
+        ),
+        ErdosProblem(
+            identifier="erdos-ginzburg-ziv",
+            title="Erdos–Ginzburg–Ziv Theorem",
+            statement=(
+                "Any sequence of 2n−1 integers contains a subsequence of length n whose "
+                "sum is divisible by n."
+            ),
+            status="solved",
+            axiom_insight=(
+                "The axiom’s regulation (F_n) governs modular accumulation, ensuring "
+                "balanced subsequences emerge."
+            ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Map integers to residues mod n."
+                    ),
+                    axiom_insight=(
+                        "A·B·C frames modular pressure across the sequence."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Apply zero-sum combinatorial lemmas."
+                    ),
+                    axiom_insight=(
+                        "E_n scales the residue space to guarantee coverage."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Use induction on n with residue partitioning."
+                    ),
+                    axiom_insight=(
+                        "Z tracks recursion while preserving sequence continuity."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Extract a length-n zero-sum subsequence."
+                    ),
+                    axiom_insight=(
+                        "F_n balances residues to stabilize the sum at zero."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Conclude optimal length 2n−1."
+                    ),
+                    axiom_insight=(
+                        "X and Y confirm the bound is tight via extremal examples."
+                    ),
+                ),
+            ],
+        ),
+        ErdosProblem(
+            identifier="erdos-heilbronn",
+            title="Erdos–Heilbronn Conjecture",
+            statement=(
+                "For a subset A of Z_p, the restricted sumset A ⊕ A = {a+b : a,b∈A, a≠b} "
+                "has size at least min(p, 2|A|−3)."
+            ),
+            status="solved",
+            axiom_insight=(
+                "The axiom links additive expansion (E_n) with pressure (C) to ensure "
+                "growth in restricted sumsets."
+            ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Embed the set in modular arithmetic."
+                    ),
+                    axiom_insight=(
+                        "A·B·C stabilizes the modular structure and constraints."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Apply polynomial method or combinatorial nullstellensatz."
+                    ),
+                    axiom_insight=(
+                        "E_n captures the expansion of algebraic constraints."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Control forbidden diagonal pairs."
+                    ),
+                    axiom_insight=(
+                        "C pressure enforces the a≠b restriction without collapse."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Compare with unrestricted sumsets."
+                    ),
+                    axiom_insight=(
+                        "F_n regulates the difference between restricted and full sums."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Conclude lower bound min(p, 2|A|−3)."
+                    ),
+                    axiom_insight=(
+                        "Z aligns the bound with finite-field continuity."
+                    ),
+                ),
+            ],
+        ),
+        ErdosProblem(
+            identifier="erdos-discrepancy",
+            title="Erdos Discrepancy Problem",
+            statement=(
+                "For any ±1 sequence, show the discrepancy of homogeneous arithmetic "
+                "progressions is unbounded."
+            ),
+            status="solved",
+            axiom_insight=(
+                "E_n amplifies oscillations while C enforces constraints, revealing that "
+                "imbalance must eventually diverge."
+            ),
+            proof_steps=[
+                ProofStep(
+                    statement=(
+                        "Model discrepancy via multiplicative sequences."
+                    ),
+                    axiom_insight=(
+                        "A·B·C captures foundational constraints on sign patterns."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Translate to Fourier/Dirichlet character bounds."
+                    ),
+                    axiom_insight=(
+                        "E_n aligns spectral growth with sequence length."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Apply entropy or energy increment arguments."
+                    ),
+                    axiom_insight=(
+                        "F_n regulates oscillations while extracting structure."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Show any bounded discrepancy implies contradiction."
+                    ),
+                    axiom_insight=(
+                        "C pressure forces an impossible compression of energy."
+                    ),
+                ),
+                ProofStep(
+                    statement=(
+                        "Conclude unbounded discrepancy."
+                    ),
+                    axiom_insight=(
+                        "Z preserves temporal continuity to the divergence threshold."
+                    ),
+                ),
+            ],
+        ),
     ]

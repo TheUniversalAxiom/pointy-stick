@@ -250,13 +250,24 @@ end
 @testset "MathSolutions" begin
     @testset "Seeded Erdos problems" begin
         solutions = erdos_seed()
-        problem = get_problem(solutions, "erdos-straus")
-        @test problem.status == "open"
-        @test length(problem.proof_steps) == 5
+        expected = Dict(
+            "erdos-straus" => "open",
+            "erdos-distinct-distances" => "solved",
+            "erdos-moser" => "partial",
+            "erdos-ko-rado" => "solved",
+            "erdos-szekeres" => "partial",
+            "erdos-faber-lovasz" => "solved",
+            "erdos-ginzburg-ziv" => "solved",
+            "erdos-heilbronn" => "solved",
+            "erdos-discrepancy" => "solved",
+        )
+        @test length(list_problems(solutions)) == length(expected)
 
-        erdos_moser = get_problem(solutions, "erdos-moser")
-        @test erdos_moser.status == "partial"
-        @test length(erdos_moser.proof_steps) == 5
+        for (identifier, status) in expected
+            problem = get_problem(solutions, identifier)
+            @test problem.status == status
+            @test length(problem.proof_steps) == 5
+        end
     end
 
     @testset "Add proof step" begin
