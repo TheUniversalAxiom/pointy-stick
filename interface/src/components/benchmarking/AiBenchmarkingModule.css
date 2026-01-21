@@ -293,7 +293,7 @@
   gap: 12px;
   padding: 12px;
   border-radius: 12px;
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--color-surface-inset);
   border: 1px solid var(--color-border);
 }
 
@@ -316,7 +316,7 @@
 }
 
 .benchmarking__grid-lines line {
-  stroke: rgba(148, 163, 184, 0.2);
+  stroke: var(--color-gridline);
   stroke-dasharray: 6 6;
 }
 
@@ -407,7 +407,7 @@
 
 .benchmarking__bar-track {
   height: 8px;
-  background: rgba(148, 163, 184, 0.2);
+  background: var(--color-gridline);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -429,7 +429,7 @@
   position: relative;
   padding: 12px;
   border-radius: 12px;
-  background: rgba(15, 23, 42, 0.45);
+  background: var(--color-surface-inset-strong);
   border: 1px solid var(--color-border);
   overflow: hidden;
 }
