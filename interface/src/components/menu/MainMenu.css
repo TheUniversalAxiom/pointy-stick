@@ -30,6 +30,18 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 8px 16px rgba(15, 23, 42, 0.35), 0 2px 6px rgba(56, 189, 248, 0.35);
+  animation: main-menu-title-glow 6s ease-in-out infinite;
+}
+
+@keyframes main-menu-title-glow {
+  0%,
+  100% {
+    text-shadow: 0 8px 16px rgba(15, 23, 42, 0.35), 0 2px 6px rgba(56, 189, 248, 0.35);
+  }
+  50% {
+    text-shadow: 0 12px 24px rgba(15, 23, 42, 0.5), 0 4px 12px rgba(251, 191, 36, 0.55);
+  }
 }
 
 .main-menu__subtitle {
