@@ -17,6 +17,7 @@ type ErdosProblem = {
   visual: {
     title: string
     description: string
+    variant: 'lattice' | 'spectrum' | 'singularity'
     metrics: { label: string; value: string }[]
     palette: {
       core: string
@@ -90,6 +91,7 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       title: 'Constraint Lattice Resonance',
       description:
         'A triadic field maps the unit-fraction decompositions, with regulated pulses echoing the axiom as it locks divisibility pressure into harmonic families.',
+      variant: 'lattice',
       metrics: [
         { label: 'Eₙ Growth', value: '4.3x' },
         { label: 'Fₙ Regulation', value: 'Stable' },
@@ -164,6 +166,7 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       title: 'Distance Spectrum Bloom',
       description:
         'The axiom projects lattice harmonics into a distance spectrum, showing how incidence pressure bends expansion into an optimal asymptotic envelope.',
+      variant: 'spectrum',
       metrics: [
         { label: 'Pair Density', value: 'n² field' },
         { label: 'Incidence Cap', value: 'Bounded' },
@@ -238,6 +241,7 @@ const ERDOS_PROBLEMS: ErdosProblem[] = [
       title: 'Temporal Sum Singularity',
       description:
         'An accelerating wavefront illustrates the power-sum buildup, while Fibonacci damping highlights the narrow corridor where near-cancellation can survive.',
+      variant: 'singularity',
       metrics: [
         { label: 'Power Surge', value: 'k↑' },
         { label: 'Z Horizon', value: 'Finite' },
@@ -413,7 +417,7 @@ export function MathSolutionsModule({ onBackToMenu }: MathSolutionsModuleProps) 
             </div>
             <div className="math-solutions__visual-grid">
               <div
-                className="math-solutions__visual-canvas"
+                className={`math-solutions__visual-canvas math-solutions__visual-canvas--${selectedProblem.visual.variant}`}
                 style={
                   {
                     '--visual-core': selectedProblem.visual.palette.core,
@@ -423,11 +427,27 @@ export function MathSolutionsModule({ onBackToMenu }: MathSolutionsModuleProps) 
                   } as CSSProperties
                 }
               >
-                <div className="math-solutions__visual-orb" />
-                <div className="math-solutions__visual-orb math-solutions__visual-orb--secondary" />
-                <div className="math-solutions__visual-ring" />
-                <div className="math-solutions__visual-wave" />
-                <div className="math-solutions__visual-gridlines" />
+                <div className="math-solutions__visual-layer math-solutions__visual-layer--lattice">
+                  <div className="math-solutions__visual-lattice-grid" />
+                  <div className="math-solutions__visual-lattice-wave" />
+                  <div className="math-solutions__visual-lattice-node math-solutions__visual-lattice-node--alpha" />
+                  <div className="math-solutions__visual-lattice-node math-solutions__visual-lattice-node--beta" />
+                  <div className="math-solutions__visual-lattice-node math-solutions__visual-lattice-node--gamma" />
+                </div>
+                <div className="math-solutions__visual-layer math-solutions__visual-layer--spectrum">
+                  <div className="math-solutions__visual-spectrum-orbit" />
+                  <div className="math-solutions__visual-spectrum-ring" />
+                  <div className="math-solutions__visual-spectrum-bars">
+                    {Array.from({ length: 6 }, (_, index) => (
+                      <span key={`spectrum-bar-${index}`} />
+                    ))}
+                  </div>
+                </div>
+                <div className="math-solutions__visual-layer math-solutions__visual-layer--singularity">
+                  <div className="math-solutions__visual-singularity-spiral" />
+                  <div className="math-solutions__visual-singularity-core" />
+                  <div className="math-solutions__visual-singularity-ripple" />
+                </div>
               </div>
               <div className="math-solutions__visual-details">
                 <h3>{selectedProblem.visual.title}</h3>
