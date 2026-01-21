@@ -17,6 +17,7 @@ from python.universal_axiom import (
     AxiomSimulator,
     fibonacci_sequence,
 )
+from python.math_solutions import ErdosProblem, MathSolutions, ProofStep
 
 
 class TestFoundationLayer:
@@ -197,6 +198,32 @@ class TestUniversalAxiom:
         axiom = UniversalAxiom(subjectivity=1.0)  # Maximum subjectivity
         intelligence = axiom.compute_intelligence()
         assert intelligence == 0.0  # Zero objectivity = zero intelligence
+
+
+class TestMathSolutions:
+    """Test MathSolutions interface for Erdos problems."""
+
+    def test_erdos_seed_contains_problem(self):
+        solutions = MathSolutions.erdos_seed()
+        problem = solutions.get_problem("erdos-straus")
+
+        assert isinstance(problem, ErdosProblem)
+        assert problem.status == "open"
+        assert problem.proof_steps == []
+
+    def test_add_proof_step(self):
+        solutions = MathSolutions.erdos_seed()
+        solutions.add_proof_step(
+            "erdos-straus",
+            "Normalize the equation to isolate reciprocal structure.",
+            "Use the axiom's foundation layer (A·B·C) to align constraints.",
+        )
+
+        problem = solutions.get_problem("erdos-straus")
+        assert len(problem.proof_steps) == 1
+        step = problem.proof_steps[0]
+        assert isinstance(step, ProofStep)
+        assert "Normalize the equation" in step.statement
 
     def test_extreme_objectivity(self):
         """Test extreme objectivity (apex dynamic processing)"""

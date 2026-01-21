@@ -9,7 +9,7 @@
  * Cognitive Layer: Subjectivity Scale (X), Why Axis (Y), TimeSphere (Z)
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AxiomSimulator = exports.UniversalAxiom = exports.CognitiveLayer = exports.DynamicLayer = exports.FoundationLayer = void 0;
+exports.MathSolutions = exports.ErdosProblem = exports.ProofStep = exports.AxiomSimulator = exports.UniversalAxiom = exports.CognitiveLayer = exports.DynamicLayer = exports.FoundationLayer = void 0;
 exports.fibonacciSequence = fibonacciSequence;
 /**
  * Foundation Layer: A · B · C
@@ -249,5 +249,94 @@ function fibonacciSequence(n) {
         sequence.push(sequence[i - 1] + sequence[i - 2]);
     }
     return sequence;
+}
+class ProofStep {
+    statement;
+    axiomInsight;
+    constructor(statement, axiomInsight) {
+        this.statement = statement;
+        this.axiomInsight = axiomInsight;
+    }
+    toJSON() {
+        return {
+            statement: this.statement,
+            axiom_insight: this.axiomInsight
+        };
+    }
+}
+exports.ProofStep = ProofStep;
+class ErdosProblem {
+    identifier;
+    title;
+    statement;
+    status;
+    axiomInsight;
+    proofSteps;
+    constructor(identifier, title, statement, status, axiomInsight, proofSteps = []) {
+        this.identifier = identifier;
+        this.title = title;
+        this.statement = statement;
+        this.status = status;
+        this.axiomInsight = axiomInsight;
+        this.proofSteps = proofSteps;
+    }
+    addProofStep(statement, axiomInsight) {
+        this.proofSteps.push(new ProofStep(statement, axiomInsight));
+    }
+    addProofSteps(steps) {
+        this.proofSteps.push(...steps);
+    }
+    toJSON() {
+        return {
+            identifier: this.identifier,
+            title: this.title,
+            statement: this.statement,
+            status: this.status,
+            axiom_insight: this.axiomInsight,
+            proof_steps: this.proofSteps.map((step) => step.toJSON())
+        };
+    }
+}
+exports.ErdosProblem = ErdosProblem;
+class MathSolutions {
+    problems;
+    constructor(problems = []) {
+        this.problems = new Map();
+        problems.forEach((problem) => this.addProblem(problem));
+    }
+    static erdosSeed() {
+        return new MathSolutions(seedErdosProblems());
+    }
+    addProblem(problem) {
+        this.problems.set(problem.identifier, problem);
+    }
+    getProblem(identifier) {
+        const problem = this.problems.get(identifier);
+        if (!problem) {
+            throw new Error(`Unknown problem identifier: ${identifier}`);
+        }
+        return problem;
+    }
+    listProblems() {
+        return Array.from(this.problems.values());
+    }
+    addProofStep(identifier, statement, axiomInsight) {
+        const problem = this.getProblem(identifier);
+        problem.addProofStep(statement, axiomInsight);
+    }
+    summaries() {
+        return Array.from(this.problems.values()).map((problem) => ({
+            identifier: problem.identifier,
+            title: problem.title,
+            status: problem.status
+        }));
+    }
+}
+exports.MathSolutions = MathSolutions;
+function seedErdosProblems() {
+    return [
+        new ErdosProblem('erdos-straus', 'Erdos–Straus Conjecture', 'For every integer n ≥ 2, the rational 4/n can be expressed as the sum of three unit fractions: 4/n = 1/x + 1/y + 1/z for integers x, y, z.', 'open', 'The axiom highlights how constraints (C) and growth (E_n, F_n) interact, suggesting structured pathways to decompositions.'),
+        new ErdosProblem('erdos-distinct-distances', 'Erdos Distinct Distances Problem', 'Determine the minimum number of distinct distances defined by n points in the plane.', 'solved', 'Balancing combinatorial growth (E_n) with structural regulation (F_n) mirrors the tension between point density and distance diversity.')
+    ];
 }
 //# sourceMappingURL=universal-axiom.js.map

@@ -33,6 +33,7 @@ from .benchmarking import (
     AxiomSignals,
     BenchmarkRunConfig,
 )
+from .math_solutions import ErdosProblem, MathSolutions, ProofStep
 from .universal_axiom import UniversalAxiom
 
 __version__ = "0.1.0"
@@ -51,5 +52,8 @@ __all__ = [
     "AxiomScenarioSource",
     "AxiomSignals",
     "BenchmarkRunConfig",
+    "ErdosProblem",
+    "MathSolutions",
+    "ProofStep",
     "UniversalAxiom",
 ]

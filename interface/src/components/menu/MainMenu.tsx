@@ -3,9 +3,14 @@ import './MainMenu.css'
 type MainMenuProps = {
   onSelectDashboard: () => void
   onSelectBenchmarking: () => void
+  onSelectMathSolutions: () => void
 }
 
-export function MainMenu({ onSelectDashboard, onSelectBenchmarking }: MainMenuProps) {
+export function MainMenu({
+  onSelectDashboard,
+  onSelectBenchmarking,
+  onSelectMathSolutions,
+}: MainMenuProps) {
   return (
     <div className="main-menu">
       <header className="main-menu__header">
@@ -21,7 +26,7 @@ export function MainMenu({ onSelectDashboard, onSelectBenchmarking }: MainMenuPr
           </div>
           <div className="main-menu__highlight">
             <p className="main-menu__highlight-label">Active modules</p>
-            <p className="main-menu__highlight-value">Dashboard · Benchmarks</p>
+            <p className="main-menu__highlight-value">Dashboard · Benchmarks · Math Solutions</p>
           </div>
           <div className="main-menu__highlight">
             <p className="main-menu__highlight-label">Last pulse</p>
@@ -51,6 +56,17 @@ export function MainMenu({ onSelectDashboard, onSelectBenchmarking }: MainMenuPr
             Stage scenarios, compare outputs, and capture performance deltas with ready-to-share summaries.
           </p>
           <span className="main-menu__card-action">Open benchmarking →</span>
+        </button>
+
+        <button type="button" className="main-menu__card" onClick={onSelectMathSolutions}>
+          <div className="main-menu__card-header">
+            <span className="main-menu__card-icon">🧠</span>
+            <h2 className="main-menu__card-title">Math Solutions Hub</h2>
+          </div>
+          <p className="main-menu__card-description">
+            Curate Erdos problem proofs, align insights to the axiom, and coordinate your reasoning workflow.
+          </p>
+          <span className="main-menu__card-action">Open math solutions →</span>
         </button>
       </div>
 

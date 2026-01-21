@@ -325,3 +325,121 @@ export function fibonacciSequence(n: number): number[] {
 
   return sequence;
 }
+
+export type ProblemStatus = 'open' | 'solved' | 'partial';
+
+export class ProofStep {
+  constructor(
+    public statement: string,
+    public axiomInsight: string
+  ) {}
+
+  toJSON(): { statement: string; axiom_insight: string } {
+    return {
+      statement: this.statement,
+      axiom_insight: this.axiomInsight
+    };
+  }
+}
+
+export class ErdosProblem {
+  proofSteps: ProofStep[];
+
+  constructor(
+    public identifier: string,
+    public title: string,
+    public statement: string,
+    public status: ProblemStatus,
+    public axiomInsight: string,
+    proofSteps: ProofStep[] = []
+  ) {
+    this.proofSteps = proofSteps;
+  }
+
+  addProofStep(statement: string, axiomInsight: string): void {
+    this.proofSteps.push(new ProofStep(statement, axiomInsight));
+  }
+
+  addProofSteps(steps: ProofStep[]): void {
+    this.proofSteps.push(...steps);
+  }
+
+  toJSON(): {
+    identifier: string;
+    title: string;
+    statement: string;
+    status: ProblemStatus;
+    axiom_insight: string;
+    proof_steps: { statement: string; axiom_insight: string }[];
+  } {
+    return {
+      identifier: this.identifier,
+      title: this.title,
+      statement: this.statement,
+      status: this.status,
+      axiom_insight: this.axiomInsight,
+      proof_steps: this.proofSteps.map((step) => step.toJSON())
+    };
+  }
+}
+
+export class MathSolutions {
+  private problems: Map<string, ErdosProblem>;
+
+  constructor(problems: ErdosProblem[] = []) {
+    this.problems = new Map();
+    problems.forEach((problem) => this.addProblem(problem));
+  }
+
+  static erdosSeed(): MathSolutions {
+    return new MathSolutions(seedErdosProblems());
+  }
+
+  addProblem(problem: ErdosProblem): void {
+    this.problems.set(problem.identifier, problem);
+  }
+
+  getProblem(identifier: string): ErdosProblem {
+    const problem = this.problems.get(identifier);
+    if (!problem) {
+      throw new Error(`Unknown problem identifier: ${identifier}`);
+    }
+    return problem;
+  }
+
+  listProblems(): ErdosProblem[] {
+    return Array.from(this.problems.values());
+  }
+
+  addProofStep(identifier: string, statement: string, axiomInsight: string): void {
+    const problem = this.getProblem(identifier);
+    problem.addProofStep(statement, axiomInsight);
+  }
+
+  summaries(): { identifier: string; title: string; status: ProblemStatus }[] {
+    return Array.from(this.problems.values()).map((problem) => ({
+      identifier: problem.identifier,
+      title: problem.title,
+      status: problem.status
+    }));
+  }
+}
+
+function seedErdosProblems(): ErdosProblem[] {
+  return [
+    new ErdosProblem(
+      'erdos-straus',
+      'Erdos–Straus Conjecture',
+      'For every integer n ≥ 2, the rational 4/n can be expressed as the sum of three unit fractions: 4/n = 1/x + 1/y + 1/z for integers x, y, z.',
+      'open',
+      'The axiom highlights how constraints (C) and growth (E_n, F_n) interact, suggesting structured pathways to decompositions.'
+    ),
+    new ErdosProblem(
+      'erdos-distinct-distances',
+      'Erdos Distinct Distances Problem',
+      'Determine the minimum number of distinct distances defined by n points in the plane.',
+      'solved',
+      'Balancing combinatorial growth (E_n) with structural regulation (F_n) mirrors the tension between point density and distance diversity.'
+    )
+  ];
+}

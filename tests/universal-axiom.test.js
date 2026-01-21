@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { UniversalAxiom, AxiomSimulator, fibonacciSequence } from '../dist/javascript/universal-axiom.js';
+import { UniversalAxiom, AxiomSimulator, MathSolutions, fibonacciSequence } from '../dist/javascript/universal-axiom.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -388,5 +388,28 @@ describe('PROMPT.md Compliance', () => {
     const intelligence = axiom.computeIntelligence();
     expect(intelligence).toBeGreaterThan(0);
     expect(isFinite(intelligence)).toBe(true);
+  });
+});
+
+describe('MathSolutions (Erdos problems)', () => {
+  test('seeded Erdos problem is available', () => {
+    const solutions = MathSolutions.erdosSeed();
+    const problem = solutions.getProblem('erdos-straus');
+
+    expect(problem.status).toBe('open');
+    expect(problem.proofSteps).toHaveLength(0);
+  });
+
+  test('adds proof steps with axiom insights', () => {
+    const solutions = MathSolutions.erdosSeed();
+    solutions.addProofStep(
+      'erdos-straus',
+      'Normalize the equation to isolate reciprocal structure.',
+      "Use the axiom's foundation layer (A·B·C) to align constraints."
+    );
+
+    const problem = solutions.getProblem('erdos-straus');
+    expect(problem.proofSteps).toHaveLength(1);
+    expect(problem.proofSteps[0].statement).toContain('Normalize the equation');
   });
 });
