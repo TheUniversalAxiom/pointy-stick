@@ -126,6 +126,9 @@ explains why ethics must be structural, not bolted on.
 
 Because power without proportion always fails.
 
+<img width="1080" height="1280" alt="image" src="https://github.com/user-attachments/assets/6aa3da11-50f3-4c6c-8f24-d3adaf23424c" />
+
+
 ---
 
 ## 🔥 Why The Axiom Provides All *New* Insights
