@@ -9,8 +9,12 @@
   },
   "scripts": {
     "build": "tsc && cp universal-axiom.js build/mcp-server/ && chmod +x build/mcp-server/index.js",
+    "build:vercel": "tsc -p tsconfig.vercel.json",
     "start": "node build/mcp-server/index.js",
     "dev": "tsc --watch",
+    "dev:vercel": "vercel dev",
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod",
     "prepare": "npm run build"
   },
   "keywords": [
@@ -19,7 +23,9 @@
     "universal-axiom",
     "intelligence",
     "reasoning",
-    "ai-tools"
+    "ai-tools",
+    "vercel",
+    "serverless"
   ],
   "author": {
     "name": "Matt Belanger",
@@ -37,10 +43,13 @@
   },
   "files": [
     "build/",
+    "api/",
+    "lib/",
     "README.md",
     "LICENSE",
     "universal-axiom.js",
-    "universal-axiom.d.ts"
+    "universal-axiom.d.ts",
+    "vercel.json"
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4"
@@ -49,7 +58,11 @@
     "@types/node": "^20.19.30",
     "typescript": "^5.0.0"
   },
+  "optionalDependencies": {
+    "@vercel/node": "^3.0.0",
+    "vercel": "^37.0.0"
+  },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   }
 }
