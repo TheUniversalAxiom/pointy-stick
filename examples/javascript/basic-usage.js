@@ -1,11 +1,10 @@
 /**
  * Basic Usage Examples for The Universal Axiom (JavaScript/Node.js)
  *
- * Note: Run with ts-node or compile TypeScript first
- * Example: npx ts-node examples/javascript/basic-usage.ts
+ * Run: node examples/javascript/basic-usage.js
  */
 
-const { UniversalAxiom, AxiomSimulator, fibonacciSequence } = require('../../dist/javascript/universal-axiom');
+import { UniversalAxiom, AxiomSimulator, fibonacciSequence } from '../../dist/javascript/universal-axiom.js';
 
 function exampleBasicComputation() {
   console.log('='.repeat(60));
@@ -249,16 +248,4 @@ function main() {
   console.log('='.repeat(60) + '\n');
 }
 
-if (require.main === module) {
-  main();
-}
-
-module.exports = {
-  exampleBasicComputation,
-  exampleEvolution,
-  exampleContradictionResolution,
-  examplePressureDynamics,
-  exampleFibonacciRegulation,
-  exampleCoherenceTracking,
-  exampleNoStagnation
-};
+main();
