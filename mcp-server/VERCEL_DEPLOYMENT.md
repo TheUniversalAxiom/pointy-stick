@@ -8,6 +8,15 @@ This guide explains how to deploy the Universal Axiom MCP server as a serverless
 2. [Vercel CLI](https://vercel.com/docs/cli) installed: `npm i -g vercel`
 3. Node.js 18+ installed
 
+## Security
+
+This deployment uses the latest versions of all dependencies with **zero known vulnerabilities**:
+- `@vercel/node@^5.5.27` (latest runtime)
+- `vercel@^50.4.11` (latest CLI)
+- Dependency overrides to ensure secure transitive dependencies
+
+All security vulnerabilities have been resolved through npm package overrides.
+
 ## Quick Deploy
 
 ### Option 1: Deploy via CLI (Recommended)

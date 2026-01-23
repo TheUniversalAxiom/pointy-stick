@@ -21,7 +21,9 @@
   ],
   "exclude": [
     "node_modules",
+    "**/node_modules",
     "dist",
-    "**/*.test.ts"
+    "**/*.test.ts",
+    "mcp-server"
   ]
 }

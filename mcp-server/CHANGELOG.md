@@ -5,6 +5,38 @@ All notable changes to the Universal Axiom MCP Server will be documented in this
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-01-23
+
+### Security
+- **CRITICAL**: Updated all Vercel dependencies to latest secure versions
+  - `@vercel/node`: ^3.0.0 → ^5.5.27
+  - `vercel`: ^37.0.0 → ^50.4.11
+- **Added**: npm package overrides to enforce secure transitive dependencies
+  - `path-to-regexp`: ^8.3.0 (fixes high severity regex backtracking vulnerability)
+  - `tar`: ^7.5.6 (fixes high severity file overwrite vulnerability)
+  - `undici`: ^7.19.0 (fixes moderate severity random value vulnerability)
+- **Resolved**: All 17 security vulnerabilities - now at **0 vulnerabilities**
+
+### Added
+- `test:vercel` script to validate Vercel deployment configuration
+- `test-vercel-config.js` - comprehensive deployment validation test
+- Security section in VERCEL_DEPLOYMENT.md documentation
+- Automated checks for:
+  - Runtime version validation
+  - Dependency version validation
+  - Security vulnerability scanning
+  - Build output verification
+
+### Changed
+- Updated `vercel.json` to use latest @vercel/node runtime (5.5.27)
+- Enhanced deployment documentation with security information
+- Improved package.json with test script for deployment validation
+
+### Fixed
+- Security vulnerabilities in Vercel deployment dependencies
+- Build configuration for latest Vercel runtime
+- Dependency tree to use only secure package versions
+
 ## [0.2.0] - 2026-01-17
 
 ### Added
