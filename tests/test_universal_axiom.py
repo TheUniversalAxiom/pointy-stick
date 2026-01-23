@@ -45,6 +45,13 @@ class TestDynamicLayer:
         expected = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
         assert sequence == expected
 
+    def test_fibonacci_sequence_edge_cases(self):
+        """Test Fibonacci sequence edge cases"""
+        assert fibonacci_sequence(0) == []
+        assert fibonacci_sequence(-1) == []
+        assert fibonacci_sequence(1) == [1]
+        assert fibonacci_sequence(2) == [1, 1]
+
     def test_fibonacci_at_n(self):
         """Test F_n Fibonacci component"""
         dynamic = DynamicLayer(n=1)
@@ -199,6 +206,14 @@ class TestUniversalAxiom:
         intelligence = axiom.compute_intelligence()
         assert intelligence == 0.0  # Zero objectivity = zero intelligence
 
+    def test_axiom_repr(self):
+        """Test UniversalAxiom string representation"""
+        axiom = UniversalAxiom(n=5)
+        repr_str = repr(axiom)
+        assert "UniversalAxiom" in repr_str
+        assert "n=5" in repr_str
+        assert "Intelligence=" in repr_str
+
 
 class TestMathSolutions:
     """Test MathSolutions interface for Erdos problems."""
@@ -239,6 +254,72 @@ class TestMathSolutions:
         step = problem.proof_steps[-1]
         assert isinstance(step, ProofStep)
         assert "Normalize the equation" in step.statement
+
+    def test_proof_step_to_dict(self):
+        """Test ProofStep serialization to dictionary"""
+        step = ProofStep(
+            statement="Test statement",
+            axiom_insight="Test insight"
+        )
+        result = step.to_dict()
+        assert result == {
+            "statement": "Test statement",
+            "axiom_insight": "Test insight"
+        }
+
+    def test_erdos_problem_to_dict(self):
+        """Test ErdosProblem serialization to dictionary"""
+        problem = ErdosProblem(
+            identifier="test-problem",
+            title="Test Problem",
+            statement="Test statement",
+            status="open",
+            axiom_insight="Test insight"
+        )
+        problem.add_proof_step("Step 1", "Insight 1")
+        result = problem.to_dict()
+
+        assert result["identifier"] == "test-problem"
+        assert result["title"] == "Test Problem"
+        assert result["statement"] == "Test statement"
+        assert result["status"] == "open"
+        assert result["axiom_insight"] == "Test insight"
+        assert len(result["proof_steps"]) == 1
+        assert result["proof_steps"][0]["statement"] == "Step 1"
+
+    def test_erdos_problem_add_proof_steps(self):
+        """Test adding multiple proof steps at once"""
+        problem = ErdosProblem(
+            identifier="test-multi",
+            title="Test Multiple Steps",
+            statement="Test",
+            status="open",
+            axiom_insight="Test"
+        )
+        steps = [
+            ProofStep("Step 1", "Insight 1"),
+            ProofStep("Step 2", "Insight 2"),
+            ProofStep("Step 3", "Insight 3")
+        ]
+        problem.add_proof_steps(steps)
+
+        assert len(problem.proof_steps) == 3
+        assert problem.proof_steps[0].statement == "Step 1"
+        assert problem.proof_steps[1].statement == "Step 2"
+        assert problem.proof_steps[2].statement == "Step 3"
+
+    def test_math_solutions_summaries(self):
+        """Test MathSolutions.summaries() method"""
+        solutions = MathSolutions.erdos_seed()
+        summaries = solutions.summaries()
+
+        assert len(summaries) > 0
+        for summary in summaries:
+            assert "identifier" in summary
+            assert "title" in summary
+            assert "status" in summary
+            # Check that these are the only keys
+            assert set(summary.keys()) == {"identifier", "title", "status"}
 
     def test_extreme_objectivity(self):
         """Test extreme objectivity (apex dynamic processing)"""
