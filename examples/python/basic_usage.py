@@ -5,9 +5,12 @@ Demonstrates core functionality and key concepts.
 """
 
 import sys
-sys.path.insert(0, '../../src/python')
+from pathlib import Path
 
-from universal_axiom import UniversalAxiom, AxiomSimulator, fibonacci_sequence
+# Add src directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'src'))
+
+from python.universal_axiom import UniversalAxiom, AxiomSimulator, fibonacci_sequence
 
 
 def example_basic_computation():
