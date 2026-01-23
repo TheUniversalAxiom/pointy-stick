@@ -26,6 +26,7 @@ env/
 .coverage.*
 htmlcov/
 .pytest_cache/
+.performance_metrics.json
 
 # JavaScript/Node
 node_modules/
