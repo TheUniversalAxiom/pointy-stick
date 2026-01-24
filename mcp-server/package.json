@@ -53,10 +53,10 @@
     "vercel.json"
   ],
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.4"
+    "@modelcontextprotocol/sdk": "^1.25.2"
   },
   "devDependencies": {
-    "@types/node": "^20.19.30",
+    "@types/node": "^25.0.10",
     "typescript": "^5.0.0"
   },
   "optionalDependencies": {
