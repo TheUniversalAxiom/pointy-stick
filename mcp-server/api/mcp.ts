@@ -150,13 +150,20 @@ const TOOLS = [
   },
   {
     name: 'get_coherence_metric',
-    description: 'Calculate the coherence metric of a system based on objectivity, purpose, and pressure balance',
+    description: 'Calculate the coherence metric of a system based on objectivity, purpose, and pressure balance. Accepts either flat params (subjectivity, purpose, etc.) or nested current_state object.',
     inputSchema: {
       type: 'object',
       properties: {
-        current_state: { type: 'object', description: 'Current state of the axiom system' },
+        current_state: { type: 'object', description: 'Current state of the axiom system (nested format)' },
+        impulses: { type: 'number', description: 'A - Fundamental drives', default: 1.0 },
+        elements: { type: 'number', description: 'B - Core components', default: 1.0 },
+        pressure: { type: 'number', description: 'C - Constraints and forces', default: 1.0 },
+        subjectivity: { type: 'number', description: 'X - Subjectivity level (0-1)', minimum: 0, maximum: 1, default: 0.0 },
+        purpose: { type: 'number', description: 'Y - Purpose-driven reasoning strength', default: 1.0 },
+        time: { type: 'number', description: 'Z - Temporal continuity', default: 1.0 },
+        n: { type: 'number', description: 'Iteration level', default: 1 },
       },
-      required: ['current_state'],
+      required: [],
     },
   },
   {
@@ -303,19 +310,45 @@ Intelligence_n = E_n · (1 + F_n) · X · Y · Z · (A · B · C)
 };
 
 // Helper functions
-function createAxiomFromState(state: Record<string, unknown>): UniversalAxiom {
-  const foundation = state.foundation as Record<string, number> | undefined;
-  const cognitive = state.cognitive as Record<string, number> | undefined;
 
-  return new UniversalAxiom({
-    impulses: foundation?.A_impulses ?? 1.0,
-    elements: foundation?.B_elements ?? 1.0,
-    pressure: foundation?.C_pressure ?? 1.0,
-    subjectivity: cognitive?.X_subjectivity ?? 0.0,
-    purpose: cognitive?.Y_purpose ?? 1.0,
-    time: cognitive?.Z_time ?? 1.0,
-    n: (state.n as number) ?? 1,
-  });
+/**
+ * Creates a UniversalAxiom from either:
+ * - Flat config: { subjectivity, purpose, impulses, elements, pressure, time, n }
+ * - Nested state: { foundation: {...}, cognitive: {...}, dynamic: {...} }
+ *
+ * This unified function fixes the bug where get_coherence_metric and analyze_permutation
+ * would return different values for the same logical input due to different initialization patterns.
+ */
+function createAxiomFromArgs(args: Record<string, unknown>): UniversalAxiom {
+  // Check if this is a nested state object
+  const hasNestedStructure = 'foundation' in args || 'cognitive' in args || 'dynamic' in args;
+
+  if (hasNestedStructure) {
+    // Handle nested state format
+    const foundation = args.foundation as Record<string, number> | undefined;
+    const cognitive = args.cognitive as Record<string, number> | undefined;
+
+    return new UniversalAxiom({
+      impulses: foundation?.A_impulses ?? 1.0,
+      elements: foundation?.B_elements ?? 1.0,
+      pressure: foundation?.C_pressure ?? 1.0,
+      subjectivity: cognitive?.X_subjectivity ?? 0.0,
+      purpose: cognitive?.Y_purpose ?? 1.0,
+      time: cognitive?.Z_time ?? 1.0,
+      n: (args.n as number) ?? 1,
+    });
+  } else {
+    // Handle flat config format
+    return new UniversalAxiom({
+      impulses: (args.impulses as number) ?? 1.0,
+      elements: (args.elements as number) ?? 1.0,
+      pressure: (args.pressure as number) ?? 1.0,
+      subjectivity: (args.subjectivity as number) ?? 0.0,
+      purpose: (args.purpose as number) ?? 1.0,
+      time: (args.time as number) ?? 1.0,
+      n: (args.n as number) ?? 1,
+    });
+  }
 }
 
 function generateRecommendations(state: AxiomState, coherence: number): string[] {
@@ -358,7 +391,8 @@ function executeTool(name: string, args: Record<string, unknown> = {}): unknown 
 
     case 'evolve_system': {
       const { current_state, steps = 1, delta_time = 1.0 } = args;
-      const axiom = createAxiomFromState(current_state as Record<string, unknown>);
+      const stateOrConfig = (current_state ?? args) as Record<string, unknown>;
+      const axiom = createAxiomFromArgs(stateOrConfig);
       const results: AxiomState[] = [];
 
       for (let i = 0; i < (steps as number); i++) {
@@ -375,7 +409,8 @@ function executeTool(name: string, args: Record<string, unknown> = {}): unknown 
 
     case 'apply_pressure': {
       const { current_state, pressure_delta } = args;
-      const axiom = createAxiomFromState(current_state as Record<string, unknown>);
+      const stateOrConfig = (current_state ?? args) as Record<string, unknown>;
+      const axiom = createAxiomFromArgs(stateOrConfig);
       axiom.applyPressure(pressure_delta as number);
 
       return {
@@ -386,7 +421,8 @@ function executeTool(name: string, args: Record<string, unknown> = {}): unknown 
 
     case 'adjust_subjectivity': {
       const { current_state, subjectivity_delta } = args;
-      const axiom = createAxiomFromState(current_state as Record<string, unknown>);
+      const stateOrConfig = (current_state ?? args) as Record<string, unknown>;
+      const axiom = createAxiomFromArgs(stateOrConfig);
       axiom.adjustSubjectivity(subjectivity_delta as number);
 
       return {
@@ -430,7 +466,10 @@ function executeTool(name: string, args: Record<string, unknown> = {}): unknown 
 
     case 'get_coherence_metric': {
       const { current_state } = args;
-      const axiom = createAxiomFromState(current_state as Record<string, unknown>);
+      // Support both nested state AND flat config formats
+      // If current_state is provided, use it; otherwise use args directly (flat format)
+      const stateOrConfig = (current_state ?? args) as Record<string, unknown>;
+      const axiom = createAxiomFromArgs(stateOrConfig);
       const simulator = new AxiomSimulator(axiom);
       const coherence = simulator.getCoherenceMetric();
 
@@ -442,7 +481,7 @@ function executeTool(name: string, args: Record<string, unknown> = {}): unknown 
             : coherence > 0.4
             ? 'Moderate coherence - some adjustment needed'
             : 'Low coherence - significant realignment required',
-        state: current_state,
+        state: axiom.getState(),
       };
     }
 
@@ -520,7 +559,8 @@ function executeTool(name: string, args: Record<string, unknown> = {}): unknown 
 
     case 'optimize_system': {
       const { current_state, optimization_goal = 'maximize_intelligence' } = args;
-      const currentAxiom = createAxiomFromState(current_state as Record<string, unknown>);
+      const stateOrConfig = (current_state ?? args) as Record<string, unknown>;
+      const currentAxiom = createAxiomFromArgs(stateOrConfig);
       const currentState = currentAxiom.getState();
       const currentSim = new AxiomSimulator(currentAxiom);
       const currentCoherence = currentSim.getCoherenceMetric();
@@ -583,7 +623,8 @@ function executeTool(name: string, args: Record<string, unknown> = {}): unknown 
 
     case 'detect_collapse_risk': {
       const { current_state } = args;
-      const axiom = createAxiomFromState(current_state as Record<string, unknown>);
+      const stateOrConfig = (current_state ?? args) as Record<string, unknown>;
+      const axiom = createAxiomFromArgs(stateOrConfig);
       const state = axiom.getState();
       const simulator = new AxiomSimulator(axiom);
       const coherence = simulator.getCoherenceMetric();
