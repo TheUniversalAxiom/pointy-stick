@@ -184,7 +184,7 @@ const TOOLS = [
       properties: {
         permutation_a: { type: 'object', description: 'First permutation to compare' },
         permutation_b: { type: 'object', description: 'Second permutation to compare' },
-        comparison_criteria: { type: 'array', description: 'Criteria to compare', default: ['intelligence', 'coherence'] },
+        comparison_criteria: { type: 'array', items: { type: 'string' }, description: 'Criteria to compare', default: ['intelligence', 'coherence'] },
       },
       required: ['permutation_a', 'permutation_b'],
     },
@@ -228,7 +228,7 @@ const TOOLS = [
       type: 'object',
       properties: {
         current_state: { type: 'object', description: 'Current state to analyze' },
-        trajectory_history: { type: 'array', description: 'Optional historical states', default: [] },
+        trajectory_history: { type: 'array', items: { type: 'object' }, description: 'Optional historical states', default: [] },
       },
       required: ['current_state'],
     },
