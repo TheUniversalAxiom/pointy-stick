@@ -296,7 +296,7 @@ function validateToolInput(toolName: string, args: any): ValidationResult {
 const server = new Server(
   {
     name: "universal-axiom-server",
-    version: "0.2.0",
+    version: "0.2.1",
   },
   {
     capabilities: {

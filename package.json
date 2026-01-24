@@ -37,7 +37,7 @@
     "prepublishOnly": "npm run build && npm test"
   },
   "lint-staged": {
-    "*.ts": [
+    "src/**/*.ts": [
       "eslint --fix",
       "tsc --noEmit"
     ],
