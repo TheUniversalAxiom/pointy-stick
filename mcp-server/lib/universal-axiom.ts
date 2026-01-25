@@ -9,6 +9,14 @@
  */
 
 /**
+ * Maximum allowed value for n to prevent overflow
+ * At n=70, Fibonacci exceeds Number.MAX_SAFE_INTEGER
+ * At n=33, E_n exceeds Number.MAX_SAFE_INTEGER
+ * We use 100 as a practical limit
+ */
+export const MAX_N = 100;
+
+/**
  * State interface for the Axiom system
  */
 export interface AxiomState {
@@ -53,18 +61,42 @@ export class FoundationLayer {
  * Dynamic Layer: E_n · (1 + F_n)
  */
 export class DynamicLayer {
-  constructor(public n: number, public baseExponential: number = 3) {}
+  private _n: number;
+
+  constructor(n: number, public baseExponential: number = 3) {
+    // Validate and clamp n to valid range [1, MAX_N]
+    this._n = Math.max(1, Math.min(MAX_N, Math.floor(n)));
+  }
+
+  get n(): number {
+    return this._n;
+  }
+
+  set n(value: number) {
+    // Validate and clamp n to valid range [1, MAX_N]
+    this._n = Math.max(1, Math.min(MAX_N, Math.floor(value)));
+  }
 
   exponentialGrowth(): number {
-    return 2 * Math.pow(this.baseExponential, this.n) - 1;
+    const result = 2 * Math.pow(this.baseExponential, this._n) - 1;
+    // Return MAX_SAFE_INTEGER if overflow would occur
+    if (!Number.isFinite(result)) {
+      return Number.MAX_SAFE_INTEGER;
+    }
+    return result;
   }
 
   fibonacci(): number {
-    if (this.n <= 1) return 1;
+    if (this._n <= 1) return 1;
     let a = 1;
     let b = 1;
-    for (let i = 2; i <= this.n; i++) {
-      [a, b] = [b, a + b];
+    for (let i = 2; i <= this._n; i++) {
+      const next = a + b;
+      // Check for overflow
+      if (!Number.isFinite(next) || next > Number.MAX_SAFE_INTEGER) {
+        return Number.MAX_SAFE_INTEGER;
+      }
+      [a, b] = [b, next];
     }
     return b;
   }
@@ -72,7 +104,12 @@ export class DynamicLayer {
   compute(): number {
     const E_n = this.exponentialGrowth();
     const F_n = this.fibonacci();
-    return E_n * (1 + F_n);
+    const result = E_n * (1 + F_n);
+    // Return MAX_SAFE_INTEGER if overflow would occur
+    if (!Number.isFinite(result)) {
+      return Number.MAX_SAFE_INTEGER;
+    }
+    return result;
   }
 }
 
@@ -144,9 +181,10 @@ export class UniversalAxiom {
 
   /**
    * Evolve the system forward in time
+   * Note: n is clamped to MAX_N to prevent overflow
    */
   evolve(deltaTime: number = 1.0): number {
-    this.n += 1;
+    this.n = Math.min(this.n + 1, MAX_N);
     this.dynamic.n = this.n;
     this.cognitive.time += deltaTime;
     return this.computeIntelligence();
