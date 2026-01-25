@@ -3,6 +3,10 @@
  *
  * This adapts the MCP server to work as a stateless HTTP API for Vercel deployment.
  * Supports JSON-RPC 2.0 protocol used by MCP.
+ *
+ * Security features:
+ * - Input validation (NaN, Infinity, type checking, range validation)
+ * - Rate limiting (60 requests/minute, 1000 requests/hour per IP)
  */
 
 // Vercel types - defined inline to avoid dependency issues
@@ -27,6 +31,310 @@ import {
   type AxiomState,
   type AxiomConfig,
 } from '../lib/universal-axiom.js';
+
+/**
+ * Rate Limiting Module (Stateless for Serverless)
+ * Uses in-memory storage - works per instance, not globally distributed
+ * For production, consider using Vercel KV or similar
+ */
+interface RateLimitConfig {
+  maxRequestsPerMinute: number;
+  maxRequestsPerHour: number;
+}
+
+interface RateLimitResult {
+  allowed: boolean;
+  reason?: string;
+  remaining: {
+    minute: number;
+    hour: number;
+  };
+}
+
+// Global rate limit storage (persists across requests in same instance)
+const rateLimitStorage: Map<string, number[]> = new Map();
+
+const RATE_LIMIT_CONFIG: RateLimitConfig = {
+  maxRequestsPerMinute: 60,
+  maxRequestsPerHour: 1000,
+};
+
+function checkRateLimit(clientId: string): RateLimitResult {
+  const now = Date.now();
+  const timestamps = rateLimitStorage.get(clientId) || [];
+
+  // Remove timestamps older than 1 hour
+  const recentTimestamps = timestamps.filter(ts => now - ts < 3600000);
+
+  // Check hourly limit
+  if (recentTimestamps.length >= RATE_LIMIT_CONFIG.maxRequestsPerHour) {
+    return {
+      allowed: false,
+      reason: `Rate limit exceeded: Maximum ${RATE_LIMIT_CONFIG.maxRequestsPerHour} requests per hour`,
+      remaining: { minute: 0, hour: 0 },
+    };
+  }
+
+  // Check per-minute limit
+  const lastMinuteTimestamps = recentTimestamps.filter(ts => now - ts < 60000);
+  if (lastMinuteTimestamps.length >= RATE_LIMIT_CONFIG.maxRequestsPerMinute) {
+    return {
+      allowed: false,
+      reason: `Rate limit exceeded: Maximum ${RATE_LIMIT_CONFIG.maxRequestsPerMinute} requests per minute`,
+      remaining: {
+        minute: 0,
+        hour: RATE_LIMIT_CONFIG.maxRequestsPerHour - recentTimestamps.length,
+      },
+    };
+  }
+
+  // Record this request
+  recentTimestamps.push(now);
+  rateLimitStorage.set(clientId, recentTimestamps);
+
+  return {
+    allowed: true,
+    remaining: {
+      minute: RATE_LIMIT_CONFIG.maxRequestsPerMinute - lastMinuteTimestamps.length - 1,
+      hour: RATE_LIMIT_CONFIG.maxRequestsPerHour - recentTimestamps.length,
+    },
+  };
+}
+
+/**
+ * Input Validation Module
+ */
+interface ValidationResult {
+  valid: boolean;
+  errors: string[];
+}
+
+function validateNumber(
+  value: unknown,
+  name: string,
+  options: {
+    required?: boolean;
+    min?: number;
+    max?: number;
+    integer?: boolean;
+  } = {}
+): ValidationResult {
+  const errors: string[] = [];
+
+  // Check if value exists
+  if (value === undefined || value === null) {
+    if (options.required) {
+      errors.push(`${name} is required`);
+    }
+    return { valid: errors.length === 0, errors };
+  }
+
+  // Check type
+  if (typeof value !== 'number') {
+    errors.push(`${name} must be a number, got ${typeof value}`);
+    return { valid: false, errors };
+  }
+
+  // Check for NaN and Infinity
+  if (Number.isNaN(value)) {
+    errors.push(`${name} cannot be NaN`);
+  }
+  if (!Number.isFinite(value)) {
+    errors.push(`${name} must be finite (not Infinity or -Infinity)`);
+  }
+
+  // Check integer constraint
+  if (options.integer && !Number.isInteger(value)) {
+    errors.push(`${name} must be an integer, got ${value}`);
+  }
+
+  // Check range
+  if (options.min !== undefined && value < options.min) {
+    errors.push(`${name} must be >= ${options.min}, got ${value}`);
+  }
+  if (options.max !== undefined && value > options.max) {
+    errors.push(`${name} must be <= ${options.max}, got ${value}`);
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+function validateAxiomParams(params: Record<string, unknown>): ValidationResult {
+  const allErrors: string[] = [];
+
+  // Validate each parameter with appropriate constraints
+  const validations = [
+    validateNumber(params.impulses, 'impulses', {}),
+    validateNumber(params.elements, 'elements', {}),
+    validateNumber(params.pressure, 'pressure', { min: 0.01 }),
+    validateNumber(params.subjectivity, 'subjectivity', { min: 0, max: 1 }),
+    validateNumber(params.purpose, 'purpose', { min: 0.01 }),
+    validateNumber(params.time, 'time', { min: 0 }),
+    validateNumber(params.n, 'n', { integer: true, min: 1, max: 1000 }), // Added max to prevent overflow
+  ];
+
+  validations.forEach(v => {
+    if (!v.valid) {
+      allErrors.push(...v.errors);
+    }
+  });
+
+  return { valid: allErrors.length === 0, errors: allErrors };
+}
+
+function validateState(state: unknown): ValidationResult {
+  const errors: string[] = [];
+
+  if (!state || typeof state !== 'object') {
+    errors.push('current_state must be a valid object');
+    return { valid: false, errors };
+  }
+
+  const stateObj = state as Record<string, unknown>;
+
+  // Check required properties
+  if (!stateObj.foundation || typeof stateObj.foundation !== 'object') {
+    errors.push('current_state.foundation is required and must be an object');
+  }
+  if (!stateObj.dynamic || typeof stateObj.dynamic !== 'object') {
+    errors.push('current_state.dynamic is required and must be an object');
+  }
+  if (!stateObj.cognitive || typeof stateObj.cognitive !== 'object') {
+    errors.push('current_state.cognitive is required and must be an object');
+  }
+  if (typeof stateObj.n !== 'number') {
+    errors.push('current_state.n is required and must be a number');
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+function validateToolInput(toolName: string, args: Record<string, unknown>): ValidationResult {
+  const allErrors: string[] = [];
+
+  switch (toolName) {
+    case 'compute_intelligence':
+    case 'simulate_evolution':
+    case 'simulate_contradiction_resolution':
+    case 'analyze_permutation':
+    case 'predict_trajectory': {
+      const validation = validateAxiomParams(args);
+      if (!validation.valid) {
+        allErrors.push(...validation.errors);
+      }
+      break;
+    }
+
+    case 'evolve_system': {
+      if (args.current_state) {
+        const stateValidation = validateState(args.current_state);
+        if (!stateValidation.valid) {
+          allErrors.push(...stateValidation.errors);
+        }
+      }
+      const stepsValidation = validateNumber(args.steps, 'steps', {
+        integer: true,
+        min: 1,
+        max: 1000,
+      });
+      if (!stepsValidation.valid) {
+        allErrors.push(...stepsValidation.errors);
+      }
+      const deltaValidation = validateNumber(args.delta_time, 'delta_time', {
+        min: 0.001,
+        max: 100,
+      });
+      if (!deltaValidation.valid) {
+        allErrors.push(...deltaValidation.errors);
+      }
+      break;
+    }
+
+    case 'apply_pressure': {
+      if (args.current_state) {
+        const stateValidation = validateState(args.current_state);
+        if (!stateValidation.valid) {
+          allErrors.push(...stateValidation.errors);
+        }
+      }
+      const deltaValidation = validateNumber(args.pressure_delta, 'pressure_delta', {
+        required: true,
+        min: -100,
+        max: 100,
+      });
+      if (!deltaValidation.valid) {
+        allErrors.push(...deltaValidation.errors);
+      }
+      break;
+    }
+
+    case 'adjust_subjectivity': {
+      if (args.current_state) {
+        const stateValidation = validateState(args.current_state);
+        if (!stateValidation.valid) {
+          allErrors.push(...stateValidation.errors);
+        }
+      }
+      const deltaValidation = validateNumber(args.subjectivity_delta, 'subjectivity_delta', {
+        required: true,
+        min: -1,
+        max: 1,
+      });
+      if (!deltaValidation.valid) {
+        allErrors.push(...deltaValidation.errors);
+      }
+      break;
+    }
+
+    case 'get_coherence_metric':
+    case 'optimize_system':
+    case 'detect_collapse_risk': {
+      if (args.current_state) {
+        const stateValidation = validateState(args.current_state);
+        if (!stateValidation.valid) {
+          allErrors.push(...stateValidation.errors);
+        }
+      }
+      break;
+    }
+
+    case 'compare_permutations': {
+      if (!args.permutation_a || typeof args.permutation_a !== 'object') {
+        allErrors.push('permutation_a is required and must be an object');
+      }
+      if (!args.permutation_b || typeof args.permutation_b !== 'object') {
+        allErrors.push('permutation_b is required and must be an object');
+      }
+      break;
+    }
+
+    default:
+      // Unknown tool - no specific validation
+      break;
+  }
+
+  return { valid: allErrors.length === 0, errors: allErrors };
+}
+
+/**
+ * Get client identifier for rate limiting
+ */
+function getClientId(req: VercelRequest): string {
+  // Try to get real IP from headers (Vercel forwards these)
+  const forwardedFor = req.headers?.['x-forwarded-for'];
+  if (forwardedFor) {
+    const ip = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor.split(',')[0];
+    return ip.trim();
+  }
+
+  const realIp = req.headers?.['x-real-ip'];
+  if (realIp) {
+    return Array.isArray(realIp) ? realIp[0] : realIp;
+  }
+
+  // Fallback to a default identifier
+  return 'anonymous';
+}
 
 // Types for MCP protocol
 interface JsonRpcRequest {
@@ -686,7 +994,32 @@ function handleListTools(): unknown {
 
 function handleCallTool(params: Record<string, unknown>): unknown {
   const { name, arguments: args } = params;
-  const result = executeTool(name as string, (args as Record<string, unknown>) || {});
+  const toolArgs = (args as Record<string, unknown>) || {};
+
+  // Validate input parameters
+  const validation = validateToolInput(name as string, toolArgs);
+  if (!validation.valid) {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(
+            {
+              error: 'Input validation failed',
+              tool: name,
+              validationErrors: validation.errors,
+              message: 'Please check your input parameters and try again',
+            },
+            null,
+            2
+          ),
+        },
+      ],
+      isError: true,
+    };
+  }
+
+  const result = executeTool(name as string, toolArgs);
 
   return {
     content: [
@@ -799,6 +1132,10 @@ export default async function handler(
         mcp: 'POST /api/mcp',
         health: 'GET /api/mcp',
       },
+      rateLimits: {
+        perMinute: RATE_LIMIT_CONFIG.maxRequestsPerMinute,
+        perHour: RATE_LIMIT_CONFIG.maxRequestsPerHour,
+      },
     });
     return;
   }
@@ -809,11 +1146,52 @@ export default async function handler(
     return;
   }
 
+  // Check rate limit
+  const clientId = getClientId(req);
+  const rateLimitResult = checkRateLimit(clientId);
+
+  // Set rate limit headers
+  res.setHeader('X-RateLimit-Limit-Minute', String(RATE_LIMIT_CONFIG.maxRequestsPerMinute));
+  res.setHeader('X-RateLimit-Limit-Hour', String(RATE_LIMIT_CONFIG.maxRequestsPerHour));
+  res.setHeader('X-RateLimit-Remaining-Minute', String(rateLimitResult.remaining.minute));
+  res.setHeader('X-RateLimit-Remaining-Hour', String(rateLimitResult.remaining.hour));
+
+  if (!rateLimitResult.allowed) {
+    res.setHeader('Retry-After', '60');
+    res.status(429).json({
+      jsonrpc: '2.0',
+      id: null,
+      error: {
+        code: -32000,
+        message: 'Rate limit exceeded',
+        data: {
+          reason: rateLimitResult.reason,
+          remaining: rateLimitResult.remaining,
+          retryAfter: 60,
+        },
+      },
+    });
+    return;
+  }
+
   try {
     const body = req.body as JsonRpcRequest | JsonRpcRequest[];
 
     // Handle batch requests
     if (Array.isArray(body)) {
+      // Limit batch size to prevent abuse
+      if (body.length > 10) {
+        res.status(400).json({
+          jsonrpc: '2.0',
+          id: null,
+          error: {
+            code: -32600,
+            message: 'Batch request too large',
+            data: { maxBatchSize: 10, receivedSize: body.length },
+          },
+        });
+        return;
+      }
       const responses = body.map(handleRequest);
       res.status(200).json(responses);
       return;

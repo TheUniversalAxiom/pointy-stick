@@ -10,6 +10,16 @@ Cognitive Layer: Subjectivity Scale (X), Why Axis (Y), TimeSphere (Z)
 
 from typing import Dict, List
 from dataclasses import dataclass
+import sys
+
+# Maximum allowed value for n to prevent overflow
+# At n=70, Fibonacci exceeds typical integer limits
+# At n=33, E_n exceeds float precision
+# We use 100 as a practical limit
+MAX_N = 100
+
+# Maximum safe value to prevent overflow
+MAX_SAFE_VALUE = sys.float_info.max / 2
 
 
 @dataclass
@@ -25,32 +35,61 @@ class FoundationLayer:
         return self.impulses * self.elements * self.pressure
 
 
-@dataclass
 class DynamicLayer:
     """Dynamic Layer: E_n · (1 + F_n)"""
 
-    n: int  # Current iteration/step
-    base_exponential: float = 3.0  # Base for exponential growth
+    def __init__(self, n: int = 1, base_exponential: float = 3.0):
+        """
+        Initialize DynamicLayer with validated n.
+
+        Args:
+            n: Current iteration/step (will be clamped to [1, MAX_N])
+            base_exponential: Base for exponential growth
+        """
+        self._n = max(1, min(MAX_N, int(n)))
+        self.base_exponential = base_exponential
+
+    @property
+    def n(self) -> int:
+        """Get current iteration step"""
+        return self._n
+
+    @n.setter
+    def n(self, value: int) -> None:
+        """Set iteration step with validation"""
+        self._n = max(1, min(MAX_N, int(value)))
 
     def exponential_growth(self) -> float:
-        """E_n - Exponential growth component"""
-        return (2 * (self.base_exponential**self.n)) - 1
+        """E_n - Exponential growth component with overflow protection"""
+        result = (2 * (self.base_exponential ** self._n)) - 1
+        # Return MAX_SAFE_VALUE if overflow would occur
+        if result > MAX_SAFE_VALUE or result != result:  # NaN check
+            return MAX_SAFE_VALUE
+        return result
 
     def fibonacci(self) -> int:
-        """F_n - Fibonacci sequence for natural regulation"""
-        if self.n <= 1:
+        """F_n - Fibonacci sequence for natural regulation with overflow protection"""
+        if self._n <= 1:
             return 1
 
         a, b = 1, 1
-        for _ in range(2, self.n + 1):
-            a, b = b, a + b
+        for _ in range(2, self._n + 1):
+            next_val = a + b
+            # Check for overflow
+            if next_val > MAX_SAFE_VALUE:
+                return int(MAX_SAFE_VALUE)
+            a, b = b, next_val
         return b
 
     def compute(self) -> float:
-        """Compute dynamic layer: E_n · (1 + F_n)"""
+        """Compute dynamic layer: E_n · (1 + F_n) with overflow protection"""
         E_n = self.exponential_growth()
         F_n = self.fibonacci()
-        return E_n * (1 + F_n)
+        result = E_n * (1 + F_n)
+        # Return MAX_SAFE_VALUE if overflow would occur
+        if result > MAX_SAFE_VALUE or result != result:  # NaN check
+            return MAX_SAFE_VALUE
+        return result
 
 
 @dataclass
@@ -100,9 +139,9 @@ class UniversalAxiom:
             n: Current iteration step (default: 1)
         """
         self.foundation = FoundationLayer(impulses, elements, pressure)
-        self.dynamic = DynamicLayer(n)
+        self.dynamic = DynamicLayer(n=n)
         self.cognitive = CognitiveLayer(subjectivity, purpose, time)
-        self.n = n
+        self.n = max(1, min(MAX_N, int(n)))
 
     def compute_intelligence(self) -> float:
         """
@@ -121,6 +160,7 @@ class UniversalAxiom:
     def evolve(self, delta_time: float = 1.0) -> float:
         """
         Evolve the system forward in time
+        Note: n is clamped to MAX_N to prevent overflow
 
         Args:
             delta_time: Time step increment
@@ -128,7 +168,7 @@ class UniversalAxiom:
         Returns:
             float: New intelligence value after evolution
         """
-        self.n += 1
+        self.n = min(self.n + 1, MAX_N)
         self.dynamic.n = self.n
         self.cognitive.time += delta_time
 
