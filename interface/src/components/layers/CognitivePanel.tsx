@@ -38,7 +38,7 @@ export function CognitivePanel({
                             />
                         </div>
                         <div className="cognitive-scale__range">
-                            <span>Subjective</span>
+                            <span>Subjective ({subjectivity.toFixed(2)})</span>
                             <span>Objective</span>
                         </div>
                     </div>

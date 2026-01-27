@@ -15,11 +15,13 @@ export function AnimatedNumber({
     className = ''
 }: AnimatedNumberProps) {
     const [displayValue, setDisplayValue] = useState(value);
+    const [previousValueState, setPreviousValueState] = useState(value);
     const previousValue = useRef(value);
     const animationRef = useRef<number | undefined>(undefined);
 
     useEffect(() => {
         const startValue = previousValue.current;
+        setPreviousValueState(startValue);
         const endValue = value;
         const startTime = performance.now();
 
@@ -49,8 +51,8 @@ export function AnimatedNumber({
         };
     }, [value, duration]);
 
-    const isIncreasing = value > previousValue.current;
-    const isDecreasing = value < previousValue.current;
+    const isIncreasing = value > previousValueState;
+    const isDecreasing = value < previousValueState;
 
     return (
         <span
