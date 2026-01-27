@@ -79,6 +79,10 @@ Pre-built prompts for common reasoning patterns:
 
 ## Usage
 
+### MCP Quickstart (input shapes + helper)
+See **MCP_QUICKSTART.md** for strict tool input shapes and a thin `buildCurrentState()` helper to avoid validation errors.
+
+
 ### With Claude Desktop
 
 Add this to your Claude Desktop configuration (`claude_desktop_config.json`):

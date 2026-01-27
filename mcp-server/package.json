@@ -45,8 +45,9 @@
   "files": [
     "build/",
     "api/",
-    "lib/",
+    "helpers/",
     "README.md",
+    "MCP_QUICKSTART.md",
     "LICENSE",
     "universal-axiom.js",
     "universal-axiom.d.ts",
