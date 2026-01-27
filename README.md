@@ -12,6 +12,12 @@ The Universal Axiom is an origin engine, not a knowledge container. It doesn't r
 
 ---
 
+## 📚 Docs Index
+
+Start here: **docs/INDEX.md**
+
+---
+
 ## 🌟 Overview
 
 The Epiphany Engine, built on The Universal Axiom framework, transforms how we gather, process, and apply information. Rather than scaling computational power, it aligns intelligence with the fundamental laws that govern reality itself.

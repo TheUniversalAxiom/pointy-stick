@@ -51,6 +51,11 @@ echo "Updating package.json..."
 sed -i.bak "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" package.json
 rm package.json.bak
 
+# Update mcp-server/package.json
+echo "Updating mcp-server/package.json..."
+sed -i.bak "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" mcp-server/package.json
+rm mcp-server/package.json.bak
+
 # Update pyproject.toml
 echo "Updating pyproject.toml..."
 sed -i.bak "s/version = \"$CURRENT_VERSION\"/version = \"$NEW_VERSION\"/" pyproject.toml

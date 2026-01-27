@@ -59,6 +59,24 @@ const RATE_LIMIT_CONFIG: RateLimitConfig = {
   maxRequestsPerHour: 1000,
 };
 
+const MAX_BODY_BYTES = 100 * 1024; // 100KB
+
+const API_KEY = process.env.MCP_API_KEY;
+const CORS_ORIGINS = process.env.MCP_CORS_ORIGINS
+  ? process.env.MCP_CORS_ORIGINS.split(',').map(origin => origin.trim()).filter(Boolean)
+  : [];
+
+function isOriginAllowed(origin?: string): boolean {
+  if (!origin) return true;
+  if (!CORS_ORIGINS.length || CORS_ORIGINS.includes('*')) return true;
+  return CORS_ORIGINS.includes(origin);
+}
+
+function getCorsOrigin(origin?: string): string {
+  if (!CORS_ORIGINS.length || CORS_ORIGINS.includes('*')) return '*';
+  return origin || CORS_ORIGINS[0];
+}
+
 function checkRateLimit(clientId: string): RateLimitResult {
   const now = Date.now();
   const timestamps = rateLimitStorage.get(clientId) || [];
@@ -1112,14 +1130,50 @@ export default async function handler(
   res: VercelResponse
 ): Promise<void> {
   // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origin = req.headers?.origin ? String(req.headers.origin) : undefined;
+  if (!isOriginAllowed(origin)) {
+    res.status(403).json({
+      jsonrpc: '2.0',
+      id: null,
+      error: {
+        code: -32600,
+        message: 'CORS origin not allowed',
+        data: { origin },
+      },
+    });
+    return;
+  }
+
+  res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(origin));
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-Key');
 
   // Handle preflight
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
+  }
+
+  // Optional API key auth
+  if (API_KEY) {
+    const authHeader = req.headers?.authorization;
+    const apiKeyHeader = req.headers?.['x-api-key'];
+    const bearerToken = authHeader && authHeader.toLowerCase().startsWith('bearer ')
+      ? authHeader.slice(7).trim()
+      : undefined;
+    const token = bearerToken || (apiKeyHeader ? String(apiKeyHeader) : undefined);
+
+    if (!token || token !== API_KEY) {
+      res.status(401).json({
+        jsonrpc: '2.0',
+        id: null,
+        error: {
+          code: -32600,
+          message: 'Unauthorized',
+        },
+      });
+      return;
+    }
   }
 
   // Health check endpoint
@@ -1143,6 +1197,35 @@ export default async function handler(
   // MCP requests must be POST
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  // Basic content checks
+  const contentType = req.headers?.['content-type'];
+  if (contentType && !String(contentType).includes('application/json')) {
+    res.status(415).json({
+      jsonrpc: '2.0',
+      id: null,
+      error: {
+        code: -32600,
+        message: 'Unsupported content type. Expected application/json',
+      },
+    });
+    return;
+  }
+
+  const contentLengthHeader = req.headers?.['content-length'];
+  const contentLength = contentLengthHeader ? Number(contentLengthHeader) : 0;
+  if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+    res.status(413).json({
+      jsonrpc: '2.0',
+      id: null,
+      error: {
+        code: -32600,
+        message: 'Request body too large',
+        data: { maxBytes: MAX_BODY_BYTES, receivedBytes: contentLength },
+      },
+    });
     return;
   }
 
@@ -1175,7 +1258,34 @@ export default async function handler(
   }
 
   try {
+    if (req.body === undefined || req.body === null) {
+      res.status(400).json({
+        jsonrpc: '2.0',
+        id: null,
+        error: {
+          code: -32600,
+          message: 'Invalid Request: missing body',
+        },
+      });
+      return;
+    }
+
     const body = req.body as JsonRpcRequest | JsonRpcRequest[];
+
+    // Enforce max body size when content-length is unavailable
+    const bodySize = JSON.stringify(body).length;
+    if (bodySize > MAX_BODY_BYTES) {
+      res.status(413).json({
+        jsonrpc: '2.0',
+        id: null,
+        error: {
+          code: -32600,
+          message: 'Request body too large',
+          data: { maxBytes: MAX_BODY_BYTES, receivedBytes: bodySize },
+        },
+      });
+      return;
+    }
 
     // Handle batch requests
     if (Array.isArray(body)) {

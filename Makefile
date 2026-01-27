@@ -406,6 +406,7 @@ version-bump-major:
 
 version-show:
 	@echo "Current versions:"
-	@echo "  NPM:    $$(node -p "require('./package.json').version")"
-	@echo "  Python: $$(grep '^version = ' pyproject.toml | cut -d'"' -f2)"
-	@echo "  Rust:   $$(grep '^version = ' src/rust/Cargo.toml | head -n1 | cut -d'"' -f2)"
+	@echo "  NPM:      $$(node -p "require('./package.json').version")"
+	@echo "  MCP:      $$(node -p "require('./mcp-server/package.json').version")"
+	@echo "  Python:   $$(grep '^version = ' pyproject.toml | cut -d'"' -f2)"
+	@echo "  Rust:     $$(grep '^version = ' src/rust/Cargo.toml | head -n1 | cut -d'"' -f2)"
