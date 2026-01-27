@@ -302,7 +302,6 @@ Before publishing to any registry, ensure:
 ### Version Management
 - [ ] Version bumped in all package files:
   - `package.json`
-  - `mcp-server/package.json`
   - `pyproject.toml`
   - `setup.py`
   - `src/rust/Cargo.toml`
@@ -335,8 +334,6 @@ The Universal Axiom follows [Semantic Versioning](https://semver.org/):
 
 ### Updating Versions
 
-**Version alignment policy:** keep `mcp-server` in lockstep with core version numbers to simplify releases and compatibility.
-
 Use the provided script to update all package versions at once:
 
 ```bash
@@ -352,11 +349,10 @@ make version-major
 
 Or manually update in these files:
 1. `package.json` → `"version"`
-2. `mcp-server/package.json` → `"version"`
-3. `pyproject.toml` → `[project] version`
-4. `setup.py` → `version=`
-5. `src/rust/Cargo.toml` → `[package] version`
-6. `src/python/__init__.py` → `__version__`
+2. `pyproject.toml` → `[project] version`
+3. `setup.py` → `version=`
+4. `src/rust/Cargo.toml` → `[package] version`
+5. `src/python/__init__.py` → `__version__`
 
 ### Creating a Release
 

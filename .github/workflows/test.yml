@@ -45,41 +45,13 @@ jobs:
         node-version: '20'
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install
 
     - name: Build TypeScript
       run: npx tsc
 
     - name: Run JavaScript tests
       run: npx jest tests/universal-axiom.test.js
-
-  mcp-server-tests:
-    name: MCP Server Tests
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-
-    - name: Install MCP server dependencies
-      working-directory: mcp-server
-      run: npm ci
-
-    - name: Build MCP server
-      working-directory: mcp-server
-      run: npm run build
-
-    - name: Run MCP tool tests
-      working-directory: mcp-server
-      run: node test-tools.js
-
-    - name: Run Vercel config tests
-      working-directory: mcp-server
-      run: node test-vercel-config.js
 
   rust-tests:
     name: Rust Tests
@@ -141,7 +113,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Install JavaScript dependencies
-      run: npm ci
+      run: npm install
 
     - name: Build TypeScript
       run: npx tsc

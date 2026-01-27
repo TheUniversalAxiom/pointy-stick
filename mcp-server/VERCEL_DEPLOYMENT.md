@@ -85,7 +85,6 @@ Response:
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/mcp \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $MCP_API_KEY" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "initialize"}'
 ```
 
@@ -94,7 +93,6 @@ curl -X POST https://your-deployment.vercel.app/api/mcp \
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/mcp \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $MCP_API_KEY" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
 ```
 
@@ -103,7 +101,6 @@ curl -X POST https://your-deployment.vercel.app/api/mcp \
 ```bash
 curl -X POST https://your-deployment.vercel.app/api/mcp \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $MCP_API_KEY" \
   -d '{
     "jsonrpc": "2.0",
     "id": 1,
@@ -191,8 +188,6 @@ No environment variables are required for basic deployment.
 
 Optional variables you can set in Vercel dashboard:
 - `NODE_ENV` - Set to `production` (default)
-- `MCP_API_KEY` - If set, requests must include `Authorization: Bearer <key>` or `X-API-Key: <key>`
-- `MCP_CORS_ORIGINS` - Comma-separated allowlist (e.g., `https://app.example.com,https://admin.example.com`). Use `*` to allow all.
 
 ## Local Development
 
@@ -212,7 +207,7 @@ The server will be available at `http://localhost:3000/api/mcp`
 Vercel serverless functions have a 10-second timeout on the free tier. Complex simulations with many steps may timeout. Consider reducing `steps` parameter or upgrading to Pro tier (60s timeout).
 
 ### CORS Issues
-CORS headers are configured in `vercel.json`, and the API also enforces `MCP_CORS_ORIGINS` if set. If you still encounter issues, check that your client sends the correct `Content-Type: application/json` header and that the requesting origin is allowlisted.
+CORS headers are configured in `vercel.json`. If you still encounter issues, check that your client sends the correct `Content-Type: application/json` header.
 
 ### Cold Starts
 First request after inactivity may be slower due to cold start. Subsequent requests will be fast.
